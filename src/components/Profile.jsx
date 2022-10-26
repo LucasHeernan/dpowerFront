@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollText, Button } from 'react-native';
+import { View, Text, StyleSheet, ScrollText, Button, ScrollView } from 'react-native';
 import useAxios from 'axios-hooks';
   
 function Profile() {
@@ -14,14 +14,14 @@ function Profile() {
     if (error) return <ScrollText>{JSON.stringify(error, null, 2)}</ScrollText>
 
     return (
-        <View style={styles.container}>
+        <ScrollView>
           <Button onPress={()=> refetch({
             data: {
               delay: 2
             }
           })} title="Refetch" />
           <Text style={styles.paragraph}>{JSON.stringify(data, null, 2)}</Text>
-        </View>
+        </ScrollView>
     );  
     // return (
     //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
