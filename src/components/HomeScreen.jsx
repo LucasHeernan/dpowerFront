@@ -1,7 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+
 import Post from '../components/Post'
 import perfiles from "./perfiles";
+
 
 
 
@@ -10,6 +12,7 @@ import perfiles from "./perfiles";
 function HomeScreen() {
  
   return (
+
     <ScrollView>
       {perfiles?.map(p => 
       <View key={p.id}>
@@ -27,10 +30,12 @@ function HomeScreen() {
     
     </ScrollView>
   )
+
 }
 
 const styles = StyleSheet.create({
   container:{
+
     backgroundColor: "#7D7D7D",
     flex: 1,
     justifyContent: 'center',
@@ -49,5 +54,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
 })
+
 
 export default HomeScreen

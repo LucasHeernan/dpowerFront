@@ -1,4 +1,5 @@
 import React from "react";
+
 import { View, Text, Image, StyleSheet,ScrollView, Button  } from 'react-native';
 
 
@@ -106,3 +107,4 @@ const styles = StyleSheet.create({
     
  
 export default Post;
+
