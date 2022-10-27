@@ -38,6 +38,7 @@ export default function MarketPlace() {
       }
     </View>
   );
+
 }
 
 const styles = StyleSheet.create({
