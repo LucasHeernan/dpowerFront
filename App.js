@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './src/components/HomeScreen';
 import MarketPlace from './src/components/MarketPlace';
 import Profile from './src/components/Profile';
+import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
