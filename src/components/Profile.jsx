@@ -1,7 +1,9 @@
 import React from "react";
+
 import { View, Text, StyleSheet, ScrollText, Button, ScrollView, Image, SafeAreaView } from 'react-native';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Title, Paragraph, Headline, Caption} from "react-native-paper";
+
 
 function Profile() {
   return (
@@ -63,6 +65,7 @@ function Profile() {
         </View>
 
         <Text style={[styles.subText, styles.description]}>Descripcion</Text>
+
 
         <View style={{alignItems: "center"}}>
           <View style={styles.descripcion}>
@@ -183,5 +186,6 @@ const styles = StyleSheet.create({
     marginRight: 20
   }
 })
+
 
 export default Profile
