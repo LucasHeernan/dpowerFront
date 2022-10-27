@@ -1,12 +1,96 @@
-import React from "react";
-import { View, Text } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, FlatList, ActivityIndicator } from "react-native";
+import axios from "axios";
+import ProductCard from "./ProductCard";
 
-function MarketPlace() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>This is the Market!</Text>
-      </View>
-    );
+export default function MarketPlace() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const getProducts = (setProducts, setLoading) => {
+    axios.get(`https://fakestoreapi.com/products`)
+      .then(resp => setProducts(resp.data))
+      .catch(error => console.error(error))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    getProducts(setProducts, setLoading)
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      {
+        loading ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
+        : (
+            <FlatList
+              data={products}
+              keyExtractor={({ id }) => id.toString()}
+              renderItem={({ item }) => (
+                <ProductCard
+                  image={item.image}
+                  name={item.title}
+                  price={item.price}
+                />
+              )}
+            />
+          )
+      }
+    </View>
+  );
 }
 
-export default MarketPlace
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 5,
+    marginTop: 10
+  },
+  loading: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
+
+
+// return (
+  //   <ScrollView >
+  //     <Text style={styles.advice}>listo</Text>
+  //     <Button title="Get Advice"
+  //       onPress={getAdvice} color="green" />
+  //     <View >
+  //         {
+  //           advice && advice.length ?
+  //             advice.map(a =>
+  //               <View style={styles.container} key={a.id}>
+  //                 <Image
+  //                   style={styles.tinyLogo}
+  //                   source={{ uri: a.image }} />
+  //                 <View>
+  //                   <Text style={styles.title}>{a.title}</Text>
+  //                   <Text style={styles.subtitle}>{a.price}</Text>
+  //                 </View>
+  //               </View>
+  //           ) : <Text>No hay info</Text>
+  //         }
+  //     </View>
+  //   </ScrollView>
+  // );
+
+// import React from "react";
+// import { View, Text } from 'react-native';
+
+// function MarketPlace() {
+//     return (
+//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//         <Text>This is the Market!</Text>
+//       </View>
+//     );
+// }
+
+// export default MarketPlace
