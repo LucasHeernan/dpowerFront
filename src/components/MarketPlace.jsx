@@ -7,6 +7,7 @@ export default function MarketPlace() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // axios.get(`http://192.168.0.77:3001/productos`)
   const getProducts = (setProducts, setLoading) => {
     axios.get(`https://fakestoreapi.com/products`)
       .then(resp => setProducts(resp.data))
@@ -30,9 +31,15 @@ export default function MarketPlace() {
                 <ProductCard
                   image={item.image}
                   name={item.title}
+                  category={item.category}
+                  // name={item.name}
                   price={item.price}
+                  description={item.description}
                 />
               )}
+              // contentContainerStyle={{
+              //   paddingHorizontal: 15,
+              // }}
             />
           )
       }
@@ -44,8 +51,7 @@ export default function MarketPlace() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 5,
-    marginTop: 10
+    backgroundColor: 'gray'
   },
   loading: {
     position: 'absolute',

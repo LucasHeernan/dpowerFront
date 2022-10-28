@@ -1,17 +1,50 @@
-import * as React from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
 
-export default function ProductCard({image, name, price}) {
+export default function ProductCard({image, name, price, category, description}) {
+
+  const [count, setCount] = useState(1);
+
   return (
     <View style={styles.container}>
       <Image
         source={{ uri: image }}
         style={styles.image}
       />
-      <View>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.subtitle}>{price}</Text>
-        {/* <Text>{description}</Text> */}
+      <View style={styles.text}>
+
+        <Text style={styles.type}>{category}</Text>
+        <Text style={styles.name}>{name}</Text>
+
+        <View style={styles.containerPrice}>
+          <View style={styles.state}>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => setCount(count - 1)}
+            >
+              <Text style={styles.lessMore}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.count}>{count}</Text>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => setCount(count + 1)}
+            >
+              <Text style={styles.lessMore}>+</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.price}>${price * count}</Text>
+        </View>
+        <Text
+          style={styles.description}
+          numberOfLines={2}
+        >
+          {description}
+        </Text>
+        <TouchableOpacity style={styles.cart}>
+          <Text style={styles.addCart}>
+            Add To Cart
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -19,38 +52,79 @@ export default function ProductCard({image, name, price}) {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: 100,
-    borderRadius: 10,
-    position: 'relative',
-    justifyContent: 'center',
+    width: '96%',
+    height: 560,
+    borderRadius: 30,
+    backgroundColor: 'white',
     alignItems: 'center',
-    marginBottom: 8,
-  },
-  // container: {
-  //   backgroundColor: "#fff",
-  //   alignItems: "center",
-  //   justifyContent: 'flex-start',
-  //   flexDirection: 'row', 
-  //   padding: 5,
-  //   marginLeft: 15,
-  // },
-  advice: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginHorizontal: 20,
+    alignSelf: 'center',
+    padding: 5,
+    marginTop: 30
   },
   image: {
-    width: '80%',
-    height: '80%',
+    width: '95%',
+    height: '60%',
     resizeMode: 'contain',
   },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 24,
+  text: {
+    marginTop: 9,
+    width: '100%',
+    height: '38%',
+    // width: '95%',
+    // alignItems: 'center',
+    backgroundColor: 'white',
   },
-  subtitle:{
-    textDecorationLine: 'underline',
-    color: 'blue',
+  count: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  type: {
+    fontSize: 15,
+  },
+  name: {
+    fontWeight: '600',
+    fontSize: 20,
+  },
+  containerPrice: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 5
+  },
+  state: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  btn: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: 'black',
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  lessMore: {
+    color: 'white'
+  },
+  price:{
+    fontWeight: 'bold',
+    fontSize: 25,
+  },
+  description: {
+    fontSize: 15,
+  },
+  cart: {
+    borderRadius: 10,
+    alignItems: 'center',
+    backgroundColor: 'black',
+    padding: 6,
+    width: '70%',
+    alignSelf: 'center',
+    marginTop: 5
+  },
+  addCart: {
+    color: 'white',
+    fontSize: 19,
+    fontWeight: 'bold'
   }
 });
