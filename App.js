@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, Button } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/components/HomeScreen';
 import MarketPlace from './src/components/MarketPlace';
 import Profile from './src/components/Profile';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { IconButton } from 'react-native-paper';
 
 
 
@@ -25,7 +27,7 @@ const MyTheme = {
   },
 }
 
-export default function App() {
+export default function App({ navigation }) {
   return (
     <NavigationContainer theme={MyTheme} >
       <Tab.Navigator screenOptions={{
@@ -64,6 +66,13 @@ export default function App() {
                 <Entypo name="shop" size={24} color={color} />
               );
             },
+            headerRight: () => (
+              <IconButton
+                icon="cart"
+                size={30}
+                onPress={() => console.log("Pressed")}
+              />
+            )
           }}/>
         
         <Tab.Screen name="Profile"

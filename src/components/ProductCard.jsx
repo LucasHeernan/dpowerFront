@@ -20,7 +20,7 @@ export default function ProductCard({image, name, price, category, description})
           <View style={styles.state}>
             <TouchableOpacity
               style={styles.btn}
-              onPress={() => setCount(count - 1)}
+              onPress={() => {if(count > 1) setCount(count -1)}}
             >
               <Text style={styles.lessMore}>-</Text>
             </TouchableOpacity>

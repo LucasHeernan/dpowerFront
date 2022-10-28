@@ -3,9 +3,13 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollText, Button, ScrollView, Image, SafeAreaView } from 'react-native';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Title, Paragraph, Headline, Caption} from "react-native-paper";
+import axios from "axios";
 
+function Profile(props) {
 
-function Profile() {
+  const {name, sport, age, nationality, description, post, powers} = props;
+  const usuario = axios.get("http://localhost:3001/usuarios")
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
