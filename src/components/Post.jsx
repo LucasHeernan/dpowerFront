@@ -17,7 +17,7 @@ function Post({fullName, id, forksCount, stargazersCount, reviewCount, avatar, d
 
 
                     <View style={styles.posts}>
-                    <Text style={styles.title}>{fullName}</Text>
+                    <Text style={styles.title}>@{fullName}</Text>
                     
                     <View style={styles.contain} > 
                               
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   title: {
         fontWeight: 'bold',
         fontSize: 20,
-        
+        marginBottom: -7,
         marginLeft: -69,
         color: '#F5F5F5',
     },
