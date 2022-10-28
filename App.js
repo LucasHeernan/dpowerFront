@@ -6,11 +6,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/components/HomeScreen';
 import MarketPlace from './src/components/MarketPlace';
 import Profile from './src/components/Profile';
+import Cart from './src/components/Cart'
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { IconButton } from 'react-native-paper';
-
+import { Ionicons } from '@expo/vector-icons';
 
 
 const Tab = createBottomTabNavigator();
@@ -19,7 +19,7 @@ const MyTheme = {
   dark: true,
   colors: {
     primary: '#F5F5F5',
-    background: 'white',
+    background: '#4D4D4D',
     card: 'rgb(255, 255, 255)',
     text: '#F5F5F5',
     border: 'rgb(199, 199, 204)',
@@ -52,7 +52,7 @@ export default function App({ navigation }) {
                 //       'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
                 //   }}
                 // />
-                <MaterialIcons name="favorite" size={28} color={color}/>
+                <MaterialIcons name="home" size={28} color={color}/>
               );
             },
           }}/>
@@ -66,13 +66,17 @@ export default function App({ navigation }) {
                 <Entypo name="shop" size={24} color={color} />
               );
             },
-            headerRight: () => (
-              <IconButton
-                icon="cart"
-                size={30}
-                onPress={() => console.log("Pressed")}
-              />
-            )
+          }}/>
+
+        <Tab.Screen name="Cart"
+          component={Cart}
+          options={{
+            title: 'Cart',
+            tabBarIcon: ({size,focused,color}) => {
+              return (                
+                <Entypo name="shopping-cart" size={24} color={color} />
+              );
+            },
           }}/>
         
         <Tab.Screen name="Profile"

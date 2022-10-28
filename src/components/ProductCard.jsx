@@ -23,7 +23,7 @@ export default function ProductCard({image, name, price, category, description})
               onPress={() => {if(count > 1) setCount(count -1)}}
             >
               <Text style={styles.lessMore}>-</Text>
-            </TouchableOpacity>
+            </TouchableOpacity >
             <Text style={styles.count}>{count}</Text>
             <TouchableOpacity
               style={styles.btn}
@@ -102,9 +102,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     marginLeft: 5,
     marginRight: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+
   },
   lessMore: {
-    color: 'white'
+    color: 'white',
+    fontSize:18,
   },
   price:{
     fontWeight: 'bold',
