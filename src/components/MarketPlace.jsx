@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, FlatList, ActivityIndicator } from "react-native";
+import { StyleSheet, View, FlatList, ActivityIndicator, } from "react-native";
 import axios from "axios";
 import ProductCard from "./ProductCard";
+import { TextInput } from "react-native-paper";
 
 export default function MarketPlace() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // axios.get(`http://192.168.0.77:3001/productos`)
+  
   const getProducts = (setProducts, setLoading) => {
-    axios.get(`https://fakestoreapi.com/products`)
+    //axios.get(`https://fakestoreapi.com/products`)
+     axios.get(`http://192.168.100.47:3001/productos`)
       .then(resp => setProducts(resp.data))
       .catch(error => console.error(error))
       .finally(() => setLoading(false));
@@ -21,6 +23,9 @@ export default function MarketPlace() {
 
   return (
     <View style={styles.container}>
+      <TextInput
+      style={styles.input}
+      >Search...</TextInput>
       {
         loading ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
         : (
@@ -30,9 +35,9 @@ export default function MarketPlace() {
               renderItem={({ item }) => (
                 <ProductCard
                   image={item.image}
-                  name={item.title}
+                  //name={item.title}
                   category={item.category}
-                  // name={item.name}
+                  name={item.name}
                   price={item.price}
                   description={item.description}
                 />
@@ -61,7 +66,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
+  input: {
+    height: 25,
+    margin: 12,
+    borderWidth: .51,
+    padding: 4,
+    borderRadius: 10,
+  },
 })
 
 
