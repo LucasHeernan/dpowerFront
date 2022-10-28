@@ -1,9 +1,14 @@
 import React from "react";
-
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
 import { View, Text, Image, StyleSheet,ScrollView, Button  } from 'react-native';
+import { Entypo } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 
-function Post({fullName, id, forksCount, stargazersCount, reviewCount, avatar}) {
+function Post({fullName, id, forksCount, stargazersCount, reviewCount, avatar, description}) {
     return (
        <ScrollView >
 		
@@ -22,33 +27,34 @@ function Post({fullName, id, forksCount, stargazersCount, reviewCount, avatar}) 
                                         
                     <View>
                     <View style={styles.container}>
-                      <Text style={styles.subtitle}>♡</Text>
+                    <MaterialIcons name="favorite" size={28} color="#C7D31E" />
                       <Text style={styles.numbers}>{forksCount}</Text>
                       
                       </View> 
                   
                     <View style={styles.container}>
-                    <Text style={styles.subtitle}>⚡</Text>
+                    <Entypo name="thunder-cloud" size={28} color="#C7D31E" />
                     <Text style={styles.numbers}>{stargazersCount}</Text>
-                    
                     </View> 
                     
                     <View style={styles.container}>
-                    <Text style={styles.subtitle}>💬</Text>
+                    <FontAwesome name="commenting" size={28} color="#C7D31E" />
                     <Text style={styles.numbers}>{reviewCount}</Text>
                     
-                    </View> 
+                    </View>
                     
 
                     <View style={styles.container}>
-                    <Text style={styles.subtitle}>🔄</Text>
+                    <Fontisto name="share" size={28} color="#C7D31E" />
                     </View>
                      </View> 
+
+                     
                     </View> 
+                    <Text style={styles.coments}>coments: {description}</Text>
 
-
-               
-            </View>
+                    
+                    </View>
             </View> 
           
            
@@ -61,13 +67,13 @@ function Post({fullName, id, forksCount, stargazersCount, reviewCount, avatar}) 
 
 const styles = StyleSheet.create({
   bg:{
-  backgroundColor: "#7D7D7D",
+  backgroundColor: "#4d4d4d",
   },
 	contain:{
 		alignItems: "center",
 		justifyContent: 'center',
         flexDirection: 'row', 
-        margin: 30,
+        margin: 10,
         
 	},
   posts:{
@@ -78,9 +84,13 @@ const styles = StyleSheet.create({
   },
   container:{
     fontSize: 24,
+    marginBottom: 12,
+    marginTop: 12,
     margin: 5,
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'space-between',
+    
+    
   },
   tinyLogo: {
         width: 280,
@@ -90,20 +100,31 @@ const styles = StyleSheet.create({
       },
   title: {
         fontWeight: 'bold',
-        fontSize: 24,
-        marginBottom: -25,
-        color: '#C7D31E',
+        fontSize: 20,
+        
+        marginLeft: -69,
+        color: '#F5F5F5',
     },
   numbers:{
         textDecorationLine: 'underline',
-        color: 'blue',
-        fontSize: 16,
+        color: '#F5F5F5',
+        fontSize: 14,
     },
   subtitle:{
       justifyContent: 'flex-start',
       fontSize: 24,
+    },
+    coments: {
+      width: 290,
+      fontSize: 24,
+      color: '#F5F5F5',
+      marginBottom: 60,
+      marginLeft: -40,
+      fontSize:18,
+      
     }
 });
     
  
 export default Post;
+

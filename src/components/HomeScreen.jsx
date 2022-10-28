@@ -22,6 +22,7 @@ function HomeScreen() {
          stargazersCount={p.stargazersCount}
          reviewCount={p.reviewCount}
          avatar={p.avatar}
+         description={p.description}
          />
         </View>
         )}
