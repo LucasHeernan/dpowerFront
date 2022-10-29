@@ -14,10 +14,10 @@ function HomeScreen() {
   return (
     <View>
       <View style={styles.inputview}>
-    <TextInput
+    {/* <TextInput
       style={styles.input}
       >Search...
-    </TextInput>
+    </TextInput> */}
     </View>
     <ScrollView>
       
