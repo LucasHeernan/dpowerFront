@@ -11,7 +11,7 @@ export default function MarketPlace() {
   
   const getProducts = (setProducts, setLoading) => {
     //axios.get(`https://fakestoreapi.com/products`)
-     axios.get(`http://192.168.100.47:3001/productos`)
+     axios.get(`http://192.168.1.34:3001/productos`)
       .then(resp => setProducts(resp.data))
       .catch(error => console.error(error))
       .finally(() => setLoading(false));
