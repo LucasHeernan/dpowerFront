@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { useDispatch, /* useSelector */ } from 'react-redux';
+import { testAlert } from '../redux/actions';
 
 export default function ProductCard({image, name, price, category, description}) {
 
+  const dispatch = useDispatch();
+  // const { alert } = useSelector(store => store);
   const [count, setCount] = useState(1);
 
   return (
@@ -40,7 +44,10 @@ export default function ProductCard({image, name, price, category, description})
         >
           {description}
         </Text>
-        <TouchableOpacity style={styles.cart}>
+        <TouchableOpacity
+          onPress={() => dispatch(testAlert())}
+          style={styles.cart}
+        >
           <Text style={styles.addCart}>
             Add To Cart
           </Text>
