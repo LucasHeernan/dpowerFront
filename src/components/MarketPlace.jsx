@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, FlatList, ActivityIndicator, } from "react-native";
+import { StyleSheet, View, FlatList, ActivityIndicator, TouchableOpacity, Text } from "react-native";
 import axios from "axios";
 import ProductCard from "./ProductCard";
 import { TextInput } from "react-native-paper";
+import { useNavigation } from '@react-navigation/native';
+import { Entypo } from '@expo/vector-icons';
 
 export default function MarketPlace() {
   const [products, setProducts] = useState([]);
@@ -10,8 +12,8 @@ export default function MarketPlace() {
 
   
   const getProducts = (setProducts, setLoading) => {
-    //axios.get(`https://fakestoreapi.com/products`)
-     axios.get(`http://192.168.100.47:3001/productos`)
+    axios.get(`https://fakestoreapi.com/products`)
+     //axios.get(`http://192.168.100.47:3001/productos`)
       .then(resp => setProducts(resp.data))
       .catch(error => console.error(error))
       .finally(() => setLoading(false));
@@ -21,11 +23,23 @@ export default function MarketPlace() {
     getProducts(setProducts, setLoading)
   }, []);
 
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <TextInput
-      style={styles.input}
-      >Search...</TextInput>
+       <View style={styles.header}>
+        <TextInput
+        style={styles.input}
+        >Search...</TextInput>
+       
+        <TouchableOpacity
+        onPress={() => navigation.navigate("Cart") }
+        style={styles.btncart}
+        >
+          <Entypo name="shopping-cart" size={30} color={"#4D4D4D"} />
+        </TouchableOpacity>
+      </View>
+
       {
         loading ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
         : (
@@ -35,9 +49,9 @@ export default function MarketPlace() {
               renderItem={({ item }) => (
                 <ProductCard
                   image={item.image}
-                  //name={item.title}
+                  name={item.title}
                   category={item.category}
-                  name={item.name}
+                  //name={item.name}
                   price={item.price}
                   description={item.description}
                 />
@@ -67,13 +81,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  header:{
+    flexDirection: 'row',
+    margin: 10,
+    justifyContent: 'space-between',
+  },
   input: {
     height: 25,
-    margin: 12,
-    borderWidth: .51,
     padding: 4,
     borderRadius: 10,
+    width: 280,
   },
+  btncart:{
+    padding: 8,
+    borderRadius: 100,
+    backgroundColor: '#C7D31E',
+    marginRight: 15,
+  }
+  
 })
 
 
