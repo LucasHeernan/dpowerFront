@@ -13,21 +13,20 @@ function Profile(props) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.titleBar}>
+        {/* <View style={styles.titleBar}>
             <MaterialIcons name="more-vert" size={24} color="#52575D"></MaterialIcons>
-        </View>
+        </View> */}
 
         <View style={{alignSelf: "center"}}>
           <View style={styles.profileImage}>
             <Image source={{uri: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"}} style={styles.image} resizeMode="center"></Image>
           </View>
-          <View style={styles.dm}>
+          {/* <View style={styles.dm}>
             <MaterialIcons name="chat" size={18} color="#DFD8C8" />
-          </View>
-          <View style={styles.active}></View>
-          <View style={styles.add}>
+          </View> */}
+          {/* <View style={styles.add}>
             <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2}}></Ionicons>
-          </View>
+          </View> */}
         </View>
 
         <View style={styles.infoContainer}>
