@@ -8,7 +8,6 @@ import axios from "axios";
 function Profile(props) {
 
   const {name, sport, age, nationality, description, post, powers} = props;
-  const usuario = axios.get("http://localhost:3001/usuarios")
 
   return (
     <SafeAreaView style={styles.container}>
