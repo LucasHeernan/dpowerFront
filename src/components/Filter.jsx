@@ -36,8 +36,9 @@ export default function Filter() {
                 data={categories}
                 setSelected={setCategory}
                 onSelect={() => handlerByCatogory(category)}
-                placeholder='Select Category'
+                placeholder='Category'
                 search={false}
+                inputStyles={styles.test}
             />
             <SelectList
                 data={prices}
@@ -53,6 +54,7 @@ export default function Filter() {
                 onSelect={() => handlerPerName(byName)}
                 placeholder='Order By Name'
                 search={false}
+                inputStyles={styles.test}
             />
         </View>
     )
@@ -61,12 +63,21 @@ export default function Filter() {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        backgroundColor: 'brown',
-        width: '95%'
+        justifyContent: 'space-between',
+        backgroundColor: '#4d4d4d',
+        color:'#F6F5F5',
+        margin: 5,
+        borderRadius: 5,
+        borderColor:'#F6F5F5', 
+
+        
+        
     },
     test: {
-        backgroundColor: 'yellow',
+       fontSize: 12,
+       borderColor:'#F6F5F5',
+       tintColor: '#F6F5F5',
+       color: '#F6F5F5',
     }
 
 })

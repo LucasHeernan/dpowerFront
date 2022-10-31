@@ -40,6 +40,8 @@ export default function MarketPlace({producto}) {
         allProducts.length < 1 ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
         :
           <View style={styles.container}>
+
+              
             <Searchbar
               placeholder="Search"
               style={styles.input}
@@ -48,11 +50,23 @@ export default function MarketPlace({producto}) {
               onSubmitEditing={() => onSubmit(text)}
             />
 
+            <View syles={styles.header}>
+            <TouchableOpacity
+            onPress={() => navigation.navigate("Cart") }
+            style={styles.btncart}
+            >
+              <Entypo name="shopping-cart" size={30} color={"#4D4D4D"} />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={clear}
+            style={styles.clear}>
+              <Text styles={styles.cleartext}> Clear</Text>
+            </TouchableOpacity>
+            </View>
+
             <Filter />
 
-            <TouchableOpacity onPress={clear}>
-              <Text>Clear</Text>
-            </TouchableOpacity>
+            
 
             {
               detail.length > 0 ?
@@ -116,16 +130,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   input: {
-    height: 25,
+    height: 30,
     padding: 4,
     borderRadius: 10,
-    width: 280,
+    width: 290,
+    margin: 8,
+    fontSize: 14,
+    
   },
   btncart:{
     padding: 8,
     borderRadius: 100,
     backgroundColor: '#C7D31E',
     marginRight: 15,
+    alignSelf: 'flex-end',
+    marginTop: -38,
   },
   view: {
     display: "flex", 
@@ -164,4 +183,24 @@ const styles = StyleSheet.create({
     paddingTop: 10
   },
 
+  header:{
+    flexDirection: 'row',
+    alignContent: 'space-around',
+  },
+  clear:{
+    backgroundColor: '#F6F5F5',
+    width: 45,
+    borderRadius: 5,
+    margin: 5,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    
+  },
+  cleartext:{
+    fontSize: 24,
+  }
 })
+
+
+})
+
