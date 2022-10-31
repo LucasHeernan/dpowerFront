@@ -19,6 +19,7 @@
     "expo-status-bar": "~1.4.0",
     "react": "^18.0.0",
     "react-native": "0.69.6",
+    "react-native-numeric-input": "^1.9.1",
     "react-native-paper": "^4.12.5",
     "react-redux": "^8.0.4",
     "redux": "^4.2.0"

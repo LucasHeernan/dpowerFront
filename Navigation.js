@@ -15,10 +15,10 @@ import HomeScreen from './src/components/HomeScreen';
 import MarketPlace from './src/components/MarketPlace';
 import Profile from './src/components/Profile';
 import Cart from './src/components/Cart'
+import ProductDetail from './src/components/ProductDetail';
 
 
 const MarketStackNavigator = createNativeStackNavigator();
-
 
 function MyStack() {
   return (
@@ -27,7 +27,7 @@ function MyStack() {
     >
       <MarketStackNavigator.Screen
       name="MarketPlace"
-      component={MarketPlace}
+      children={({item}) => <MarketPlace producto={item} />}
       options={{
         headerStyle: {backgroundColor: "#4d4d4d"},
         headerTitleStyle: {color: "white"}
@@ -41,7 +41,14 @@ function MyStack() {
         headerTitleStyle: {color: "white"}
       }}
       />
-
+      <MarketStackNavigator.Screen
+      name="Detail"
+      component={ProductDetail}
+      options={{
+        headerStyle: {backgroundColor: "#4d4d4d"},
+        headerTitleStyle: {color: "white"}
+      }}
+      />
     </MarketStackNavigator.Navigator>
 )}
 
@@ -93,17 +100,6 @@ function MyTabs() {
             },
         }}
         />
-  
-        {/* <Tab.Screen name="Cart"
-            component={Cart}
-            options={{
-              title: 'Cart',
-              tabBarIcon: ({size,focused,color}) => {
-                return (                
-                  <Entypo name="shopping-cart" size={24} color={color} />
-                );
-              },
-        }}/> */}
           
         <Tab.Screen name="Profile"
             children={() => <Profile 

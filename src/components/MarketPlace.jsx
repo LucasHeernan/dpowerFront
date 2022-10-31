@@ -7,7 +7,7 @@ import { Headline, TextInput } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 
-export default function MarketPlace() {
+export default function MarketPlace({producto}) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -45,17 +45,17 @@ export default function MarketPlace() {
         loading ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
         : (
             <ScrollView>
-              <View style={{display: "flex", flexWrap: "wrap", flexDirection: "row", justifyContent:"space-between", paddingLeft: 6, paddingRight: 6}}>
+              <View style={styles.view}>
                 {products.map((product) => (
-                  <Pressable key={product.id} style={{width: "47%", backgroundColor: "white", borderRadius: 6, shadowColor: "#000", shadowOffset: {
-	                    width: 0,
-	                    height: 6,
-                    }, shadowOpacity: 0.37, shadowRadius: 7.49, elevation: 12, paddingTop: 3, marginTop: 30, marginBottom: 30, paddingBottom: 20, overflow: "hidden"}}>
-                    <Image source={{uri: product.image}} alt={product.name} style={{width: "100%", height: 240, resizeMode: "contain"}} />
-                    <View style={{paddingLeft: 40, paddingRight: 40, paddingTop: 10}}>
-                      <Headline style={{fontWeight: "bold", fontSize: 19}}>
-                        {product.name}
+                  <Pressable key={product.id} style={styles.product} onPress={() => navigation.navigate("Detail", {
+                    selectedProduct: product,
+                  })}>
+                    <Image source={{uri: product.image}} alt={product.name} style={styles.image} />
+                    <View style={styles.price}>
+                      <Headline style={{fontWeight: "bold"}}>
+                        ${product.price}
                       </Headline>
+                      <Text style={{marginTop: 10}} numberOfLines={3}>{product.name}</Text>
                     </View>
                   </Pressable>
                 ))}
@@ -98,44 +98,42 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: '#C7D31E',
     marginRight: 15,
-  }
-  
+  },
+  view: {
+    display: "flex", 
+    flexWrap: "wrap", 
+    flexDirection: "row", 
+    justifyContent:"space-between", 
+    paddingLeft: 6, 
+    paddingRight: 6
+  },
+  product: {
+    width: "47%", 
+    backgroundColor: "white", 
+    borderRadius: 6, 
+    shadowColor: "#000", 
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    }, 
+    shadowOpacity: 0.37, 
+    shadowRadius: 7.49, 
+    elevation: 12, 
+    paddingTop: 3, 
+    marginTop: 30, 
+    marginBottom: 30, 
+    paddingBottom: 20, 
+    overflow: "hidden"
+  },
+  image: {
+    width: "100%", 
+    height: 240, 
+    resizeMode: "contain"
+  },
+  price: {
+    paddingLeft: 40, 
+    paddingRight: 40, 
+    paddingTop: 10
+  },
+
 })
-
-
-// return (
-  //   <ScrollView >
-  //     <Text style={styles.advice}>listo</Text>
-  //     <Button title="Get Advice"
-  //       onPress={getAdvice} color="green" />
-  //     <View >
-  //         {
-  //           advice && advice.length ?
-  //             advice.map(a =>
-  //               <View style={styles.container} key={a.id}>
-  //                 <Image
-  //                   style={styles.tinyLogo}
-  //                   source={{ uri: a.image }} />
-  //                 <View>
-  //                   <Text style={styles.title}>{a.title}</Text>
-  //                   <Text style={styles.subtitle}>{a.price}</Text>
-  //                 </View>
-  //               </View>
-  //           ) : <Text>No hay info</Text>
-  //         }
-  //     </View>
-  //   </ScrollView>
-  // );
-
-// import React from "react";
-// import { View, Text } from 'react-native';
-
-// function MarketPlace() {
-//     return (
-//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//         <Text>This is the Market!</Text>
-//       </View>
-//     );
-// }
-
-// export default MarketPlace
