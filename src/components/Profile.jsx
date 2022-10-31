@@ -3,64 +3,64 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollText, Button, ScrollView, Image, SafeAreaView } from 'react-native';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Title, Paragraph, Headline, Caption} from "react-native-paper";
+import axios from "axios";
 
+function Profile(props) {
 
-function Profile() {
+  const {name, sport, age, nationality, description, post, powers, likes, followers, images, avatar} = props;
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.titleBar}>
+        {/* <View style={styles.titleBar}>
             <MaterialIcons name="more-vert" size={24} color="#52575D"></MaterialIcons>
-        </View>
+        </View> */}
 
         <View style={{alignSelf: "center"}}>
           <View style={styles.profileImage}>
-            <Image source={{uri: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"}} style={styles.image} resizeMode="center"></Image>
+            <Image source={{uri: avatar}} style={styles.image} resizeMode="center"></Image>
           </View>
-          <View style={styles.dm}>
+          {/* <View style={styles.dm}>
             <MaterialIcons name="chat" size={18} color="#DFD8C8" />
-          </View>
-          <View style={styles.active}></View>
-          <View style={styles.add}>
+          </View> */}
+          {/* <View style={styles.add}>
             <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2}}></Ionicons>
-          </View>
+          </View> */}
         </View>
 
         <View style={styles.infoContainer}>
-          <Text style={[styles.text, { fontWeight: "400", fontSize: 36 }]}>Julian</Text>
-          <Text style={[styles.text, { color: "AEB5BC", fontSize: 14}]}>Deportista</Text>
+          <Text style={[styles.text, { fontWeight: "400", fontSize: 36 }]}>{name}</Text>
+          <Text style={[styles.text, styles.subText]}>{age} Años</Text>
+          <Text style={[styles.text, styles.subText]}>{nationality}</Text>
+          <Text style={[styles.text, { color: "AEB5BC", fontSize: 14}]}>{sport}</Text>
         </View>
 
         <View style={styles.statsContainer}>
           <View style={styles.statsBox}>
-            <Text style={[styles.text, { fontSize: 24 }]}>3</Text>
+            <Text style={[styles.text, { fontSize: 24 }]}>{images.length}</Text>
             <Text style={[styles.text, styles.subText]}>Posts</Text>
           </View>
           <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1}]}>
-            <Text style={[styles.text, { fontSize: 24 }]}>24</Text>
+            <Text style={[styles.text, { fontSize: 24 }]}>{likes}</Text>
             <Text style={[styles.text, styles.subText]}>Likes</Text>
           </View>
           <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1}]}>
-            <Text style={[styles.text, { fontSize: 24 }]}>8</Text>
+            <Text style={[styles.text, { fontSize: 24 }]}>{powers}</Text>
             <Text style={[styles.text, styles.subText]}>Powers</Text>
           </View>
           <View style={styles.statsBox}>
-            <Text style={[styles.text, { fontSize: 24 }]}>13</Text>
+            <Text style={[styles.text, { fontSize: 24 }]}>{followers}</Text>
             <Text style={[styles.text, styles.subText]}>Seguidores</Text>
           </View>
         </View>
 
         <View style={{ marginTop: 32}}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={styles.mediaImageContainer}>
-              <Image source={{uri: "https://www.rehagirona.com/wp-content/uploads/2021/07/atletismo_paralimpico_des.jpg"}} style={styles.image} resizeMode="cover"></Image>
+            {images.map(imagen => 
+              <View style={styles.mediaImageContainer}>
+              <Image source={{uri: imagen}} style={styles.image} resizeMode="cover"></Image>
             </View>
-            <View style={styles.mediaImageContainer}>
-              <Image source={{uri: "http://www.lima2019.pe/sites/default/files/2019-07/para-atletismo-banner.jpg"}} style={styles.image} resizeMode="cover"></Image>
-            </View>
-            <View style={styles.mediaImageContainer}>
-              <Image source={{uri: "https://www.argentina.gob.ar/sites/default/files/2019-08-24_para_athletics_gh_lima2019_1927.jpg"}} style={styles.image} resizeMode="cover"></Image>
-            </View>
+            )}
           </ScrollView>
         </View>
 
@@ -72,7 +72,7 @@ function Profile() {
             <View style={styles.descripcionIndicador}></View>
             <View style={{width: 250}}>
             <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-            Hola mi nombre es Julian y soy deportista, me gusta mucho el basquet y la natacion
+            {description}
             </Text>
             </View>
           </View>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: undefined,
-    height: undefined
+    height: undefined,
   },
   titleBar: {
     flexDirection: "row",
