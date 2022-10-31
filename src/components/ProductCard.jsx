@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function ProductCard({image, name, price, category, description}) {
-  
+
   const [count, setCount] = useState(1);
 
   return (
@@ -12,37 +12,12 @@ export default function ProductCard({image, name, price, category, description})
         style={styles.image}
       />
       <View style={styles.text}>
-
-        <Text style={styles.type}>{category}</Text>
         <Text style={styles.name}>{name}</Text>
 
         <View style={styles.containerPrice}>
-          <View style={styles.state}>
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => { count > 1 ? setCount(count - 1) : null}}
-            >
-              <Text style={styles.lessMore}>-</Text>
-            </TouchableOpacity >
-            <Text style={styles.count}>{count}</Text>
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => setCount(count + 1)}
-            >
-              <Text style={styles.lessMore}>+</Text>
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.price}>${price * count}</Text>
+          <Text style={styles.price}>${price}</Text>
         </View>
-        <Text
-          style={styles.description}
-          numberOfLines={2}
-        >
-          {description}
-        </Text>
-        <TouchableOpacity
-          style={styles.cart}
-        >
+        <TouchableOpacity style={styles.cart}>
           <Text style={styles.addCart}>
             Add To Cart
           </Text>
@@ -55,13 +30,14 @@ export default function ProductCard({image, name, price, category, description})
 const styles = StyleSheet.create({
   container: {
     width: '96%',
-    height: 560,
-    borderRadius: 30,
+    height: 400,
+    borderRadius: 40,
     backgroundColor: 'white',
     alignItems: 'center',
     alignSelf: 'center',
     padding: 5,
-    marginTop: 30
+    marginTop: 30,
+    overflow: "hidden"
   },
   image: {
     width: '95%',
@@ -75,13 +51,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10
   },
-  count: {
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  type: {
-    fontSize: 15,
-  },
   name: {
     fontWeight: '600',
     fontSize: 20,
@@ -90,34 +59,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: "center",
     marginVertical: 5
-  },
-  state: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  btn: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: 'black',
-    marginLeft: 5,
-    marginRight: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-
-
-  },
-  lessMore: {
-    color: 'white',
-    fontSize:18,
   },
   price:{
     fontWeight: 'bold',
     fontSize: 25,
-  },
-  description: {
-    fontSize: 15,
+    alignItems: "center"
   },
   cart: {
     borderRadius: 10,

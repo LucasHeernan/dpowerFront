@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FlatList, ActivityIndicator, TouchableOpacity, Text } from "react-native";
+
 import ProductCard from "./ProductCard";
 import Filter from "./Filter";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +10,18 @@ export default function MarketPlace() {
   const [text, setText] = useState('')
   const dispatch = useDispatch();
   const { allProducts, filterProducts, categories, detail } = useSelector(store => store);
+
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, FlatList, ActivityIndicator, TouchableOpacity, Text, ScrollView, Image } from "react-native";
+import { Pressable } from "react-native";
+import axios from "axios";
+import ProductCard from "./ProductCard";
+import { Headline, TextInput } from "react-native-paper";
+import { useNavigation } from '@react-navigation/native';
+import { Entypo } from '@expo/vector-icons';
+
+export default function MarketPlace({producto}) {
+
 
   useEffect(() => {
     !categories.length && dispatch(getCategories());
@@ -24,6 +35,8 @@ export default function MarketPlace() {
   function clear() {
     dispatch(clearMarket());
   }
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -101,7 +114,7 @@ export default function MarketPlace() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gray',
+    backgroundColor: '#4d4d4d'
   },
   loading: {
     position: 'absolute',
@@ -112,12 +125,57 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  header:{
+    flexDirection: 'row',
+    margin: 10,
+    justifyContent: 'space-between',
+  },
   input: {
     height: 25,
-    margin: 8,
-    alignItems: "center",
-    borderWidth: .51,
     padding: 4,
     borderRadius: 10,
+    width: 280,
+  },
+  btncart:{
+    padding: 8,
+    borderRadius: 100,
+    backgroundColor: '#C7D31E',
+    marginRight: 15,
+  },
+  view: {
+    display: "flex", 
+    flexWrap: "wrap", 
+    flexDirection: "row", 
+    justifyContent:"space-between", 
+    paddingLeft: 6, 
+    paddingRight: 6
+  },
+  product: {
+    width: "47%", 
+    backgroundColor: "white", 
+    borderRadius: 6, 
+    shadowColor: "#000", 
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    }, 
+    shadowOpacity: 0.37, 
+    shadowRadius: 7.49, 
+    elevation: 12, 
+    paddingTop: 3, 
+    marginTop: 30, 
+    marginBottom: 30, 
+    paddingBottom: 20, 
+    overflow: "hidden"
+  },
+  image: {
+    width: "100%", 
+    height: 240, 
+    resizeMode: "contain"
+  },
+  price: {
+    paddingLeft: 40, 
+    paddingRight: 40, 
+    paddingTop: 10
   },
 })
