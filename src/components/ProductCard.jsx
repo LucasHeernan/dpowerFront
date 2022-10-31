@@ -12,49 +12,25 @@ export default function ProductCard({image, name, price, category, description, 
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-     
-      
-      <Image
-        source={{ uri: image }}
-        style={styles.image}
-      />
-      
-      <View style={styles.text}>
-        <Text style={styles.name}>{name}</Text>
-
-        <View style={styles.containerPrice}>
-          <Text style={styles.price}>${price}</Text>
-        </View>
-
-        <TouchableOpacity style={styles.cart}>
-
-          <Text style={styles.addCart}>
-            Add To Cart
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+          <ScrollView>
+            <View style={styles.view}>
+                <Pressable key={id} style={styles.product} onPress={() => navigation.navigate("Detail", {
+                  selectedProduct: product,
+                })}>
+                  <Image source={{uri: image}} alt={name} style={styles.image} />
+                  <View style={styles.price}>
+                     <Headline style={{fontWeight: "bold"}}>
+                       ${price}
+                     </Headline>
+                     <Text style={{marginTop: 10}} numberOfLines={3}>{name}</Text>
+                  </View>
+                 </Pressable>
+            </View>
+          </ScrollView>
   );
 }
 
-            // <ScrollView>
-            //   <View style={styles.view}>
-            //     {products.map((product) => (
-            //       <Pressable key={product.id} style={styles.product} onPress={() => navigation.navigate("Detail", {
-            //         selectedProduct: product,
-            //       })}>
-            //         <Image source={{uri: product.image}} alt={product.name} style={styles.image} />
-            //         <View style={styles.price}>
-            //           <Headline style={{fontWeight: "bold"}}>
-            //             ${product.price}
-            //           </Headline>
-            //           <Text style={{marginTop: 10}} numberOfLines={3}>{product.name}</Text>
-            //         </View>
-            //       </Pressable>
-            //     ))}
-            //   </View>
-            // </ScrollView>
+            
 
 const styles = StyleSheet.create({
   container: {
@@ -69,9 +45,9 @@ const styles = StyleSheet.create({
     overflow: "hidden"
   },
   image: {
-    width: '95%',
-    height: '60%',
-    resizeMode: 'contain',
+    width: "100%", 
+    height: 240, 
+    resizeMode: "contain"
   },
   text: {
     marginTop: 9,
@@ -109,5 +85,36 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 19,
     fontWeight: 'bold'
+  },
+  view: {
+    display: "flex", 
+    flexWrap: "wrap", 
+    flexDirection: "row", 
+    justifyContent:"space-between", 
+    paddingLeft: 6, 
+    paddingRight: 6
+  },
+  product: {
+    width: "47%", 
+    backgroundColor: "white", 
+    borderRadius: 6, 
+    shadowColor: "#000", 
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    }, 
+    shadowOpacity: 0.37, 
+    shadowRadius: 7.49, 
+    elevation: 12, 
+    paddingTop: 3, 
+    marginTop: 30, 
+    marginBottom: 30, 
+    paddingBottom: 20, 
+    overflow: "hidden"
+  },
+  price: {
+    paddingLeft: 40, 
+    paddingRight: 40, 
+    paddingTop: 10
   }
 });

@@ -5,7 +5,7 @@ FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET } from '../actionTypes';
 export function getAllProducts() {
     return async (dispatch) => {
         try {
-            const data = await axios(`http://192.168.0.77:3001/productos`).then(e => e.data);
+            const data = await axios(`http://192.168.1.34:3001/productos`).then(e => e.data);
             return dispatch({
                 type: GET_ALL_PRODUCTS,
                 payload: data
