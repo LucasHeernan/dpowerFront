@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
-import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { Text, View, Image, StyleSheet, Button, TouchableOpacity, ScrollView, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Headline } from 'react-native-paper';
+import axios from 'axios';
+import { getProductById } from '../redux/actions/index';
+import { useDispatch } from 'react-redux';
 
 
 
-
-
-export default function ProductCard({image, name, price, category, description, id}) {
-
+export default function ProductCard({producto}) {
+  
+  console.log(producto)
   const [count, setCount] = useState(1);
   const navigation = useNavigation();
+  const dispatch = useDispatch()
 
   return (
           <ScrollView>
             <View style={styles.view}>
-                <Pressable key={id} style={styles.product} onPress={() => navigation.navigate("Detail", {
-                  selectedProduct: product,
-                })}>
-                  <Image source={{uri: image}} alt={name} style={styles.image} />
+                <Pressable key={id} style={styles.product} onPress={() => {
+                  dispatch(getProductById(producto.id))
+                  navigation.navigate("Detail")
+                  }}>
+                  <Image source={{uri: producto.image}} alt={producto.name} style={styles.image} />
                   <View style={styles.price}>
                      <Headline style={{fontWeight: "bold"}}>
-                       ${price}
+                       ${producto.price}
                      </Headline>
-                     <Text style={{marginTop: 10}} numberOfLines={3}>{name}</Text>
+                     <Text style={{marginTop: 10}} numberOfLines={3}>{producto.name}</Text>
                   </View>
                  </Pressable>
             </View>

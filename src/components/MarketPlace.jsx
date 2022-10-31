@@ -9,8 +9,9 @@ import axios from "axios";
 import { Headline, TextInput } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
+import ProductCard from "./ProductCard"
 
-export default function MarketPlace() {
+export default function MarketPlace({producto}) {
 
   const [text, setText] = useState('')
   const dispatch = useDispatch();
@@ -60,11 +61,7 @@ export default function MarketPlace() {
                 keyExtractor={({ id }) => id.toString()}
                 renderItem={({ item }) => (
                   <ProductCard
-                    image={item.image}
-                    name={item.name}
-                    category={item.category}
-                    price={item.price}
-                    description={item.description}
+                    producto={item}
                   />
                 )}
               /> :
@@ -76,11 +73,7 @@ export default function MarketPlace() {
                     keyExtractor={({ id }) => id.toString()}
                     renderItem={({ item }) => (
                       <ProductCard
-                        image={item.image}
-                        name={item.name}
-                        category={item.category}
-                        price={item.price}
-                        description={item.description}
+                        producto={item}
                       />
                     )}
                   /> :
@@ -89,11 +82,7 @@ export default function MarketPlace() {
                     keyExtractor={({ id }) => id.toString()}
                     renderItem={({ item }) => (
                       <ProductCard
-                        image={item.image}
-                        name={item.name}
-                        category={item.category}
-                        price={item.price}
-                        description={item.description}
+                        producto={item}
                       />
                     )}
                   />

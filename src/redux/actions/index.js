@@ -39,7 +39,7 @@ export function getProductById(id) {
 export function getCategories() {
     return async (dispatch) => {
         try {
-            const data = await axios(`http://192.168.100.47:3001/productos`).then(e => e.data);
+            const data = await axios(`http://192.168.1.34:3001/productos`).then(e => e.data);
 
 
             return dispatch({
