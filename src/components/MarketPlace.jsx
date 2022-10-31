@@ -4,25 +4,19 @@ import Filter from "./Filter";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts, getCategories, getProductByName, clearMarket } from "../redux/actions";
 import { Searchbar } from 'react-native-paper';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, FlatList, ActivityIndicator, TouchableOpacity, Text, ScrollView, Image } from "react-native";
+import { Pressable } from "react-native";
+import axios from "axios";
+import { Headline, TextInput } from "react-native-paper";
+import { useNavigation } from '@react-navigation/native';
+import { Entypo } from '@expo/vector-icons';
 
 export default function MarketPlace() {
 
   const [text, setText] = useState('')
   const dispatch = useDispatch();
   const { allProducts, filterProducts, categories, detail } = useSelector(store => store);
-
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, FlatList, ActivityIndicator, TouchableOpacity, Text, ScrollView, Image } from "react-native";
-import { Pressable } from "react-native";
-import axios from "axios";
-import ProductCard from "./ProductCard";
-import { Headline, TextInput } from "react-native-paper";
-import { useNavigation } from '@react-navigation/native';
-import { Entypo } from '@expo/vector-icons';
-
-export default function MarketPlace({producto}) {
-
-
 
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React from 'react';
- import { Button, TextInput, View } from 'react-native';
+ import { Button, TextInput, View, Text } from 'react-native';
  import { Formik } from 'formik';
  import axios from 'axios';
 
@@ -29,36 +29,44 @@ import React from 'react';
    >
      {({ handleChange, handleBlur, handleSubmit, values }) => (
        <View>
+        <Text>Name</Text>
          <TextInput
+         
            onChangeText={handleChange('name')}
            onBlur={handleBlur('name')}
            value={values.name}
          />
+          <Text>Category</Text>
          <TextInput
            onChangeText={handleChange('category')}
            onBlur={handleBlur('category')}
            value={values.category}
          />
+         <Text>Price</Text>
          <TextInput
            onChangeText={handleChange('price')}
            onBlur={handleBlur('price')}
            value={values.price}
          />
+         <Text>Stock</Text>
          <TextInput
            onChangeText={handleChange('stock')}
            onBlur={handleBlur('stock')}
            value={values.stock}
          />
+         <Text>Published</Text>
          <TextInput
            onChangeText={handleChange('published')}
            onBlur={handleBlur('published')}
            value={values.published}
          />
+         <Text>Image URL</Text>
          <TextInput
            onChangeText={handleChange('image')}
            onBlur={handleBlur('image')}
            value={values.image}
          />
+         <Text>Description</Text>
          <TextInput
            onChangeText={handleChange('description')}
            onBlur={handleBlur('description')}
