@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { TextInput } from "react-native-paper";
 import Post from '../components/Post'
 import perfiles from "./perfiles";
@@ -13,17 +13,22 @@ function HomeScreen() {
  
   return (
     <View>
-      <View style={styles.inputview}>
-    {/* <TextInput
+      {/* <View style={styles.inputview}>
+    <TextInput
       style={styles.input}
       >Search...
-    </TextInput> */}
-    </View>
+    </TextInput>
+    </View> */}
     <ScrollView>
       
 
       {perfiles?.map(p => 
+
+     
       <View key={p.id}>
+        <TouchableOpacity 
+        onPress={() => alert(p.id + p.description) }
+        >
          <Post 
          fullName={p.fullName}
          forksCount={p.forksCount}
@@ -31,7 +36,8 @@ function HomeScreen() {
          reviewCount={p.reviewCount}
          avatar={p.avatar}
          description={p.description}
-         />
+         /> 
+         </TouchableOpacity>
         </View>
         )}
    

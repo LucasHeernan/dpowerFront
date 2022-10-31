@@ -45,40 +45,73 @@ export default function MarketPlace({producto}) {
 
   return (
     <View style={styles.container}>
-       <View style={styles.header}>
-        <TextInput
-        style={styles.input}
-        >Search...</TextInput>
-       
-        <TouchableOpacity
-        onPress={() => navigation.navigate("Cart") }
-        style={styles.btncart}
-        >
-          <Entypo name="shopping-cart" size={30} color={"#4D4D4D"} />
-        </TouchableOpacity>
-      </View>
-
       {
-        loading ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
-        : (
-            <ScrollView>
-              <View style={styles.view}>
-                {products.map((product) => (
-                  <Pressable key={product.id} style={styles.product} onPress={() => navigation.navigate("Detail", {
-                    selectedProduct: product,
-                  })}>
-                    <Image source={{uri: product.image}} alt={product.name} style={styles.image} />
-                    <View style={styles.price}>
-                      <Headline style={{fontWeight: "bold"}}>
-                        ${product.price}
-                      </Headline>
-                      <Text style={{marginTop: 10}} numberOfLines={3}>{product.name}</Text>
-                    </View>
-                  </Pressable>
-                ))}
+
+        allProducts.length < 1 ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
+        :
+          <View style={styles.container}>
+            <Searchbar
+              placeholder="Search"
+              style={styles.input}
+              onChangeText={setText}
+              value={text}
+              onSubmitEditing={() => onSubmit(text)}
+            />
+
+            <Filter />
+
+            <TouchableOpacity onPress={clear}>
+              <Text>Clear</Text>
+            </TouchableOpacity>
+
+            {
+              detail.length > 0 ?
+              <FlatList
+                data={detail}
+                keyExtractor={({ id }) => id.toString()}
+                renderItem={({ item }) => (
+                  <ProductCard
+                    image={item.image}
+                    name={item.name}
+                    category={item.category}
+                    price={item.price}
+                    description={item.description}
+                  />
+                )}
+              /> :
+              <View style={styles.container}>
+                {
+                  filterProducts.length > 0 ?
+                  <FlatList
+                    data={filterProducts}
+                    keyExtractor={({ id }) => id.toString()}
+                    renderItem={({ item }) => (
+                      <ProductCard
+                        image={item.image}
+                        name={item.name}
+                        category={item.category}
+                        price={item.price}
+                        description={item.description}
+                      />
+                    )}
+                  /> :
+                  <FlatList
+                    data={allProducts}
+                    keyExtractor={({ id }) => id.toString()}
+                    renderItem={({ item }) => (
+                      <ProductCard
+                        image={item.image}
+                        name={item.name}
+                        category={item.category}
+                        price={item.price}
+                        description={item.description}
+                      />
+                    )}
+                  />
+                }
               </View>
-            </ScrollView>
-          )
+            }
+          </View>
       }
     </View>
   );

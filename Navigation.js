@@ -3,8 +3,6 @@ import { Text, View, StyleSheet, Image, Button } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -15,7 +13,10 @@ import HomeScreen from './src/components/HomeScreen';
 import MarketPlace from './src/components/MarketPlace';
 import Profile from './src/components/Profile';
 import Cart from './src/components/Cart'
+import ProductCard from './src/components/ProductCard';
+import UploadPost from './src/components/UploadPost'
 import ProductDetail from './src/components/ProductDetail';
+
 
 
 const MarketStackNavigator = createNativeStackNavigator();
@@ -49,6 +50,14 @@ function MyStack() {
         headerTitleStyle: {color: "white"}
       }}
       />
+
+
+      <MarketStackNavigator.Screen
+      name="Detail"
+      component={ProductCard}
+      />
+
+
     </MarketStackNavigator.Navigator>
 )}
 
@@ -100,6 +109,19 @@ function MyTabs() {
             },
         }}
         />
+
+  
+        <Tab.Screen name="Upload"
+            component={UploadPost}
+            options={{
+              title: 'UploadPost',
+              tabBarIcon: ({size,focused,color}) => {
+                return (                
+                  <Entypo name="squared-plus" size={24} color={color} />
+                );
+              },
+        }}/>
+
           
         <Tab.Screen name="Profile"
             children={() => <Profile 
