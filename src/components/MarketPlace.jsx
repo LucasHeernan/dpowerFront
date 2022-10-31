@@ -1,62 +1,107 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, FlatList, ActivityIndicator, } from "react-native";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, FlatList, ActivityIndicator, TouchableOpacity, Text } from "react-native";
 import ProductCard from "./ProductCard";
-import { TextInput } from "react-native-paper";
+import Filter from "./Filter";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts, getCategories, getProductByName, clearMarket } from "../redux/actions";
+import { Searchbar } from 'react-native-paper';
 
 export default function MarketPlace() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  
-  const getProducts = (setProducts, setLoading) => {
-    // axios.get(`http://192.168.0.77:3001/productos`)
-    axios.get(`https://fakestoreapi.com/products`)
-      .then(resp => setProducts(resp.data))
-      .catch(error => console.error(error))
-      .finally(() => setLoading(false));
-  };
+  const [text, setText] = useState('')
+  const dispatch = useDispatch();
+  const { allProducts, filterProducts, categories, detail } = useSelector(store => store);
 
   useEffect(() => {
-    getProducts(setProducts, setLoading)
-  }, []);
+    !categories.length && dispatch(getCategories());
+    dispatch(getAllProducts());
+  }, [dispatch, filterProducts])
+
+  function onSubmit(e) {
+    dispatch(getProductByName(e));
+  }
+
+  function clear() {
+    dispatch(clearMarket());
+  }
 
   return (
     <View style={styles.container}>
-      <TextInput
-      style={styles.input}
-      >Search...</TextInput>
       {
-        loading ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
-        : (
-            <FlatList
-              data={products}
-              keyExtractor={({ id }) => id.toString()}
-              renderItem={({ item }) => (
-                <ProductCard
-                  image={item.image}
-                  name={item.title}
-                  category={item.category}
-                  // name={item.name}
-                  price={item.price}
-                  description={item.description}
-                />
-              )}
-              // contentContainerStyle={{
-              //   paddingHorizontal: 15,
-              // }}
+        allProducts.length < 1 ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
+        :
+          <View style={styles.container}>
+            <Searchbar
+              placeholder="Search"
+              style={styles.input}
+              onChangeText={setText}
+              value={text}
+              onSubmitEditing={() => onSubmit(text)}
             />
-          )
+
+            <Filter />
+
+            <TouchableOpacity onPress={clear}>
+              <Text>Clear</Text>
+            </TouchableOpacity>
+
+            {
+              detail.length > 0 ?
+              <FlatList
+                data={detail}
+                keyExtractor={({ id }) => id.toString()}
+                renderItem={({ item }) => (
+                  <ProductCard
+                    image={item.image}
+                    name={item.name}
+                    category={item.category}
+                    price={item.price}
+                    description={item.description}
+                  />
+                )}
+              /> :
+              <View style={styles.container}>
+                {
+                  filterProducts.length > 0 ?
+                  <FlatList
+                    data={filterProducts}
+                    keyExtractor={({ id }) => id.toString()}
+                    renderItem={({ item }) => (
+                      <ProductCard
+                        image={item.image}
+                        name={item.name}
+                        category={item.category}
+                        price={item.price}
+                        description={item.description}
+                      />
+                    )}
+                  /> :
+                  <FlatList
+                    data={allProducts}
+                    keyExtractor={({ id }) => id.toString()}
+                    renderItem={({ item }) => (
+                      <ProductCard
+                        image={item.image}
+                        name={item.name}
+                        category={item.category}
+                        price={item.price}
+                        description={item.description}
+                      />
+                    )}
+                  />
+                }
+              </View>
+            }
+          </View>
       }
     </View>
   );
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gray'
+    backgroundColor: 'gray',
   },
   loading: {
     position: 'absolute',
@@ -69,47 +114,10 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 25,
-    margin: 12,
+    margin: 8,
+    alignItems: "center",
     borderWidth: .51,
     padding: 4,
     borderRadius: 10,
   },
 })
-
-
-// return (
-  //   <ScrollView >
-  //     <Text style={styles.advice}>listo</Text>
-  //     <Button title="Get Advice"
-  //       onPress={getAdvice} color="green" />
-  //     <View >
-  //         {
-  //           advice && advice.length ?
-  //             advice.map(a =>
-  //               <View style={styles.container} key={a.id}>
-  //                 <Image
-  //                   style={styles.tinyLogo}
-  //                   source={{ uri: a.image }} />
-  //                 <View>
-  //                   <Text style={styles.title}>{a.title}</Text>
-  //                   <Text style={styles.subtitle}>{a.price}</Text>
-  //                 </View>
-  //               </View>
-  //           ) : <Text>No hay info</Text>
-  //         }
-  //     </View>
-  //   </ScrollView>
-  // );
-
-// import React from "react";
-// import { View, Text } from 'react-native';
-
-// function MarketPlace() {
-//     return (
-//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//         <Text>This is the Market!</Text>
-//       </View>
-//     );
-// }
-
-// export default MarketPlace

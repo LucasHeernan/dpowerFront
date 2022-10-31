@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
-import { useDispatch, /* useSelector */ } from 'react-redux';
-import { testAlert } from '../redux/actions';
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function ProductCard({image, name, price, category, description}) {
-
-  const dispatch = useDispatch();
-  // const { alert } = useSelector(store => store);
+  
   const [count, setCount] = useState(1);
 
   return (
@@ -24,7 +20,7 @@ export default function ProductCard({image, name, price, category, description})
           <View style={styles.state}>
             <TouchableOpacity
               style={styles.btn}
-              onPress={() => {if(count > 1) setCount(count -1)}}
+              onPress={() => { count > 1 ? setCount(count - 1) : null}}
             >
               <Text style={styles.lessMore}>-</Text>
             </TouchableOpacity >
@@ -45,7 +41,6 @@ export default function ProductCard({image, name, price, category, description})
           {description}
         </Text>
         <TouchableOpacity
-          onPress={() => dispatch(testAlert())}
           style={styles.cart}
         >
           <Text style={styles.addCart}>
@@ -77,9 +72,8 @@ const styles = StyleSheet.create({
     marginTop: 9,
     width: '100%',
     height: '38%',
-    // width: '95%',
-    // alignItems: 'center',
     backgroundColor: 'white',
+    borderRadius: 10
   },
   count: {
     fontWeight: 'bold',

@@ -11,6 +11,8 @@ import { Entypo } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
+import { Provider } from 'react-redux';
+import store from './src/redux';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,69 +30,69 @@ const MyTheme = {
 
 export default function App() {
   return (
-    <NavigationContainer theme={MyTheme} >
-      <Tab.Navigator screenOptions={{
-        tabBarShowLabel: false,
-        tabBarStyle: {backgroundColor:"#4d4d4d", height: 60,},
-        headerStyle:{backgroundColor:"#4d4d4d", height: 70, },
-        tabBarInactiveTintColor: "#F5F5F5",
-        tabBarActiveTintColor: "#C7D31E",
-        
-        
-      }}>
-      <Tab.Screen name="Home"
-          component={HomeScreen}
-          options={{
-            title: 'Home',
-            tabBarIcon: ({size,focused,color}) => {
-              return (
-                // <Image
-                //   style={{ width: size, height: size, }}
-                //   source={{
-                //     uri:
-                //       'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-                //   }}
-                // />
-                <MaterialIcons name="home" size={28} color={color}/>
-              );
-            },
-          }}/>
+    <Provider store={store}>
+      <NavigationContainer theme={MyTheme} >
+        <Tab.Navigator screenOptions={{
+          tabBarShowLabel: false,
+          tabBarStyle: {backgroundColor:"#4d4d4d", height: 60,},
+          headerStyle:{backgroundColor:"#4d4d4d", height: 70, },
+          tabBarInactiveTintColor: "#F5F5F5",
+          tabBarActiveTintColor: "#C7D31E",
+        }}>
+        <Tab.Screen name="Home"
+            component={HomeScreen}
+            options={{
+              title: 'Home',
+              tabBarIcon: ({size,focused,color}) => {
+                return (
+                  // <Image
+                  //   style={{ width: size, height: size, }}
+                  //   source={{
+                  //     uri:
+                  //       'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                  //   }}
+                  // />
+                  <MaterialIcons name="home" size={28} color={color}/>
+                );
+              },
+            }}/>
 
-        <Tab.Screen name="Marketplace"
-          component={MarketPlace}
-          options={{
-            title: 'Marketplace',
-            tabBarIcon: ({size,focused,color}) => {
-              return (                
-                <Entypo name="shop" size={24} color={color} />
-              );
-            },
-          }}/>
+          <Tab.Screen name="Marketplace"
+            component={MarketPlace}
+            options={{
+              title: 'Marketplace',
+              tabBarIcon: ({size,focused,color}) => {
+                return (                
+                  <Entypo name="shop" size={24} color={color} />
+                );
+              },
+            }}/>
 
-        <Tab.Screen name="Cart"
-          component={Cart}
-          options={{
-            title: 'Cart',
-            tabBarIcon: ({size,focused,color}) => {
-              return (                
-                <Entypo name="shopping-cart" size={24} color={color} />
-              );
-            },
-          }}/>
-        
-        <Tab.Screen name="Profile"
-          component={Profile}
-          options={{
-            title: 'My profile',
-            tabBarIcon: ({size,focused,color}) => {
-              return (
-                <FontAwesome5 name="user-alt" size={24} color={color} />
-              );
-            },
-          }} />
+          <Tab.Screen name="Cart"
+            component={Cart}
+            options={{
+              title: 'Cart',
+              tabBarIcon: ({size,focused,color}) => {
+                return (                
+                  <Entypo name="shopping-cart" size={24} color={color} />
+                );
+              },
+            }}/>
+          
+          <Tab.Screen name="Profile"
+            component={Profile}
+            options={{
+              title: 'My profile',
+              tabBarIcon: ({size,focused,color}) => {
+                return (
+                  <FontAwesome5 name="user-alt" size={24} color={color} />
+                );
+              },
+            }} />
 
-      </Tab.Navigator>
-    </NavigationContainer>
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
