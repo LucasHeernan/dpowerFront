@@ -10,24 +10,24 @@ import { useDispatch } from 'react-redux';
 
 export default function ProductCard({producto}) {
   
-  console.log(producto.id)
-  const [count, setCount] = useState(1);
+  const { id, image, name, price } = producto
+  console.log(producto)
   const navigation = useNavigation();
-  const dispatch = useDispatch()
 
   return (
           <ScrollView>
             <View style={styles.view}>
                 <Pressable key={id} style={styles.product} onPress={() => {
-                  dispatch(getProductById(producto.id))
-                  navigation.navigate("Detail")
+                  navigation.navigate("Detail", {
+                    selectedProduct: producto
+                  })
                   }}>
-                  <Image source={{uri: producto.image}} alt={producto.name} style={styles.image} />
+                  <Image source={{uri: image}} alt={name} style={styles.image} />
                   <View style={styles.price}>
                      <Headline style={{fontWeight: "bold"}}>
-                       ${producto.price}
+                       ${price}
                      </Headline>
-                     <Text style={{marginTop: 10}} numberOfLines={3}>{producto.name}</Text>
+                     <Text style={{marginTop: 10}} numberOfLines={3}>{name}</Text>
                   </View>
                  </Pressable>
             </View>
