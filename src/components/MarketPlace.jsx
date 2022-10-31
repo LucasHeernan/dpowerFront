@@ -12,8 +12,8 @@ export default function MarketPlace() {
 
   
   const getProducts = (setProducts, setLoading) => {
-    axios.get(`https://fakestoreapi.com/products`)
-     //axios.get(`http://192.168.100.47:3001/productos`)
+    //axios.get(`https://fakestoreapi.com/products`)
+     axios.get(`http://192.168.100.47:3001/productos`)
       .then(resp => setProducts(resp.data))
       .catch(error => console.error(error))
       .finally(() => setLoading(false));
@@ -49,11 +49,12 @@ export default function MarketPlace() {
               renderItem={({ item }) => (
                 <ProductCard
                   image={item.image}
-                  name={item.title}
+                  //name={item.title} 
                   category={item.category}
-                  //name={item.name}
+                  name={item.name}
                   price={item.price}
                   description={item.description}
+                  id={item.id}
                 />
               )}
               // contentContainerStyle={{
