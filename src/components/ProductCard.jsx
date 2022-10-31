@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function ProductCard({image, name, price}) {
+export default function ProductCard({image, name, price, category, description}) {
 
   const [count, setCount] = useState(1);
 
@@ -48,9 +48,8 @@ const styles = StyleSheet.create({
     marginTop: 9,
     width: '100%',
     height: '38%',
-    // width: '95%',
-    // alignItems: 'center',
     backgroundColor: 'white',
+    borderRadius: 10
   },
   name: {
     fontWeight: '600',
