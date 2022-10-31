@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, FlatList, ActivityIndicator, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, View, FlatList, ActivityIndicator, TouchableOpacity, Text, ScrollView, Image } from "react-native";
+import { Pressable } from "react-native";
 import axios from "axios";
 import ProductCard from "./ProductCard";
-import { TextInput } from "react-native-paper";
+import { Headline, TextInput } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 
@@ -43,23 +44,23 @@ export default function MarketPlace() {
       {
         loading ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
         : (
-            <FlatList
-              data={products}
-              keyExtractor={({ id }) => id.toString()}
-              renderItem={({ item }) => (
-                <ProductCard
-                  image={item.image}
-                  name={item.title}
-                  category={item.category}
-                  //name={item.name}
-                  price={item.price}
-                  description={item.description}
-                />
-              )}
-              // contentContainerStyle={{
-              //   paddingHorizontal: 15,
-              // }}
-            />
+            <ScrollView>
+              <View style={{display: "flex", flexWrap: "wrap", flexDirection: "row", justifyContent:"space-between", paddingLeft: 6, paddingRight: 6}}>
+                {products.map((product) => (
+                  <Pressable key={product.id} style={{width: "47%", backgroundColor: "white", borderRadius: 6, shadowColor: "#000", shadowOffset: {
+	                    width: 0,
+	                    height: 6,
+                    }, shadowOpacity: 0.37, shadowRadius: 7.49, elevation: 12, paddingTop: 3, marginTop: 30, marginBottom: 30, paddingBottom: 20, overflow: "hidden"}}>
+                    <Image source={{uri: product.image}} alt={product.name} style={{width: "100%", height: 240, resizeMode: "contain"}} />
+                    <View style={{paddingLeft: 40, paddingRight: 40, paddingTop: 10}}>
+                      <Headline style={{fontWeight: "bold", fontSize: 19}}>
+                        {product.name}
+                      </Headline>
+                    </View>
+                  </Pressable>
+                ))}
+              </View>
+            </ScrollView>
           )
       }
     </View>
@@ -70,7 +71,7 @@ export default function MarketPlace() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gray'
+    backgroundColor: '#4d4d4d'
   },
   loading: {
     position: 'absolute',

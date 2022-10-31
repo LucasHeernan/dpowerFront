@@ -28,10 +28,18 @@ function MyStack() {
       <MarketStackNavigator.Screen
       name="MarketPlace"
       component={MarketPlace}
+      options={{
+        headerStyle: {backgroundColor: "#4d4d4d"},
+        headerTitleStyle: {color: "white"}
+      }}
       />
       <MarketStackNavigator.Screen
       name="Cart"
       component={Cart}
+      options={{
+        headerStyle: {backgroundColor: "#4d4d4d"},
+        headerTitleStyle: {color: "white"}
+      }}
       />
 
     </MarketStackNavigator.Navigator>
@@ -63,6 +71,8 @@ function MyTabs() {
         <Tab.Screen name="Home"
             component={HomeScreen}
             options={{
+              headerStyle: {backgroundColor:"#4d4d4d"},
+              headerTitleStyle: {color: "white"},
               title: 'Home',
               tabBarIcon: ({size,focused,color}) => {
                 return (
@@ -96,7 +106,19 @@ function MyTabs() {
         }}/> */}
           
         <Tab.Screen name="Profile"
-            component={Profile}
+            children={() => <Profile 
+              name="Julian" 
+              sport="Natacion" 
+              age="24" 
+              nationality="Argentino"
+              post="3"
+              likes="65"
+              powers="150"
+              followers="1200"
+              description="Hola mi nombre es Julian, tengo 18 años y soy nadador profesional."
+              avatar="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"
+              images={["https://www.rehagirona.com/wp-content/uploads/2021/07/atletismo_paralimpico_des.jpg", "https://billiken.lat/wp-content/uploads/2021/07/atle-para.jpg", "https://www.acnur.org/thumb1/60db219df.jpg", "https://img.olympicchannel.com/images/image/private/t_16-9_360-203_2x/f_auto/v1538355600/primary/mjdvlnu0gpflzhuvgkbw"]}
+            />}
             options={{
               title: 'My profile',
               tabBarIcon: ({size,focused,color}) => {
