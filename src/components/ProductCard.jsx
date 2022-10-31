@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 
 export default function ProductCard({producto}) {
   
-  console.log(producto)
+  console.log(producto.id)
   const [count, setCount] = useState(1);
   const navigation = useNavigation();
   const dispatch = useDispatch()
