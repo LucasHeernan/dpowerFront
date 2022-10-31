@@ -1,23 +1,34 @@
 import React, { useState } from 'react';
+import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function ProductCard({image, name, price, category, description}) {
+
+
+
+export default function ProductCard({image, name, price, category, description, id}) {
 
   const [count, setCount] = useState(1);
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
+     
+      
       <Image
         source={{ uri: image }}
         style={styles.image}
       />
+      
       <View style={styles.text}>
         <Text style={styles.name}>{name}</Text>
 
         <View style={styles.containerPrice}>
           <Text style={styles.price}>${price}</Text>
         </View>
+
         <TouchableOpacity style={styles.cart}>
+
           <Text style={styles.addCart}>
             Add To Cart
           </Text>

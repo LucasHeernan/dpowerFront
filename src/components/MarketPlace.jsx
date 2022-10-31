@@ -23,6 +23,8 @@ import { Entypo } from '@expo/vector-icons';
 export default function MarketPlace({producto}) {
 
 
+
+
   useEffect(() => {
     !categories.length && dispatch(getCategories());
     dispatch(getAllProducts());
@@ -41,6 +43,7 @@ export default function MarketPlace({producto}) {
   return (
     <View style={styles.container}>
       {
+
         allProducts.length < 1 ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
         :
           <View style={styles.container}>
