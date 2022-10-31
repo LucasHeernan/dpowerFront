@@ -3,17 +3,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Caption, Headline } from "react-native-paper";
 import NumericInput from "react-native-numeric-input";
+import { useSelector } from "react-redux";
 
-export default function ProductDetail({route}) {
+export default function ProductDetail() {
     // const {id, name, price, description, image, category} = props;
-    const {category, description, id, image, name, price} = (route.params.selectedProduct)
+    const { detail } = useSelector((state) => state) 
+    const {category, description, id, image, name, price, title} = (detail)
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <Image source={{uri: image}} style={styles.image} alt="Image" />
                 <Caption style={{letterSpacing: 2, alignItems: "center", marginBottom:5, marginTop: 25}}>{category}</Caption>
-                <Headline style={styles.name}>{name}</Headline>
+                <Headline style={styles.name}>{title}</Headline>
                 <Headline style={styles.price}>${price}</Headline>
                 <Button icon="cash" mode="contained" style={styles.carting} onPress={() => alert("Añadido al carrito!")}>ADD TO CART</Button>
                 <Text style={styles.description}>{description}</Text>

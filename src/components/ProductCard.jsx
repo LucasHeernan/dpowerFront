@@ -1,42 +1,41 @@
 import React, { useState } from 'react';
-import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { Text, View, Image, StyleSheet, Button, TouchableOpacity, ScrollView, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Headline } from 'react-native-paper';
+import axios from 'axios';
+import { getProductById } from '../redux/actions/index';
+import { useDispatch } from 'react-redux';
 
 
 
-
-
-export default function ProductCard({image, name, price, category, description, id}) {
-
+export default function ProductCard({producto}) {
+  
+  console.log(producto)
   const [count, setCount] = useState(1);
   const navigation = useNavigation();
+  const dispatch = useDispatch()
 
   return (
-    <View style={styles.container}>
-     
-      
-      <Image
-        source={{ uri: image }}
-        style={styles.image}
-      />
-      
-      <View style={styles.text}>
-        <Text style={styles.name}>{name}</Text>
-
-        <View style={styles.containerPrice}>
-          <Text style={styles.price}>${price}</Text>
-        </View>
-
-        <TouchableOpacity style={styles.cart}>
-
-          <Text style={styles.addCart}>
-            Add To Cart
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+          <ScrollView>
+            <View style={styles.view}>
+                <Pressable key={id} style={styles.product} onPress={() => {
+                  dispatch(getProductById(producto.id))
+                  navigation.navigate("Detail")
+                  }}>
+                  <Image source={{uri: producto.image}} alt={producto.name} style={styles.image} />
+                  <View style={styles.price}>
+                     <Headline style={{fontWeight: "bold"}}>
+                       ${producto.price}
+                     </Headline>
+                     <Text style={{marginTop: 10}} numberOfLines={3}>{producto.name}</Text>
+                  </View>
+                 </Pressable>
+            </View>
+          </ScrollView>
   );
 }
+
+            
 
 const styles = StyleSheet.create({
   container: {
@@ -51,9 +50,9 @@ const styles = StyleSheet.create({
     overflow: "hidden"
   },
   image: {
-    width: '95%',
-    height: '60%',
-    resizeMode: 'contain',
+    width: "100%", 
+    height: 240, 
+    resizeMode: "contain"
   },
   text: {
     marginTop: 9,
@@ -91,5 +90,36 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 19,
     fontWeight: 'bold'
+  },
+  view: {
+    display: "flex", 
+    flexWrap: "wrap", 
+    flexDirection: "row", 
+    justifyContent:"space-between", 
+    paddingLeft: 6, 
+    paddingRight: 6
+  },
+  product: {
+    width: "47%", 
+    backgroundColor: "white", 
+    borderRadius: 6, 
+    shadowColor: "#000", 
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    }, 
+    shadowOpacity: 0.37, 
+    shadowRadius: 7.49, 
+    elevation: 12, 
+    paddingTop: 3, 
+    marginTop: 30, 
+    marginBottom: 30, 
+    paddingBottom: 20, 
+    overflow: "hidden"
+  },
+  price: {
+    paddingLeft: 40, 
+    paddingRight: 40, 
+    paddingTop: 10
   }
 });
