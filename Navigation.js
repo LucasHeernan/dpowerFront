@@ -52,10 +52,7 @@ function MyStack() {
       />
 
 
-      <MarketStackNavigator.Screen
-      name="Detail"
-      component={ProductCard}
-      />
+    
 
 
     </MarketStackNavigator.Navigator>
@@ -111,10 +108,10 @@ function MyTabs() {
         />
 
   
-        <Tab.Screen name="Upload"
+        <Tab.Screen name="Add Product"
             component={UploadPost}
             options={{
-              title: 'UploadPost',
+              title: 'Add Product',
               tabBarIcon: ({size,focused,color}) => {
                 return (                
                   <Entypo name="squared-plus" size={24} color={color} />

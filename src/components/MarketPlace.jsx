@@ -6,27 +6,16 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, FlatList, ActivityIndicator, TouchableOpacity, Text, ScrollView, Image } from "react-native";
 import { Pressable } from "react-native";
 import axios from "axios";
-import ProductCard from "./ProductCard";
 import { Headline, TextInput } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 
-export default function MarketPlace({producto}) {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function MarketPlace() {
+
   const [text, setText] = useState('')
   const dispatch = useDispatch();
   const { allProducts, filterProducts, categories, detail } = useSelector(store => store);
 
-
-  
-  const getProducts = (setProducts, setLoading) => {
-    //axios.get(`https://fakestoreapi.com/products`)
-     axios.get(`http://192.168.1.34:3001/productos`)
-      .then(resp => setProducts(resp.data))
-      .catch(error => console.error(error))
-      .finally(() => setLoading(false));
-  };
 
   useEffect(() => {
     !categories.length && dispatch(getCategories());

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+
 
 
 

@@ -35,9 +35,10 @@ const reducer = ( state = initialState, action ) => {
                 detail: productByName
             }
         case GET_CATEGORIES:
-            return {
+        const categoriesfilter = state.allProducts.map(e => e.category)    
+        return {
                 ...state,
-                categories: action.payload
+                categories: categoriesfilter
             }
         case ORDER_BY_PRICE:
             let allProductsPPrice = [...state.allProducts]
