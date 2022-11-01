@@ -8,7 +8,9 @@ const IP = '192.168.0.77'
 export function getAllProducts() {
     return async (dispatch) => {
         try {
-            const data = await axios(`http://${IP}:3001/products`).then(e => e.data);
+
+            const data = await axios(`http://192.168.100.47:3001/products`).then(e => e.data);
+
             return dispatch({
                 type: GET_ALL_PRODUCTS,
                 payload: data
@@ -22,7 +24,7 @@ export function getAllProducts() {
 export function getProductById(id) {
     return async (dispatch) => {
         try {
-            const data = await axios(`https://192.168.100.47:3001/productos/${id}`).then(e => e.data);
+            const data = await axios(`https://192.168.100.47:3001/products/${id}`).then(e => e.data);
             return dispatch({
                 type: GET_PRODUCT_BY_ID,
                 payload: data
@@ -36,7 +38,8 @@ export function getProductById(id) {
 export function getCategories() {
     return async (dispatch) => {
         try {
-            const data = await axios(`http://${IP}:3001/products`).then(e => e.data);
+            const data = await axios(`http://192.168.100.47:3001/products`).then(e => e.data);
+
             return dispatch({
                 type: GET_CATEGORIES,
                 payload: data
