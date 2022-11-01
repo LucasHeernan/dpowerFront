@@ -5,10 +5,12 @@ import { Button, Caption, Headline } from "react-native-paper";
 import NumericInput from "react-native-numeric-input";
 import { useSelector } from "react-redux";
 
-export default function ProductDetail({ route }) {
-    //const {id, name, price, description, image, category} = props;
-    const { detail } = useSelector((state) => state) 
-    const {category, description, id, image, name, price, title} = route.params.selectedProduct
+
+export default function ProductDetail({route}) {
+    // const {id, name, price, description, image, category} = props;
+    
+    const { image, title, price, name, description, category, id } = route.params.selectedProduct
+
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
