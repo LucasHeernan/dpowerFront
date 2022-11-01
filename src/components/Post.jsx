@@ -17,7 +17,7 @@ function Post({fullName, id, forksCount, stargazersCount, reviewCount, avatar, d
 
 
                     <View style={styles.posts}>
-                    <Text style={styles.title}>{fullName}</Text>
+                    <Text style={styles.title}>@{fullName}</Text>
                     
                     <View style={styles.contain} > 
                               

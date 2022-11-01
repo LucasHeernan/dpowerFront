@@ -22,10 +22,12 @@ export default function Filter() {
 
     function handlerPerPrice(e) {
         dispatch(orderByPrice(e));
+        alert(e)
     }
 
     function handlerPerName(e) {
-        dispatch(orderByName(e)); 
+        dispatch(orderByName(e));
+        alert(e)
     }
 
     return (
