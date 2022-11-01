@@ -1,11 +1,8 @@
-
-
 import axios from 'axios';
 import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
 FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET } from '../actionTypes';
 
-
-
+const IP = '192.168.0.77'
 
 
 export function getAllProducts() {
@@ -25,7 +22,7 @@ export function getAllProducts() {
 export function getProductById(id) {
     return async (dispatch) => {
         try {
-            const data = await axios(`https://fakestoreapi.com/products/${id}`).then(e => e.data);
+            const data = await axios(`https://192.168.100.47:3001/products/${id}`).then(e => e.data);
             return dispatch({
                 type: GET_PRODUCT_BY_ID,
                 payload: data

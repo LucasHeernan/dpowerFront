@@ -94,6 +94,17 @@ function MyTabs() {
               },
         }}
         />
+
+        <Tab.Screen name="Add Product"
+              component={UploadPost}
+              options={{
+                title: 'Add Product',
+                tabBarIcon: ({size,focused,color}) => {
+                  return (                
+                    <Entypo name="squared-plus" size={24} color={color} />
+                  );
+                },
+        }}/>
   
         <Tab.Screen name="Market"
             component={MyStack}
@@ -106,19 +117,6 @@ function MyTabs() {
             },
         }}
         />
-
-  
-        <Tab.Screen name="Add Product"
-            component={UploadPost}
-            options={{
-              title: 'Add Product',
-              tabBarIcon: ({size,focused,color}) => {
-                return (                
-                  <Entypo name="squared-plus" size={24} color={color} />
-                );
-              },
-        }}/>
-
           
         <Tab.Screen name="Profile"
             children={() => <Profile 
