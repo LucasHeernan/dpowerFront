@@ -202,5 +202,5 @@ const styles = StyleSheet.create({
 })
 
 
-})
+
 

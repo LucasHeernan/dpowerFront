@@ -10,24 +10,27 @@ import { useDispatch } from 'react-redux';
 
 export default function ProductCard({producto}) {
   
-  console.log(producto)
+  // console.log(producto)
   const [count, setCount] = useState(1);
   const navigation = useNavigation();
   const dispatch = useDispatch()
 
+  const { name, id, image, price } = producto
+
   return (
           <ScrollView>
             <View style={styles.view}>
-                <Pressable key={id} style={styles.product} onPress={() => {
-                  dispatch(getProductById(producto.id))
-                  navigation.navigate("Detail")
+                <Pressable key={id} style={styles.product} 
+                onPress={() => { 
+                  //dispatch(getProductById(id))
+                  navigation.navigate("Detail", {selectedProduct: producto})
                   }}>
-                  <Image source={{uri: producto.image}} alt={producto.name} style={styles.image} />
+                  <Image source={{uri: image}} alt={name} style={styles.image} />
                   <View style={styles.price}>
                      <Headline style={{fontWeight: "bold"}}>
-                       ${producto.price}
+                       ${price}
                      </Headline>
-                     <Text style={{marginTop: 10}} numberOfLines={3}>{producto.name}</Text>
+                     <Text style={{marginTop: 10}} numberOfLines={3}>{name}</Text>
                   </View>
                  </Pressable>
             </View>
@@ -40,7 +43,7 @@ export default function ProductCard({producto}) {
 const styles = StyleSheet.create({
   container: {
     width: '96%',
-    height: 400,
+    height: 380,
     borderRadius: 40,
     backgroundColor: 'white',
     alignItems: 'center',
@@ -50,9 +53,10 @@ const styles = StyleSheet.create({
     overflow: "hidden"
   },
   image: {
-    width: "100%", 
-    height: 240, 
-    resizeMode: "contain"
+    width: "85%", 
+    height: 220, 
+    resizeMode: "contain",
+    alignSelf: 'center',
   },
   text: {
     marginTop: 9,
@@ -92,16 +96,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   view: {
-    display: "flex", 
-    flexWrap: "wrap", 
-    flexDirection: "row", 
-    justifyContent:"space-between", 
+    marginLeft: 25,
+    
+    justifyContent:"center", 
     paddingLeft: 6, 
     paddingRight: 6
   },
   product: {
-    width: "47%", 
+    width: "60%", 
     backgroundColor: "white", 
+    alignSelf: 'center',
     borderRadius: 6, 
     shadowColor: "#000", 
     shadowOffset: {

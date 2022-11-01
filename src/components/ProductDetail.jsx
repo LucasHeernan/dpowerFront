@@ -5,20 +5,20 @@ import { Button, Caption, Headline } from "react-native-paper";
 import NumericInput from "react-native-numeric-input";
 import { useSelector } from "react-redux";
 
-export default function ProductDetail() {
-    // const {id, name, price, description, image, category} = props;
+export default function ProductDetail({ route }) {
+    //const {id, name, price, description, image, category} = props;
     const { detail } = useSelector((state) => state) 
-    const {category, description, id, image, name, price, title} = (detail)
+    const {category, description, id, image, name, price, title} = route.params.selectedProduct
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <Image source={{uri: image}} style={styles.image} alt="Image" />
-                <Caption style={{letterSpacing: 2, alignItems: "center", marginBottom:5, marginTop: 25}}>{category}</Caption>
+                <Caption style={{letterSpacing: 2, alignItems: "center", marginBottom:2, marginTop: 20}}>{category}</Caption>
                 <Headline style={styles.name}>{title}</Headline>
                 <Headline style={styles.price}>${price}</Headline>
                 <Button icon="cash" mode="contained" style={styles.carting} onPress={() => alert("Añadido al carrito!")}>ADD TO CART</Button>
-                <Text style={styles.description}>{description}</Text>
+                <Text style={styles.description}>Description: {description}</Text>
             </ScrollView>
         </SafeAreaView>
     )
@@ -27,18 +27,22 @@ export default function ProductDetail() {
 const styles = StyleSheet.create({
     container: {
         paddingLeft: 50,
-        paddingRight: 50
+        paddingRight: 50,
+        padding: 12,
+        backgroundColor: '#7d7d7d'
     },
     image: {
         width: "100%",
-        height: 350,
-        resizeMode: "contain"
+        height: 300,
+        resizeMode: "contain",
+         borderRadius: 12
     },
     name: {
         lineHeight: 20,
         fontSize: 15,
         fontWeight: "bold",
-        marginBottom: 20
+        marginBottom: 18,
+       
     },
     price: {
         fontWeight: "bold",
@@ -47,7 +51,7 @@ const styles = StyleSheet.create({
     },
     description: {
         lineHeight: 24,
-        fontSize: 12
+        fontSize: 16
     },
     carting: {
         backgroundColor: "#C7D31E",
