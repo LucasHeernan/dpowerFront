@@ -22,7 +22,7 @@ export function getAllProducts() {
 export function getProductById(id) {
     return async (dispatch) => {
         try {
-            const data = await axios(`https://fakestoreapi.com/products/${id}`).then(e => e.data);
+            const data = await axios(`https://192.168.100.47:3001/productos/${id}`).then(e => e.data);
             return dispatch({
                 type: GET_PRODUCT_BY_ID,
                 payload: data
@@ -37,8 +37,6 @@ export function getCategories() {
     return async (dispatch) => {
         try {
             const data = await axios(`http://${IP}:3001/products`).then(e => e.data);
-
-
             return dispatch({
                 type: GET_CATEGORIES,
                 payload: data
