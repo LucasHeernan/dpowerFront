@@ -1,17 +1,14 @@
-
-
 import axios from 'axios';
 import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
 FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET } from '../actionTypes';
 
-
-
+const IP = '192.168.0.77'
 
 
 export function getAllProducts() {
     return async (dispatch) => {
         try {
-            const data = await axios(`http://192.168.1.34:3001/productos`).then(e => e.data);
+            const data = await axios(`http://${IP}:3001/products`).then(e => e.data);
             return dispatch({
                 type: GET_ALL_PRODUCTS,
                 payload: data
@@ -39,7 +36,7 @@ export function getProductById(id) {
 export function getCategories() {
     return async (dispatch) => {
         try {
-            const data = await axios(`http://192.168.1.34:3001/productos`).then(e => e.data);
+            const data = await axios(`http://${IP}:3001/products`).then(e => e.data);
 
 
             return dispatch({
