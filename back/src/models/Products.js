@@ -7,7 +7,6 @@ module.exports = (sequelize) => {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-
       unique: true,
       primaryKey: true,
       autoIncrement: true,
@@ -33,7 +32,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     image: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       defaultValue: 'https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg'
     }

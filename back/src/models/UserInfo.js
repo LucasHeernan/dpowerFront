@@ -7,7 +7,6 @@ module.exports = (sequelize) => {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-
       unique: true,
       primaryKey: true,
       autoIncrement: true,
@@ -24,7 +23,7 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
     },
     nationality: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     description: {

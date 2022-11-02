@@ -32,7 +32,7 @@ router.get('/:id', async (req, res) => {
           // || POST /PRODUCTOS || //
 router.post('', async (req, res) => {
   try {
-    const { name, category, price, stock, published, image } = req.body;
+    const { name, category, price, stock, published, image, description } = req.body;
 
     if (name && category && price && stock && published) {
       const newProduct = await Product.create({
@@ -42,6 +42,7 @@ router.post('', async (req, res) => {
         stock,
         published,
         image,
+        description
       });
 
       res.json(newProduct);

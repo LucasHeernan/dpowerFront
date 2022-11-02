@@ -1,16 +1,11 @@
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Caption, Headline } from "react-native-paper";
-import NumericInput from "react-native-numeric-input";
-import { useSelector } from "react-redux";
 
 
 export default function ProductDetail({route}) {
-    // const {id, name, price, description, image, category} = props;
-    
-    const { image, title, price, name, description, category, id } = route.params.selectedProduct
 
+    const { image, title, price, name, description, category, id } = route.params.selectedProduct
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
@@ -37,14 +32,13 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 300,
         resizeMode: "contain",
-         borderRadius: 12
+        borderRadius: 12
     },
     name: {
         lineHeight: 20,
         fontSize: 15,
         fontWeight: "bold",
         marginBottom: 18,
-       
     },
     price: {
         fontWeight: "bold",
@@ -61,5 +55,4 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 15
     }
-})
-
+});
