@@ -35,8 +35,8 @@ const reducer = ( state = initialState, action ) => {
                 detail: productByName
             }
         case GET_CATEGORIES:
-        const categoriesfilter = state.allProducts.map(e => e.category)    
-        return {
+            const categoriesfilter = state.allProducts.map(e => e.category)
+            return {
                 ...state,
                 categories: categoriesfilter
             }
