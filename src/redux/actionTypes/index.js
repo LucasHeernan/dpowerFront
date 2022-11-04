@@ -7,3 +7,4 @@ export const ORDER_BY_PRICE = 'SORT_BY_PRICE';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const CLEAR_MARKET = 'CLEAR_MARKET';
 export const LOGIN_DATA = "LOGIN_DATA";
+export const CLEAN_LOGIN = "CLEAN_LOGIN";
