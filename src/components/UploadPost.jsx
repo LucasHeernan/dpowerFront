@@ -5,7 +5,7 @@ import React from 'react';
 
  const PostProducts = (values) => {
     //axios.get(`https://fakestoreapi.com/products`)
-     axios.post(`http://192.168.100.47:3001/productos`, values)
+     axios.post(`https://dpower-production.up.railway.app/products`, values)
       .then(resp => alert('Product created!'))
       .catch(error => alert(error))
       //.finally(() => console.log(values));
