@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
-FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, LOGIN_DATA } from '../actionTypes';
+FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, LOGIN_DATA, CLEAN_LOGIN } from '../actionTypes';
+
+
 
 export function getAllProducts() {
     return async (dispatch) => {
@@ -66,4 +68,8 @@ export function clearMarket() {
 
 export function loginData(payload) {
     return { type: LOGIN_DATA, payload }
+}
+
+export function cleanLogin() {
+    return { type: CLEAN_LOGIN }
 }

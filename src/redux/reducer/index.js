@@ -1,5 +1,5 @@
 import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
-FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, LOGIN_DATA } from "../actionTypes";
+FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, LOGIN_DATA, CLEAN_LOGIN } from "../actionTypes";
 
 const initialState = {
     allProducts: [],
@@ -86,6 +86,11 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 user: [action.payload]
+            }
+        case CLEAN_LOGIN:
+            return {
+                ...state,
+                user: []
             }
         default:
         return { ...state };
