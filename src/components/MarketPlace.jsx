@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 import ProductCard from "./ProductCard"
 
+
+
 export default function MarketPlace({producto}) {
 
   const [text, setText] = useState('')

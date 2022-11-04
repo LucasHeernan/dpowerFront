@@ -16,10 +16,12 @@ import Cart from './src/components/Cart'
 import ProductCard from './src/components/ProductCard';
 import UploadPost from './src/components/UploadPost'
 import ProductDetail from './src/components/ProductDetail';
-
+import LandingPage from './src/components/LandingPage'
+import ImagePicker from './src/components/ImagePicker'
 
 
 const MarketStackNavigator = createNativeStackNavigator();
+const HomeStackNavigator = createNativeStackNavigator();
 
 function MyStack() {
   return (
@@ -50,13 +52,43 @@ function MyStack() {
         headerTitleStyle: {color: "white"}
       }}
       />
-
-
-    
-
-
     </MarketStackNavigator.Navigator>
+
+
+
+
+
+
+
 )}
+
+
+function MyHomeStack() {
+  return (
+    <HomeStackNavigator.Navigator
+    initialRouteName="LogIn"
+    >
+      <HomeStackNavigator.Screen
+      name="LogIn"
+      component={LandingPage}
+      options={{
+        headerStyle: {backgroundColor: "#4d4d4d"},
+        headerTitleStyle: {color: "white"}
+      }}
+      />
+      <HomeStackNavigator.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{
+        headerStyle: {backgroundColor: "#4d4d4d"},
+        headerTitleStyle: {color: "white"}
+      }}
+      />
+    </HomeStackNavigator.Navigator>
+  )}    
+
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -82,11 +114,12 @@ function MyTabs() {
     >
            
         <Tab.Screen name="Home"
-            component={HomeScreen}
+            component={MyHomeStack}
             options={{
+              headerShown: false,
               headerStyle: {backgroundColor:"#4d4d4d"},
               headerTitleStyle: {color: "white"},
-              title: 'Home',
+              title: 'Homes',
               tabBarIcon: ({size,focused,color}) => {
                 return (
                  <MaterialIcons name="home" size={28} color={color}/>
@@ -96,7 +129,7 @@ function MyTabs() {
         />
 
         <Tab.Screen name="Add Product"
-              component={UploadPost}
+              component={ImagePicker}
               options={{
                 title: 'Add Product',
                 tabBarIcon: ({size,focused,color}) => {
