@@ -12,9 +12,9 @@ function Profile(props) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* <View style={styles.titleBar}>
+        <View style={styles.titleBar}>
             <MaterialIcons name="more-vert" size={24} color="#52575D"></MaterialIcons>
-        </View> */}
+        </View>
 
         <View style={{alignSelf: "center"}}>
           <View style={styles.profileImage}>
