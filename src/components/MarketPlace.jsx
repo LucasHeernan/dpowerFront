@@ -1,15 +1,12 @@
-import Filter from "./Filter";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { StyleSheet, View, FlatList, ActivityIndicator, TouchableOpacity, Text } from "react-native";
 import { getAllProducts, getCategories, getProductByName, clearMarket } from "../redux/actions";
 import { Searchbar } from 'react-native-paper';
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, FlatList, ActivityIndicator, TouchableOpacity, Text, ScrollView, Image } from "react-native";
-import { Pressable } from "react-native";
-import axios from "axios";
-import { Headline, TextInput } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 import ProductCard from "./ProductCard"
+import Filter from "./Filter";
 
 export default function MarketPlace({producto}) {
 
@@ -36,78 +33,75 @@ export default function MarketPlace({producto}) {
   return (
     <View style={styles.container}>
       {
-
         allProducts.length < 1 ? <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
         :
-          <View style={styles.container}>
+        <View style={styles.container}>
 
-              
-            <Searchbar
-              placeholder="Search"
-              style={styles.input}
-              onChangeText={setText}
-              value={text}
-              onSubmitEditing={() => onSubmit(text)}
-            />
+          <Searchbar
+            placeholder="Search"
+            style={styles.input}
+            onChangeText={setText}
+            value={text}
+            onSubmitEditing={() => onSubmit(text)}
+          />
 
-            <View syles={styles.header}>
+          <View syles={styles.header}>
             <TouchableOpacity
-            onPress={() => navigation.navigate("Cart") }
-            style={styles.btncart}
+              onPress={() => navigation.navigate("Cart") }
+              style={styles.btncart}
             >
               <Entypo name="shopping-cart" size={30} color={"#4D4D4D"} />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={clear}
-            style={styles.clear}>
+            <TouchableOpacity
+              onPress={clear}
+              style={styles.clear}
+            >
               <Text styles={styles.cleartext}> Clear</Text>
             </TouchableOpacity>
-            </View>
-
-            <Filter />
-
-            
-
-            {
-              detail.length > 0 ?
-              <FlatList
-                data={detail}
-                keyExtractor={({ id }) => id.toString()}
-                renderItem={({ item }) => (
-                  <ProductCard
-                    producto={item}
-                  />
-                )}
-              /> :
-              <View style={styles.container}>
-                {
-                  filterProducts.length > 0 ?
-                  <FlatList
-                    data={filterProducts}
-                    keyExtractor={({ id }) => id.toString()}
-                    renderItem={({ item }) => (
-                      <ProductCard
-                        producto={item}
-                      />
-                    )}
-                  /> :
-                  <FlatList
-                    data={allProducts}
-                    keyExtractor={({ id }) => id.toString()}
-                    renderItem={({ item }) => (
-                      <ProductCard
-                        producto={item}
-                      />
-                    )}
-                  />
-                }
-              </View>
-            }
           </View>
+
+          <Filter />
+
+          {
+            detail.length > 0 ?
+            <FlatList
+              data={detail}
+              keyExtractor={({ id }) => id.toString()}
+              renderItem={({ item }) => (
+                <ProductCard
+                  producto={item}
+                />
+              )}
+            /> :
+            <View style={styles.container}>
+              {
+                filterProducts.length > 0 ?
+                <FlatList
+                  data={filterProducts}
+                  keyExtractor={({ id }) => id.toString()}
+                  renderItem={({ item }) => (
+                    <ProductCard
+                      producto={item}
+                    />
+                  )}
+                /> :
+                <FlatList
+                  data={allProducts}
+                  keyExtractor={({ id }) => id.toString()}
+                  renderItem={({ item }) => (
+                    <ProductCard
+                      producto={item}
+                    />
+                  )}
+                />
+              }
+            </View>
+          }
+        </View>
       }
     </View>
   );
-
 }
 
 const styles = StyleSheet.create({
@@ -136,7 +130,6 @@ const styles = StyleSheet.create({
     width: 290,
     margin: 8,
     fontSize: 14,
-    
   },
   btncart:{
     padding: 8,
@@ -182,7 +175,6 @@ const styles = StyleSheet.create({
     paddingRight: 40, 
     paddingTop: 10
   },
-
   header:{
     flexDirection: 'row',
     alignContent: 'space-around',
@@ -199,8 +191,4 @@ const styles = StyleSheet.create({
   cleartext:{
     fontSize: 24,
   }
-})
-
-
-
-
+});

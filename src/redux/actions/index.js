@@ -1,16 +1,15 @@
 import axios from 'axios';
 import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
-FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET } from '../actionTypes';
+FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, LOGIN_DATA } from '../actionTypes';
+import { MY_IP } from '@env';
 
-const IP = '192.168.1.34'
-
+const IP = MY_IP;
 
 export function getAllProducts() {
     return async (dispatch) => {
         try {
-
-            const data = await axios(`http://192.168.1.34:3001/products`).then(e => e.data);
-
+            const data = await axios(`http://${IP}:3001/products`).then(e => e.data);
+            // const data = await axios(`http://192.168.0.77:3001/products`).then(e => e.data);
             return dispatch({
                 type: GET_ALL_PRODUCTS,
                 payload: data
@@ -24,7 +23,8 @@ export function getAllProducts() {
 export function getProductById(id) {
     return async (dispatch) => {
         try {
-            const data = await axios(`https://192.168.1.34:3001/products/${id}`).then(e => e.data);
+            const data = await axios(`https://${IP}:3001/products/${id}`).then(e => e.data);
+            // const data = await axios(`https://192.168.0.77:3001/products/${id}`).then(e => e.data);
             return dispatch({
                 type: GET_PRODUCT_BY_ID,
                 payload: data
@@ -38,8 +38,8 @@ export function getProductById(id) {
 export function getCategories() {
     return async (dispatch) => {
         try {
-            const data = await axios(`http://192.168.1.34:3001/products`).then(e => e.data);
-
+            const data = await axios(`http://${IP}:3001/products`).then(e => e.data);
+            // const data = await axios(`http://192.168.0.77:3001/products`).then(e => e.data);
             return dispatch({
                 type: GET_CATEGORIES,
                 payload: data
@@ -68,4 +68,8 @@ export function getProductByName(payload) {
 
 export function clearMarket() {
     return { type: CLEAR_MARKET }
+}
+
+export function loginData(payload) {
+    return { type: LOGIN_DATA, payload }
 }

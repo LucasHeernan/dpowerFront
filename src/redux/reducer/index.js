@@ -1,12 +1,13 @@
 import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
-FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET } from "../actionTypes";
+FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, LOGIN_DATA } from "../actionTypes";
 
 const initialState = {
     allProducts: [],
     filterProducts: [],
     detail: [],
     categories: [],
-    alert: ''
+    alert: '',
+    user: []
 }
 
 const reducer = ( state = initialState, action ) => {
@@ -35,8 +36,8 @@ const reducer = ( state = initialState, action ) => {
                 detail: productByName
             }
         case GET_CATEGORIES:
-        const categoriesfilter = state.allProducts.map(e => e.category)    
-        return {
+            const categoriesfilter = state.allProducts.map(e => e.category)
+            return {
                 ...state,
                 categories: categoriesfilter
             }
@@ -80,6 +81,11 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 filterProducts: filterCategories
+            }
+        case LOGIN_DATA:
+            return {
+                ...state,
+                user: [action.payload]
             }
         default:
         return { ...state };

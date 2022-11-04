@@ -68,10 +68,7 @@ const styles = StyleSheet.create({
         color:'#F6F5F5',
         margin: 5,
         borderRadius: 5,
-        borderColor:'#F6F5F5', 
-
-        
-        
+        borderColor:'#F6F5F5',
     },
     test: {
        fontSize: 12,
@@ -79,5 +76,4 @@ const styles = StyleSheet.create({
        tintColor: '#F6F5F5',
        color: '#F6F5F5',
     }
-
 })
