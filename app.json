@@ -6,14 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "plugins": [
-      [
-        "react-native-auth0",
-        {
-          "domain": "dev-tgmuj241vtx0h7yl.us.auth0.com"
-        }
-      ]
-    ],
+    
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

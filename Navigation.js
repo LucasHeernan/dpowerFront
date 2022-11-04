@@ -17,6 +17,7 @@ import ProductCard from './src/components/ProductCard';
 import UploadPost from './src/components/UploadPost'
 import ProductDetail from './src/components/ProductDetail';
 import LandingPage from './src/components/LandingPage';
+import { useSelector } from 'react-redux';
 
 
 
@@ -165,9 +166,14 @@ function MyTabs() {
 }
 
 export default function Navigation(){
+  const { user } = useSelector(state => state);
   return(
   <NavigationContainer style={MyTheme} >
-    <LandingStack />
+    {user.length ? (
+        <MyTabs />
+    ) : (
+      <LandingStack />
+    )}
   </NavigationContainer>
 )}
 

@@ -20,7 +20,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 // import App from "./App";
-import { Auth0Provider } from "@auth0/auth0-react";
+// import { Auth0Provider } from "@auth0/auth0-react";
 import Navigation from './Navigation'
 import { Provider } from 'react-redux';
 import store from './src/redux';
@@ -39,13 +39,13 @@ import store from './src/redux';
 // );
 export default function App() {
   return (
-    <Auth0Provider
-      domain={"dev-tgmuj241vtx0h7yl.us.auth0.com"}
-      clientId={"2VbDucD7TVu3lDDxPm7VoIDr5NrlrGP7"}
-    >
+    // <Auth0Provider
+    //   domain={"dev-tgmuj241vtx0h7yl.us.auth0.com"}
+    //   clientId={"2VbDucD7TVu3lDDxPm7VoIDr5NrlrGP7"}
+    // >
       <Provider store={store}>
         <Navigation/>
       </Provider>
-    </Auth0Provider>
+    // </Auth0Provider>
   );
 }

@@ -12,10 +12,10 @@ export default function ProductDetail({route}) {
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <Image source={{uri: image}} style={styles.image} alt="Image" />
                 <Caption style={{letterSpacing: 2, alignItems: "center", marginBottom:2, marginTop: 20}}>{category}</Caption>
-                <Headline style={styles.name}>{title}</Headline>
+                <Headline style={styles.name}>{name}</Headline>
                 <Headline style={styles.price}>${price}</Headline>
                 <Button icon="cash" mode="contained" style={styles.carting} onPress={() => alert("Añadido al carrito!")}>ADD TO CART</Button>
-                <Text style={styles.description}>Description: {description}</Text>
+                <Text style={styles.description}>{description}</Text>
             </ScrollView>
         </SafeAreaView>
     )

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
-FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET } from '../actionTypes';
+FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, LOGIN_DATA } from '../actionTypes';
 import { MY_IP } from '@env';
 
 const IP = MY_IP;
@@ -68,4 +68,8 @@ export function getProductByName(payload) {
 
 export function clearMarket() {
     return { type: CLEAR_MARKET }
+}
+
+export function loginData(payload) {
+    return { type: LOGIN_DATA, payload }
 }
