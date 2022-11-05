@@ -9,7 +9,7 @@ import { useState } from 'react';
 //  POST https://api.cloudinary.com/v1_1/dr6vvkghv/image/upload
 
  export default function PostProducts () {
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState("");
 
    
         const pickImage = async () => {
@@ -19,7 +19,7 @@ import { useState } from 'react';
             let result = await ImagePicker.launchImageLibraryAsync({
               mediaTypes: ImagePicker.MediaTypeOptions.All,
               
-              
+              base64: true,
               quality: 1,
               title: 'Select Photo',
                 storageOptions: {
@@ -30,32 +30,50 @@ import { useState } from 'react';
             });
 
             if (!result.cancelled) {
-                setImage(result);
-              }
-        
-            console.log('Result:', result);   
+                
+              
+            let base64image = `data:image/jpg;base64,${result.base64}`
 
-            console.log('Image:', image.uri)
+            
+
+            let data = {
+              "file": base64image,
+              "upload_preset": "depawer",
+
+              
+            }
+           setImage(data);
+          }
+           
+
+              console.log(result)
+        
+            
         }
 
-        const cloudinaryUpload = (photo) => {
-            const data = new FormData()
-            data.append('file', photo)
-            data.append('upload_preset', 'depawer')
-            data.append("cloud_name", "dr6vvkghv")
-            fetch("https://api.cloudinary.com/v1_1/dr6vvkghv/image/upload", {
-      method: "post",
-      body: data
-    }).then(res => res.json()).
-      then(data => {
-        setPhoto(data)
-      }).catch(err => {
-        Alert.alert("An Error Occured While Uploading")
+        const cloudinaryUpload = () => {
+          
+          console.log('upload console:     ', image)
+
+
+            fetch("https://api.cloudinary.com/v1_1/dr6vvkghv/image/upload", { 
+      method: "POST",
+      body: JSON.stringify(image),
+      headers: {
+        'content-type': 'application/json'
+      },
+
+    }).then( async (res) => {
+        let imagenurl = await res.json()
+        console.log(imagenurl)
+    })
+      .catch(err => {
+       console.log('Error del fetch:     ', err)
       })
           }
 
 
-        
+
     // ImagePicker.launchImageLibraryAsync(options, (response) => {
     //     console.log('Response = ', response);
     //     if (response.didCancel) {
@@ -90,7 +108,7 @@ import { useState } from 'react';
 
        
 <View>
- <Image source={{ uri: 'https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg' }} style={styles.tinyLogo}>
+ <Image source={{ uri: image.uri }} style={styles.tinyLogo}>
         </Image>
 </View>
 
