@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Image, Button } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -8,6 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 //screens
 import HomeScreen from './src/components/HomeScreen';
@@ -140,17 +141,17 @@ function MyTabs() {
     
     <Tab.Screen name="Profile"
       children={() => <Profile
-        key={user[0].exp}
-        name={user[0].given_name || user[0].nickname} 
+        key={user[0].id}
+        name={user[0].name || user[0].nickname} 
         sport="Natacion" 
         age="24" 
-        nationality={user[0].locale}
+        nationality="Argentino"
         post="3"
         likes="65"
         powers="150"
         followers="1200"
         description="Hola mi nombre es Julian, tengo 18 años y soy nadador profesional."
-        avatar={user[0].picture || "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"}
+        avatar={user[0].avatar || "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80"}
         images={["https://www.rehagirona.com/wp-content/uploads/2021/07/atletismo_paralimpico_des.jpg", "https://billiken.lat/wp-content/uploads/2021/07/atle-para.jpg", "https://www.acnur.org/thumb1/60db219df.jpg", "https://img.olympicchannel.com/images/image/private/t_16-9_360-203_2x/f_auto/v1538355600/primary/mjdvlnu0gpflzhuvgkbw"]}
       />}
       options={{
@@ -167,18 +168,57 @@ function MyTabs() {
   );
 }
 
-export default function Navigation(){
-  const { user } = useSelector(state => state);
-  console.log(user)
+export default function Navigation() {
+  const user = useSelector(state => state.user);
+
+  // useEffect(() =>{
+  //   console.log('USER DESDE USEEFFECT :', user)
+  // }, [user])
+
+  // const verificador = async (user) => {
+  //   try {
+  //     if ( typeof user[0] !== 'object' ) {
+  //       console.log("USER ===>", user)
+  //       return false
+  //     } else {
+  //       console.log("USER DESDE ELSE ====>", user)
+  //       const data = await axios.get(`https://dpower-production.up.railway.app/users/${user[0].id}`).then(e => e.data)
+  //       console.log("DATA ===>", data)
+  //       return data
+  //     }
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
+
+  // const resultGet = verificador(user);
+  // console.log('CONSOLE DESDE NAV --> ', user)
+  // console.log('CONSOLE DE RESULTGET', resultGet)
+  
+  //   return(
+  //   <NavigationContainer style={MyTheme} >
+  //     {
+  //       Object.keys(resultGet).includes("id") ? (
+  //         <MyTabs />
+  //       ) : (
+  //         <LandingStack />
+  //       )
+  //     }
+  //   </NavigationContainer>
+  // )}
+
   return(
-  <NavigationContainer style={MyTheme} >
-    {user.length ? (
-        <MyTabs />
-    ) : (
-      <LandingStack />
-    )}
-  </NavigationContainer>
-)}
+    <NavigationContainer style={MyTheme} >
+      {
+        user.length ? (
+          <MyTabs />
+        ) : (
+          <LandingStack />
+        )
+      }
+    </NavigationContainer>
+  )
+}
 
 const styles = StyleSheet.create({
   container:{

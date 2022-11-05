@@ -5,7 +5,7 @@ import { openAuthSessionAsync } from "expo-web-browser";
 import { View, Text, StyleSheet, ScrollText, ScrollView, Image, SafeAreaView, Alert, Platform } from 'react-native';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Button, IconButton, Menu, Provider } from "react-native-paper";
-import { cleanLogin } from "../redux/actions";
+import { cleanUser } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const auth0ClientId = "R7NnYEPxs5lx6uWZCLvcaSe1vNFAAiUf";
@@ -27,7 +27,7 @@ function Profile(props) {
 
   const logout = async () => {
     try {
-      dispatch(cleanLogin())
+      dispatch(cleanUser())
 
       console.log(user)
       await openAuthSessionAsync(`${authorizationEndpoint}?client_id=${auth0ClientId}&returnTo=${redirectUri}`, 'redirectUrl');

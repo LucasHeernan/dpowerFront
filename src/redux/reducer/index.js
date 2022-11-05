@@ -1,12 +1,11 @@
 import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
-FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, LOGIN_DATA, CLEAN_LOGIN } from "../actionTypes";
+FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, CLEAN_USER, CREATE_USER } from "../actionTypes";
 
 const initialState = {
     allProducts: [],
     filterProducts: [],
     detail: [],
     categories: [],
-    alert: '',
     user: []
 }
 
@@ -40,6 +39,11 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 categories: categoriesfilter
+            }
+        case CREATE_USER:
+            return {
+                ...state,
+                user: [action.payload]
             }
         case ORDER_BY_PRICE:
             let allProductsPPrice = [...state.allProducts]
@@ -82,12 +86,7 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 filterProducts: filterCategories
             }
-        case LOGIN_DATA:
-            return {
-                ...state,
-                user: [action.payload]
-            }
-        case CLEAN_LOGIN:
+        case CLEAN_USER:
             return {
                 ...state,
                 user: []
