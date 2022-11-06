@@ -4,9 +4,13 @@ import * as AuthSession from "expo-auth-session"
 import { openAuthSessionAsync } from "expo-web-browser";
 import { View, Text, StyleSheet, ScrollText, ScrollView, Image, SafeAreaView, Alert, Platform } from 'react-native';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Button, IconButton, Menu, Provider } from "react-native-paper";
+import { Button, Divider, IconButton, Menu, Provider } from "react-native-paper";
 import { cleanUser } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import FormRegisterUser from "./FormRegisterUser";
+import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
+import { getUserById } from "../redux/actions";
 
 const auth0ClientId = "R7NnYEPxs5lx6uWZCLvcaSe1vNFAAiUf";
 const authorizationEndpoint = "https://dpwr.us.auth0.com/v2/logout";
@@ -24,6 +28,12 @@ function Profile(props) {
   const closeMenu = () => setVisible(false);
 
   const {name, sport, age, nationality, description, post, powers, likes, followers, images, avatar} = props;
+
+  useEffect(() => {
+    dispatch(getUserById(user[0].data.id))
+  }, [user])
+
+  const navigation = useNavigation()
 
   const logout = async () => {
     try {
@@ -50,12 +60,14 @@ function Profile(props) {
                 anchor={<IconButton icon="dots-vertical" size={24} color="#52575D" onPress={openMenu} />}
               >
                 <Menu.Item onPress={logout} title="LogOut" />
+                <Divider />
+                <Menu.Item onPress={() => navigation.navigate("Form")} title="Edit profile" />
               </Menu>
         </View>
 
         <View style={{alignSelf: "center"}}>
           <View style={styles.profileImage}>
-            <Image source={{uri: avatar}} style={styles.image} resizeMode="center"></Image>
+            <Image source={{uri: user[0].data.avatar}} style={styles.image} resizeMode="center"></Image>
           </View>
           {/* <View style={styles.dm}>
             <MaterialIcons name="chat" size={18} color="#DFD8C8" />
@@ -66,10 +78,10 @@ function Profile(props) {
         </View>
 
         <View style={styles.infoContainer}>
-          <Text style={[styles.text, { fontWeight: "400", fontSize: 36 }]}>{name}</Text>
-          <Text style={[styles.text, styles.subText]}>{age} Años</Text>
-          <Text style={[styles.text, styles.subText]}>{nationality}</Text>
-          <Text style={[styles.text, { color: "AEB5BC", fontSize: 14}]}>{sport}</Text>
+          <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>{user[0].data.name}</Text>
+          <Text style={[styles.text, styles.subText]}>{user[0].data.age || "Edad"}</Text>
+          <Text style={[styles.text, styles.subText]}>{user[0].data.nationality}</Text>
+          <Text style={[styles.text, { color: "AEB5BC", fontSize: 14}]}>{user[0].data.sport}</Text>
         </View>
 
         <View style={styles.statsContainer}>
@@ -109,7 +121,7 @@ function Profile(props) {
             <View style={styles.descripcionIndicador}></View>
             <View style={{width: 250}}>
             <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-            {description}
+            {user[0].data.description}
             </Text>
             </View>
           </View>

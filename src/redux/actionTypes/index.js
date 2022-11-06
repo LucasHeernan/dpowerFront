@@ -8,3 +8,5 @@ export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const CLEAR_MARKET = 'CLEAR_MARKET';
 export const CLEAN_USER = "CLEAN_USER";
 export const CREATE_USER = "CREATE_USER";
+export const UPDATE_USER = "UPDATE_USER";
+export const GET_USER_BY_ID = 'GET_USER_BY_ID';

@@ -1,6 +1,18 @@
 import axios from 'axios';
-import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
-FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, CLEAN_USER, CREATE_USER } from '../actionTypes';
+import { useSelector } from 'react-redux';
+import { 
+    GET_ALL_PRODUCTS, 
+    GET_PRODUCT_BY_ID, 
+    GET_CATEGORIES, 
+    ORDER_BY_PRICE, 
+    ORDER_BY_NAME,
+    FILTER_BY_CATEGORY, 
+    GET_PRODUCT_BY_NAME, 
+    CLEAR_MARKET, 
+    CLEAN_USER, 
+    CREATE_USER, 
+    UPDATE_USER,
+    GET_USER_BY_ID } from '../actionTypes';
 
 
 
@@ -50,7 +62,7 @@ export function createUser(info) {
     return async (dispatch) => {
         try {
             const usuario = {
-                id: info.exp,
+                id: info.email,
                 name: info.name,
                 mail: info.email,
                 username: info.nickname,
@@ -63,6 +75,34 @@ export function createUser(info) {
             })
         } catch (err) {
             console.log('ERROR DE VERIFICACION : ', err)
+        }
+    }
+}
+
+export function getUserById(id) {
+    return async (dispatch) => {
+        try {
+            const data = await axios.get(`https://dpower-production.up.railway.app/users/${id}`)
+            return dispatch({
+                type: GET_USER_BY_ID,
+                payload: data
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
+export function updateUser(info) {
+    return async (dispatch) => {
+        try {
+            const data = await axios.put(`https://dpower-production.up.railway.app/users/${info.mail}`, info)
+            return dispatch({
+                type: UPDATE_USER,
+                payload: data
+            })
+        } catch (err) {
+            console.log(err)
         }
     }
 }

@@ -19,11 +19,44 @@ import ProductCard from './src/components/ProductCard';
 import UploadPost from './src/components/UploadPost'
 import ProductDetail from './src/components/ProductDetail';
 import LandingPage from './src/components/LandingPage';
-
+import FormRegisterUser from './src/components/FormRegisterUser';
 
 
 const MarketStackNavigator = createNativeStackNavigator();
 const LandingStackNavigator = createNativeStackNavigator();
+const ProfileStackNavigator = createNativeStackNavigator();
+
+function ProfileStack() {
+  const { user } = useSelector(state => state)
+  return (
+    <ProfileStackNavigator.Navigator
+      initialRouteName='My Profile'
+    >
+      <ProfileStackNavigator.Screen
+        name="The Profile"
+        children={() => <Profile
+        key={user[0].data.id}
+        name={user[0].data.name || user[0].data.username}
+        sport="Natacion" 
+        age={user[0].data.age} 
+        nationality="Argentino"
+        likes="65"
+        powers="150"
+        followers="1200"
+        description="Hola mi nombre es Julian, tengo 18 años y soy nadador profesional."
+        avatar={user[0].data.avatar}
+        images={["https://www.rehagirona.com/wp-content/uploads/2021/07/atletismo_paralimpico_des.jpg", "https://billiken.lat/wp-content/uploads/2021/07/atle-para.jpg", "https://www.acnur.org/thumb1/60db219df.jpg", "https://img.olympicchannel.com/images/image/private/t_16-9_360-203_2x/f_auto/v1538355600/primary/mjdvlnu0gpflzhuvgkbw"]}
+      />}
+        
+      />
+      <ProfileStackNavigator.Screen
+        name="Form"
+        component={FormRegisterUser}
+        
+      />
+    </ProfileStackNavigator.Navigator>
+  )
+}
 
 function LandingStack() {
   return (
@@ -140,21 +173,9 @@ function MyTabs() {
     />
     
     <Tab.Screen name="Profile"
-      children={() => <Profile
-        key={user[0].id}
-        name={user[0].name || user[0].nickname} 
-        sport="Natacion" 
-        age="24" 
-        nationality="Argentino"
-        post="3"
-        likes="65"
-        powers="150"
-        followers="1200"
-        description="Hola mi nombre es Julian, tengo 18 años y soy nadador profesional."
-        avatar={user[0].avatar}
-        images={["https://www.rehagirona.com/wp-content/uploads/2021/07/atletismo_paralimpico_des.jpg", "https://billiken.lat/wp-content/uploads/2021/07/atle-para.jpg", "https://www.acnur.org/thumb1/60db219df.jpg", "https://img.olympicchannel.com/images/image/private/t_16-9_360-203_2x/f_auto/v1538355600/primary/mjdvlnu0gpflzhuvgkbw"]}
-      />}
+      component={ProfileStack}
       options={{
+        headerShown: false,
         title: 'My profile',
         tabBarIcon: ({size,focused,color}) => {
           return (
