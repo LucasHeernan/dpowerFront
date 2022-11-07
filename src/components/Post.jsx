@@ -12,7 +12,9 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
 		  <View style={styles.bg} >
 
         <View style={styles.posts}>
-          
+
+          <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text>
+
           <View style={styles.contain} >
             <Image
               style={styles.tinyLogo}
@@ -40,7 +42,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
               </View>
             </View>
           </View>
-          <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text>
+
           {/* <Text style={styles.coments}>Description: {description}</Text> */}
         </View>
       </View>
