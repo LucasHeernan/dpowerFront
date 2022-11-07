@@ -8,7 +8,6 @@ import { Entypo } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 
 //screens
 import HomeScreen from './src/components/HomeScreen';
