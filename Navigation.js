@@ -22,6 +22,7 @@ import FormRegisterUser from './src/components/FormRegisterUser';
 import PostProducts from './src/components/ImagePicker';
 
 
+
 const MarketStackNavigator = createNativeStackNavigator();
 const LandingStackNavigator = createNativeStackNavigator();
 const ProfileStackNavigator = createNativeStackNavigator();
@@ -149,7 +150,9 @@ function MyTabs() {
     />
 
     <Tab.Screen name="Add Product"
+
       component={PostProducts}
+
       options={{
         title: 'New Post',
         tabBarIcon: ({size,focused,color}) => {

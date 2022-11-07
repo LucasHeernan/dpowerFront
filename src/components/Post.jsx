@@ -12,7 +12,9 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
 		  <View style={styles.bg} >
 
         <View style={styles.posts}>
+
           <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text>
+
           <View style={styles.contain} >
             <Image
               style={styles.tinyLogo}
@@ -40,6 +42,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
               </View>
             </View>
           </View>
+
           {/* <Text style={styles.coments}>Description: {description}</Text> */}
         </View>
       </View>
@@ -77,8 +80,9 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 20,
-    marginBottom: -7,
-    marginLeft: -69,
+    marginBottom: 50,
+    marginLeft: 55,
+    alignSelf: 'flex-start',
     color: '#F5F5F5',
   },
   numbers:{

@@ -26,6 +26,7 @@ import axios from 'axios';
         multimedia: '',
         description: postdescription,
         UserInfoId: user[0].data.id
+
     })
 
     // function handleChange(e) {
@@ -153,7 +154,9 @@ import axios from 'axios';
             <Image source={ img ? ( {uri:img.uri}) : { uri: null }} style={styles.tinyLogo}/>
         </View> 
 
+
         <TouchableOpacity onPress={pickImage} >
+
             <Text >Pick a photo</Text>
         </TouchableOpacity>   
 
@@ -161,12 +164,15 @@ import axios from 'axios';
             <Text >upload</Text>
         </TouchableOpacity>  */}
 
+
         <View>
         {/* <TextInput
+
         style={{height: 40}}
         placeholder="Add a description!"
         onChangepostdescription={newpostdescription => setpostdescription(newpostdescription)}
         value={postdescription}
+
       /> */}
      
 
@@ -175,11 +181,14 @@ import axios from 'axios';
 {/* 
 
         <Button onPress={cloudinaryUpload} title={'Submit photo'}/>
+
     
 
         <Button onPress={verificacion} title={'verificacion'}/> */}
 
+
         <Button onPress={cloudinaryUpload} title={'postear'}/>
+
 </View>
 
 ) 
@@ -204,6 +213,5 @@ import axios from 'axios';
     },
     formContainer: {
         padding: 8,
-    },
-   
+    },  
   });
