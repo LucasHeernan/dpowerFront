@@ -6,7 +6,8 @@ const initialState = {
     filterProducts: [],
     detail: [],
     categories: [],
-    user: []
+    user: [],
+    userById: []
 }
 
 const reducer = ( state = initialState, action ) => {
@@ -43,7 +44,7 @@ const reducer = ( state = initialState, action ) => {
         case GET_USER_BY_ID:
             return {
                 ...state,
-                user: [action.payload]
+                userById: [action.payload]
             }
         case CREATE_USER:
             return {
