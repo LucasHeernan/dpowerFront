@@ -6,41 +6,41 @@ import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 
-function Post({fullName, id, forksCount, stargazersCount, reviewCount, avatar, description}) {
+function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
   return (
     <ScrollView >
 		  <View style={styles.bg} >
 
         <View style={styles.posts}>
-          <Text style={styles.title}>@{fullName}</Text>
+          <Text style={styles.title}>@{UserInfoId}</Text>
           <View style={styles.contain} >
             <Image
               style={styles.tinyLogo}
-              source={{ uri: avatar }}
+              source={{ uri: multimedia }}
             />
             <View>
 
               <View style={styles.container}>
                 <MaterialIcons name="favorite" size={28} color="#C7D31E" />
-                <Text style={styles.numbers}>{forksCount}</Text>
+                <Text style={styles.numbers}>{likes}</Text>
               </View>
       
               <View style={styles.container}>
                 <Entypo name="thunder-cloud" size={28} color="#C7D31E" />
-                <Text style={styles.numbers}>{stargazersCount}</Text>
+                <Text style={styles.numbers}>{powersGained}</Text>
               </View>
 
-              <View style={styles.container}>
+              {/* <View style={styles.container}>
                 <FontAwesome name="commenting" size={28} color="#C7D31E" />
                 <Text style={styles.numbers}>{reviewCount}</Text>
-              </View>
+              </View> */}
 
               <View style={styles.container}>
                 <Fontisto name="share" size={28} color="#C7D31E" />
               </View>
             </View>
           </View>
-          <Text style={styles.coments}>coments: {description}</Text>
+          <Text style={styles.coments}>Description: {description}</Text>
         </View>
       </View>
 		</ScrollView>
