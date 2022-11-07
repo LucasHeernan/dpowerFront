@@ -19,6 +19,7 @@ import UploadPost from './src/components/UploadPost'
 import ProductDetail from './src/components/ProductDetail';
 import LandingPage from './src/components/LandingPage';
 import FormRegisterUser from './src/components/FormRegisterUser';
+import PostProducts from './src/components/ImagePicker';
 
 
 const MarketStackNavigator = createNativeStackNavigator();
@@ -148,9 +149,9 @@ function MyTabs() {
     />
 
     <Tab.Screen name="Add Product"
-      component={UploadPost}
+      component={PostProducts}
       options={{
-        title: 'Add Product',
+        title: 'New Post',
         tabBarIcon: ({size,focused,color}) => {
           return (                
             <Entypo name="squared-plus" size={24} color={color} />

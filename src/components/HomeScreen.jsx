@@ -1,40 +1,52 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Button} from 'react-native';
 import { TextInput } from "react-native-paper";
 import Post from '../components/Post'
 import perfiles from "./perfiles";
-
-
-
+import axios from 'axios'
+import { useState } from 'react';
 
 
 
 function HomeScreen() {
  
+const [posteos, setPosteos ] = useState([])
+
+
+async function allPost () {
+  let res = await axios.get('https://dpower-production.up.railway.app/post');
+ setPosteos( res.data)
+  
+  console.log('datallpost', posteos)
+}
+
+
+
+
+
+
+
+
   return (
     <View>
-      {/* <View style={styles.inputview}>
-    <TextInput
-      style={styles.input}
-      >Search...
-    </TextInput>
-    </View> */}
+      <Button onPress={allPost}title={'Refresh'}/>
+
+
     <ScrollView>
       
 
-      {perfiles?.map(p => 
+      {posteos?.slice(0).reverse().map(p => 
 
-     
+
       <View key={p.id}>
         <TouchableOpacity 
         onPress={() => alert(p.id + p.description) }
         >
          <Post 
-         fullName={p.fullName}
-         forksCount={p.forksCount}
-         stargazersCount={p.stargazersCount}
-         reviewCount={p.reviewCount}
-         avatar={p.avatar}
+         UserInfoId={p.UserInfoId}
+         powersGained={p.powersGained}
+         likes={p.likes}
+         multimedia={p.multimedia}
          description={p.description}
          /> 
          </TouchableOpacity>
