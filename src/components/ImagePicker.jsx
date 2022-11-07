@@ -100,7 +100,7 @@ import axios from 'axios';
                     likes: 1,
                     powersGained: 1,
                     description: ' ',
-                    UserInfoId: user[0].email,
+                    UserInfoId: 'jorgechdea@gmail.com',
                     multimedia: imagenurl.secure_url
                 }
                 console.log('RESJSON:   ', imagenurl)
@@ -153,31 +153,29 @@ import axios from 'axios';
             <Image source={ img ? ( {uri:img.uri}) : { uri: null }} style={styles.tinyLogo}/>
         </View> 
 
-        <TouchableOpacity onPress={pickImage} >
+        <TouchableOpacity onPress={pickImage} style={styles.pick} >
             <Text >Pick a photo</Text>
         </TouchableOpacity>   
 
-        <TouchableOpacity onPress={cloudinaryUpload} >
+        {/* <TouchableOpacity onPress={cloudinaryUpload} >
             <Text >upload</Text>
-        </TouchableOpacity> 
+        </TouchableOpacity>  */}
 
-        <View>
+        {/* <View>
         <TextInput
         style={{height: 40}}
         placeholder="Add a description!"
         onChangepostdescription={newpostdescription => setpostdescription(newpostdescription)}
         value={postdescription}
       />
-     
-
-        </View>
+        </View> */}
 
 
 
-        <Button onPress={cloudinaryUpload} title={'Submit photo'}/>
+        {/* <Button onPress={cloudinaryUpload} title={'Submit photo'}/>
     
 
-        <Button onPress={verificacion} title={'verificacion'}/>
+        <Button onPress={verificacion} title={'verificacion'}/> */}
 
         <Button onPress={postear} title={'postear'}/>
 </View>
@@ -205,5 +203,9 @@ import axios from 'axios';
     formContainer: {
         padding: 8,
     },
+    pick:{
+        margin: 15,
+        borderColor: 'black',
+    }
    
   });
