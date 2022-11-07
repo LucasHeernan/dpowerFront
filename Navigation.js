@@ -18,7 +18,7 @@ import ProductCard from './src/components/ProductCard';
 import UploadPost from './src/components/UploadPost'
 import ProductDetail from './src/components/ProductDetail';
 import LandingPage from './src/components/LandingPage';
-
+import ImagePicker from './src/components/ImagePicker'
 
 
 const MarketStackNavigator = createNativeStackNavigator();
@@ -115,7 +115,7 @@ function MyTabs() {
     />
 
     <Tab.Screen name="Add Product"
-      component={UploadPost}
+      component={ImagePicker}
       options={{
         title: 'Add Product',
         tabBarIcon: ({size,focused,color}) => {
