@@ -1,39 +1,33 @@
-import React, { useState } from 'react';
-import { Text, View, Image, StyleSheet, Button, TouchableOpacity, ScrollView, Pressable } from 'react-native';
+import React from 'react';
+import { Text, View, Image, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Headline } from 'react-native-paper';
-import axios from 'axios';
-import { getProductById } from '../redux/actions/index';
-import { useDispatch } from 'react-redux';
-
 
 
 export default function ProductCard({producto}) {
-  
 
   const navigation = useNavigation();
   const { name, id, image, price } = producto
 
   return (
-          <ScrollView>
-            <View style={styles.view}>
-
-                <Pressable key={id} style={styles.product} onPress={() => {
-                  navigation.navigate("Detail", {
-                    selectedProduct: producto
-                  })
-
-                  }}>
-                  <Image source={{uri: image}} alt={name} style={styles.image} />
-                  <View style={styles.price}>
-                     <Headline style={{fontWeight: "bold"}}>
-                       ${price}
-                     </Headline>
-                     <Text style={{marginTop: 10}} numberOfLines={3}>{name}</Text>
-                  </View>
-                 </Pressable>
+    <ScrollView>
+      <View style={styles.view}>
+          <Pressable key={id} style={styles.product}
+            onPress={() => {
+              navigation.navigate("Detail", {
+              selectedProduct: producto
+            })
+          }}>
+            <Image source={{uri: image}} alt={name} style={styles.image} />
+            <View style={styles.price}>
+              <Headline style={{fontWeight: "bold"}}>
+                ${price}
+              </Headline>
+              <Text style={{marginTop: 10}} numberOfLines={3}>{name}</Text>
             </View>
-          </ScrollView>
+          </Pressable>
+      </View>
+    </ScrollView>
   );
 }
 

@@ -1,14 +1,25 @@
 import axios from 'axios';
-import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
-FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET } from '../actionTypes';
+import { useSelector } from 'react-redux';
+import { 
+    GET_ALL_PRODUCTS, 
+    GET_PRODUCT_BY_ID, 
+    GET_CATEGORIES, 
+    ORDER_BY_PRICE, 
+    ORDER_BY_NAME,
+    FILTER_BY_CATEGORY, 
+    GET_PRODUCT_BY_NAME, 
+    CLEAR_MARKET, 
+    CLEAN_USER, 
+    CREATE_USER, 
+    UPDATE_USER,
+    GET_USER_BY_ID } from '../actionTypes';
 
-const IP = '192.168.0.77'
 
 
 export function getAllProducts() {
     return async (dispatch) => {
         try {
-            const data = await axios(`http://192.168.1.108:3001/productos`).then(e => e.data);
+            const data = await axios(`https://dpower-production.up.railway.app/products`).then(e => e.data);
             return dispatch({
                 type: GET_ALL_PRODUCTS,
                 payload: data
@@ -22,7 +33,7 @@ export function getAllProducts() {
 export function getProductById(id) {
     return async (dispatch) => {
         try {
-            const data = await axios(`https://192.168.100.47:3001/products/${id}`).then(e => e.data);
+            const data = await axios(`https://dpower-production.up.railway.app/products/${id}`).then(e => e.data);
             return dispatch({
                 type: GET_PRODUCT_BY_ID,
                 payload: data
@@ -36,11 +47,58 @@ export function getProductById(id) {
 export function getCategories() {
     return async (dispatch) => {
         try {
-            const data = await axios(`http://192.168.1.108:3001/productos`).then(e => e.data);
-
-
+            const data = await axios(`https://dpower-production.up.railway.app/products`).then(e => e.data);
             return dispatch({
                 type: GET_CATEGORIES,
+                payload: data
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
+export function createUser(info) {
+    return async (dispatch) => {
+        try {
+            const usuario = {
+                id: info.email,
+                name: info.name,
+                mail: info.email,
+                username: info.nickname,
+                avatar: info.picture
+            }
+            const data = await axios.post(`https://dpower-production.up.railway.app/users`, usuario)
+            return dispatch({
+                type: CREATE_USER,
+                payload: data
+            })
+        } catch (err) {
+            console.log('ERROR DE VERIFICACION : ', err)
+        }
+    }
+}
+
+export function getUserById(id) {
+    return async (dispatch) => {
+        try {
+            const data = await axios.get(`https://dpower-production.up.railway.app/users/${id}`)
+            return dispatch({
+                type: GET_USER_BY_ID,
+                payload: data
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
+export function updateUser(info) {
+    return async (dispatch) => {
+        try {
+            const data = await axios.put(`https://dpower-production.up.railway.app/users/${info.mail}`, info)
+            return dispatch({
+                type: UPDATE_USER,
                 payload: data
             })
         } catch (err) {
@@ -67,4 +125,8 @@ export function getProductByName(payload) {
 
 export function clearMarket() {
     return { type: CLEAR_MARKET }
+}
+
+export function cleanUser() {
+    return { type: CLEAN_USER }
 }
