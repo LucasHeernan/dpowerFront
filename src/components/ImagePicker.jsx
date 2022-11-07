@@ -25,7 +25,8 @@ import axios from 'axios';
         powersGained: 0,
         multimedia: '',
         description: postdescription,
-        userId: user[0].email
+        UserInfoId: user[0].data.id
+
     })
 
     // function handleChange(e) {
@@ -100,7 +101,7 @@ import axios from 'axios';
                     likes: 1,
                     powersGained: 1,
                     description: ' ',
-                    UserInfoId: user[0].email,
+                    UserInfoId: user[0].data.id,
                     multimedia: imagenurl.secure_url
                 }
                 console.log('RESJSON:   ', imagenurl)
@@ -153,33 +154,41 @@ import axios from 'axios';
             <Image source={ img ? ( {uri:img.uri}) : { uri: null }} style={styles.tinyLogo}/>
         </View> 
 
+
         <TouchableOpacity onPress={pickImage} >
+
             <Text >Pick a photo</Text>
         </TouchableOpacity>   
 
-        <TouchableOpacity onPress={cloudinaryUpload} >
+        {/* <TouchableOpacity onPress={cloudinaryUpload} >
             <Text >upload</Text>
-        </TouchableOpacity> 
+        </TouchableOpacity>  */}
+
 
         <View>
-        <TextInput
+        {/* <TextInput
+
         style={{height: 40}}
         placeholder="Add a description!"
         onChangepostdescription={newpostdescription => setpostdescription(newpostdescription)}
         value={postdescription}
-      />
+
+      /> */}
      
 
         </View>
 
-
+{/* 
 
         <Button onPress={cloudinaryUpload} title={'Submit photo'}/>
+
     
 
-        <Button onPress={verificacion} title={'verificacion'}/>
+        <Button onPress={verificacion} title={'verificacion'}/> */}
 
-        <Button onPress={postear} title={'postear'}/>
+
+        <Button onPress={cloudinaryUpload} title={'postear'}/>
+
 </View>
 
 ) 
@@ -204,6 +213,5 @@ import axios from 'axios';
     },
     formContainer: {
         padding: 8,
-    },
-   
+    },  
   });
