@@ -44,7 +44,7 @@ const reducer = ( state = initialState, action ) => {
         case GET_USER_BY_ID:
             return {
                 ...state,
-                userById: [...state.user, action.payload]
+                userById: [action.payload]
             }
         case CREATE_USER:
             return {

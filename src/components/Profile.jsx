@@ -29,22 +29,20 @@ function Profile(props) {
 
   const { powers, likes, followers, images } = props;
   
-  // const actualUser = user[0].data.id;
-  // console.log('QUE HAY EN USER BY ID - ', userById[0].data)
-  console.log('QUE HAY EN USER - ', user[0].data)
+  const actualUser = user[0].data.id;
+  // console.log('QUE HAY EN USER BY ID - ', userById)
+  // console.log('QUE HAY EN USER - ', user[0].data)
 
-  // useEffect(() => {
-  //   dispatch(getUserById(user[0].data.id))
-  //   console.log('KELOKE ES LOOP O NO');
-  // }, [userById])
+  useEffect(() => {
+    dispatch(getUserById(actualUser))
+    console.log('KELOKE ES LOOP O NO');
+  }, [user])
 
   const navigation = useNavigation()
 
   const logout = async () => {
     try {
       dispatch(cleanUser())
-
-      console.log(user)
       await openAuthSessionAsync(`${authorizationEndpoint}?client_id=${auth0ClientId}&returnTo=${redirectUri}`, 'redirectUrl');
       // handle unsetting your user from store / context / memory
       
