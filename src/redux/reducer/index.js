@@ -15,8 +15,7 @@ const reducer = ( state = initialState, action ) => {
         case GET_ALL_PRODUCTS:
             return {
                 ...state,
-                allProducts: state.allProducts.length ? state.allProducts : action.payload,
-                allProductsTwo: state.allProducts
+                allProducts:  action.payload,    
             }
         case CLEAR_MARKET:
             return {

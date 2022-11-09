@@ -14,6 +14,7 @@ export default function MarketPlace({producto}) {
   const dispatch = useDispatch();
   const { allProducts, filterProducts, categories, detail } = useSelector(store => store);
 
+  console.log('allproducts:    ', allProducts )
 
   useEffect(() => {
     !categories.length && dispatch(getCategories());
@@ -67,7 +68,7 @@ export default function MarketPlace({producto}) {
             detail.length > 0 ?
             <FlatList
               data={detail}
-              keyExtractor={({ id }) => id.toString()}
+              keyExtractor={({ id }) => id}
               renderItem={({ item }) => (
                 <ProductCard
                   producto={item}
@@ -79,7 +80,7 @@ export default function MarketPlace({producto}) {
                 filterProducts.length > 0 ?
                 <FlatList
                   data={filterProducts}
-                  keyExtractor={({ id }) => id.toString()}
+                  keyExtractor={({ id }) => id}
                   renderItem={({ item }) => (
                     <ProductCard
                       producto={item}
@@ -88,7 +89,7 @@ export default function MarketPlace({producto}) {
                 /> :
                 <FlatList
                   data={allProducts}
-                  keyExtractor={({ id }) => id.toString()}
+                  keyExtractor={({ id }) => id}
                   renderItem={({ item }) => (
                     <ProductCard
                       producto={item}

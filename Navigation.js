@@ -19,7 +19,7 @@ import UploadPost from './src/components/UploadPost'
 import ProductDetail from './src/components/ProductDetail';
 import LandingPage from './src/components/LandingPage';
 import FormRegisterUser from './src/components/FormRegisterUser';
-import PostProducts from './src/components/ImagePicker';
+import PostPicture from './src/components/ImagePicker';
 
 
 
@@ -151,7 +151,7 @@ function MyTabs() {
 
     <Tab.Screen name="Add Product"
 
-      component={PostProducts}
+      component={PostPicture}
 
       options={{
         title: 'New Post',
