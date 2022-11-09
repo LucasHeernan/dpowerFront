@@ -39,9 +39,7 @@ async function allPost () {
 
 
       <View key={p.id}>
-        <TouchableOpacity 
-        onPress={() => alert(p.id + p.description) }
-        >
+        
          <Post 
          UserInfoId={p.UserInfoId}
          powersGained={p.powersGained}
@@ -49,7 +47,7 @@ async function allPost () {
          multimedia={p.multimedia}
          description={p.description}
          /> 
-         </TouchableOpacity>
+        
         </View>
         )}
    

@@ -44,7 +44,8 @@
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "expo-sharing": "~10.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
