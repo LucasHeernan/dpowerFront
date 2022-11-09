@@ -27,19 +27,22 @@ function Profile(props) {
 
   const closeMenu = () => setVisible(false);
 
-  const {name, sport, age, nationality, description, post, powers, likes, followers, images, avatar} = props;
+  const { powers, likes, followers, images } = props;
+  
+  const actualUser = user[0].data.id;
+  // console.log('QUE HAY EN USER BY ID - ', userById)
+  // console.log('QUE HAY EN USER - ', user[0].data)
 
-  // useEffect(() => {
-  //   dispatch(getUserById(user[0].data.id))
-  // }, [])
+  useEffect(() => {
+    dispatch(getUserById(actualUser))
+    console.log('KELOKE ES LOOP O NO');
+  }, [user])
 
   const navigation = useNavigation()
 
   const logout = async () => {
     try {
       dispatch(cleanUser())
-
-      console.log(user)
       await openAuthSessionAsync(`${authorizationEndpoint}?client_id=${auth0ClientId}&returnTo=${redirectUri}`, 'redirectUrl');
       // handle unsetting your user from store / context / memory
       
@@ -47,6 +50,8 @@ function Profile(props) {
        console.error(err)    
     }
   }
+
+  const avatar = typeof userById[0]?.data === "undefined" ? user[0].data.avatar : userById[0].data.avatar;
 
   return (
     <Provider>
@@ -67,21 +72,27 @@ function Profile(props) {
 
         <View style={{alignSelf: "center"}}>
           <View style={styles.profileImage}>
-            <Image source={{uri: user[0].data.avatar}} style={styles.image} resizeMode="center"></Image>
+            <Image
+              source={{ uri: avatar }}
+              style={styles.image}
+              resizeMode="center"
+            />
           </View>
-          {/* <View style={styles.dm}>
-            <MaterialIcons name="chat" size={18} color="#DFD8C8" />
-          </View> */}
-          {/* <View style={styles.add}>
-            <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2}}></Ionicons>
-          </View> */}
         </View>
 
         <View style={styles.infoContainer}>
-          <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>{user[0].data.name}</Text>
-          <Text style={[styles.text, styles.subText]}>{user[0].data.age || "Edad"}</Text>
-          <Text style={[styles.text, styles.subText]}>{user[0].data.nationality}</Text>
-          <Text style={[styles.text, { color: "AEB5BC", fontSize: 14}]}>{user[0].data.sport}</Text>
+          <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>
+            { typeof userById[0]?.data === "undefined" ? user[0].data.name : userById[0].data.name }
+          </Text>
+          <Text style={[styles.text, styles.subText]}>
+            { typeof userById[0]?.data === "undefined" ? user[0].data.age : userById[0].data.age }
+          </Text>
+          <Text style={[styles.text, styles.subText]}>
+            { typeof userById[0]?.data === "undefined" ? user[0].data.nationality : userById[0].data.nationality }
+          </Text>
+          <Text style={[styles.text, { color: "AEB5BC", fontSize: 14}]}>
+            { typeof userById[0]?.data === "undefined" ? user[0].data.sport : userById[0].data.sport }
+          </Text>
         </View>
 
         <View style={styles.statsContainer}>
@@ -105,23 +116,22 @@ function Profile(props) {
 
         <View style={{ marginTop: 32}}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {images.map(imagen => 
-              <View style={styles.mediaImageContainer}>
-              <Image source={{uri: imagen}} style={styles.image} resizeMode="cover"></Image>
-            </View>
+            {images.map((imagen, index) => 
+              <View style={styles.mediaImageContainer} key={index} >
+                <Image source={{uri: imagen}} style={styles.image} resizeMode="cover"></Image>
+              </View>
             )}
           </ScrollView>
         </View>
 
-        <Text style={[styles.subText, styles.description]}>Descripcion</Text>
-
+        <Text style={[styles.subText, styles.description]}>Description</Text>
 
         <View style={{alignItems: "center"}}>
           <View style={styles.descripcion}>
             <View style={styles.descripcionIndicador}></View>
             <View style={{width: 250}}>
             <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-            {user[0].data.description}
+              { typeof userById[0]?.data === "undefined" ? 'Please fill in your description ...' : userById[0].data.description }
             </Text>
             </View>
           </View>

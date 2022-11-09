@@ -15,7 +15,6 @@ export default function FormRegisterUser({ navigation }) {
   const userInfo = {
     name: '',
     age: 0,
-    avatar: '',
     sport: '',
     description: "",
     nationality: ""
@@ -23,7 +22,7 @@ export default function FormRegisterUser({ navigation }) {
 
   const [error, setError] = useState('');
 
-  const { name, age, avatar, sport, description, nationality } = userInfo;
+  const { name, age, sport, description, nationality } = userInfo;
 
   const handleOnChangeText = (value, fieldName) => {
     setUserInfo({ ...userInfo, [fieldName]: value });
@@ -36,8 +35,6 @@ export default function FormRegisterUser({ navigation }) {
     // if valid name with 3 or more characters
     if (!name.trim() || name.length < 3)
       return updateError('Invalid name!', setError);
-    // only valid email id is allowed
-    if (!isValidUrl(avatar)) return updateError('Invalid image!', setError);
     // password must have 8 or more characters
     if (!sport.trim() || sport.length < 2)
       return updateError('Password is less then 8 characters!', setError);
@@ -73,8 +70,6 @@ export default function FormRegisterUser({ navigation }) {
       .integer()
       .required("Age is required!")
       .positive("Age must be positive!"),
-    avatar: Yup.string()
-      .url(),
     sport: Yup.string()
       .trim()
       .min(2, "Too short sport!")
@@ -116,7 +111,7 @@ export default function FormRegisterUser({ navigation }) {
           handleBlur,
           handleSubmit,
         }) => {
-          const { name, age, description, avatar, sport, nationality} = values;
+          const { name, age, description, sport, nationality} = values;
           return (
             <>
               <FormInput
@@ -159,15 +154,6 @@ export default function FormRegisterUser({ navigation }) {
                 onBlur={handleBlur('description')}
                 label='Description'
                 placeholder='Description...'
-              />
-              <FormInput
-                value={avatar}
-                error={touched.avatar && errors.avatar}
-                onChangeText={handleChange('avatar')}
-                onBlur={handleBlur('avatar')}
-                autoCapitalize='none'
-                label='Image'
-                placeholder='Image URL (JPG/JPEG/PNG)'
               />
               <FormSubmitButton
                 submitting={isSubmitting}
