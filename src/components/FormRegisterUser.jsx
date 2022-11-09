@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
-import FormSubmitButton from "./FormSubmitButton";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import FormInput from "./FormInput";
 import { useDispatch, useSelector } from "react-redux";
 import {updateUser} from "../redux/actions/index"
@@ -58,7 +57,7 @@ export default function FormRegisterUser({ navigation }) {
     stateUpdater(error);
     setTimeout(() => {
       stateUpdater('');
-    }, 2500);
+    }, 1000);
   };
   
   const validationSchema = Yup.object({
@@ -90,6 +89,7 @@ export default function FormRegisterUser({ navigation }) {
 
   const signUp = async (values, formikActions) => {
     dispatch(updateUser({...values, mail}))
+    alert("Profile edited successfully!")
 
     formikActions.resetForm();
     formikActions.setSubmitting(false);
@@ -110,8 +110,13 @@ export default function FormRegisterUser({ navigation }) {
           handleChange,
           handleBlur,
           handleSubmit,
+          isValid,
+          dirty
         }) => {
           const { name, age, description, sport, nationality} = values;
+          const backgroundColor = isSubmitting
+      ? 'rgba(27,27,51,0.4)'
+      : 'rgba(27,27,51,1)';
           return (
             <>
               <FormInput
@@ -155,11 +160,13 @@ export default function FormRegisterUser({ navigation }) {
                 label='Description'
                 placeholder='Description...'
               />
-              <FormSubmitButton
-                submitting={isSubmitting}
-                onPress={handleSubmit}
-                title='Update!'
-              />
+              <TouchableOpacity
+                 disabled={!(isValid && dirty)}
+                 onPress={!isSubmitting ? handleSubmit : null}
+                 style={[styles.button, {backgroundColor}]}
+              >
+                  <Text style={{ fontSize: 18, color: '#fff' }}>Update!</Text>
+               </TouchableOpacity>
             </>
           );
         }}
@@ -172,5 +179,12 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20,
     paddingHorizontal: 20
-  }
+  },
+  button: {
+    height: 45,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 70
+  },
 });
