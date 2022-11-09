@@ -51,7 +51,7 @@ function Profile(props) {
     }
   }
 
-  const avatar = typeof userById[0]?.data === "undefined" ? user[0].data.avatar : userById[0].data.avatar;
+  const avatar = typeof userById[0]?.data !== "object" ? user[0].data.avatar : userById[0].data.avatar;
 
   return (
     <Provider>
@@ -82,16 +82,16 @@ function Profile(props) {
 
         <View style={styles.infoContainer}>
           <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>
-            { typeof userById[0]?.data === "undefined" ? user[0].data.name : userById[0].data.name }
+            { typeof userById[0]?.data !== "object" ? user[0].data.name : userById[0].data.name }
           </Text>
           <Text style={[styles.text, styles.subText]}>
-            { typeof userById[0]?.data === "undefined" ? user[0].data.age : userById[0].data.age }
+            { typeof userById[0]?.data !== "object" ? user[0].data.age : userById[0].data.age }
           </Text>
           <Text style={[styles.text, styles.subText]}>
-            { typeof userById[0]?.data === "undefined" ? user[0].data.nationality : userById[0].data.nationality }
+            { typeof userById[0]?.data !== "object" ? user[0].data.nationality : userById[0].data.nationality }
           </Text>
           <Text style={[styles.text, { color: "AEB5BC", fontSize: 14}]}>
-            { typeof userById[0]?.data === "undefined" ? user[0].data.sport : userById[0].data.sport }
+            { typeof userById[0]?.data !== "object" ? user[0].data.sport : userById[0].data.sport }
           </Text>
         </View>
 
@@ -131,7 +131,7 @@ function Profile(props) {
             <View style={styles.descripcionIndicador}></View>
             <View style={{width: 250}}>
             <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-              { typeof userById[0]?.data === "undefined" ? 'Please fill in your description ...' : userById[0].data.description }
+              { userById[0]?.data.description.trim() === "" ? 'Please fill in your description ...' : userById[0].data.description }
             </Text>
             </View>
           </View>
