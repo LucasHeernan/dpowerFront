@@ -1,13 +1,10 @@
-import React from "react";
-import jwtDecode from "jwt-decode";
+import React, { useState } from "react";
 import * as AuthSession from "expo-auth-session"
 import { openAuthSessionAsync } from "expo-web-browser";
-import { View, Text, StyleSheet, ScrollText, ScrollView, Image, SafeAreaView, Alert, Platform } from 'react-native';
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Button, Divider, IconButton, Menu, Provider } from "react-native-paper";
+import { View, Text, StyleSheet, ScrollView, Image, SafeAreaView, Platform } from 'react-native';
+import { Divider, IconButton, Menu, Provider } from "react-native-paper";
 import { cleanUser } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import FormRegisterUser from "./FormRegisterUser";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 import { getUserById } from "../redux/actions";
@@ -20,18 +17,16 @@ const redirectUri = AuthSession.makeRedirectUri({ useProxy }); // <-- must be se
 
 
 function Profile(props) {
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = useState(false);
   const { user, userById } = useSelector(state => state)
   const dispatch = useDispatch()
-  const openMenu = () => setVisible(true);
 
+  const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
   const { powers, likes, followers, images } = props;
   
   const actualUser = user[0].data.id;
-  console.log('QUE HAY EN USER BY ID - ', userById)
-  // console.log('QUE HAY EN USER - ', user[0].data)
 
   useEffect(() => {
     dispatch(getUserById(actualUser))
@@ -45,13 +40,13 @@ function Profile(props) {
       dispatch(cleanUser())
       await openAuthSessionAsync(`${authorizationEndpoint}?client_id=${auth0ClientId}&returnTo=${redirectUri}`, 'redirectUrl');
       // handle unsetting your user from store / context / memory
-      
     } catch (err) {
-       console.error(err)    
+      console.error(err)
     }
   }
-//!userById.length  ? user[0].data.name : userById[0].data.name
-  const avatar =  !userById.length  ? user[0].data.avatar : userById[0].data.avatar
+
+  const avatar = !userById.length  ? user[0].data.avatar : userById[0].data.avatar;
+
   return (
     <Provider>
 

@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Caption, Headline } from "react-native-paper";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/actions";
 
 
 export default function ProductDetail({route}) {
 
-    const { image, title, price, name, description, category, id } = route.params.selectedProduct
+    // const dispatch = useDispatch();
+    const { image, price, name, description, category } = route.params.selectedProduct;
+
+    console.log('QUE LLEGA -', route.params.selectedProduct);
+
+    // const handleSubmit = (e) => {
+    //     dispatch(addToCart(e))
+    // }
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>

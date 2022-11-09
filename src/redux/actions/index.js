@@ -1,18 +1,19 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { 
-    GET_ALL_PRODUCTS, 
-    GET_PRODUCT_BY_ID, 
-    GET_CATEGORIES, 
-    ORDER_BY_PRICE, 
+    GET_ALL_PRODUCTS,
+    GET_PRODUCT_BY_ID,
+    GET_CATEGORIES,
+    ORDER_BY_PRICE,
     ORDER_BY_NAME,
-    FILTER_BY_CATEGORY, 
-    GET_PRODUCT_BY_NAME, 
-    CLEAR_MARKET, 
-    CLEAN_USER, 
-    CREATE_USER, 
+    FILTER_BY_CATEGORY,
+    GET_PRODUCT_BY_NAME,
+    CLEAR_MARKET,
+    CLEAN_USER,
+    CREATE_USER,
     UPDATE_USER,
-    GET_USER_BY_ID } from '../actionTypes';
+    GET_USER_BY_ID,
+    ADD_TO_CART
+ } from '../actionTypes';
 
 
 
@@ -129,4 +130,8 @@ export function clearMarket() {
 
 export function cleanUser() {
     return { type: CLEAN_USER }
+}
+
+export function addToCart(product) {
+    return { type: ADD_TO_CART, payload: product }
 }
