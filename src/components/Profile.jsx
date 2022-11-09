@@ -30,7 +30,7 @@ function Profile(props) {
   const { powers, likes, followers, images } = props;
   
   const actualUser = user[0].data.id;
-  // console.log('QUE HAY EN USER BY ID - ', userById)
+  console.log('QUE HAY EN USER BY ID - ', userById)
   // console.log('QUE HAY EN USER - ', user[0].data)
 
   useEffect(() => {
@@ -50,9 +50,8 @@ function Profile(props) {
        console.error(err)    
     }
   }
-
-  const avatar = typeof userById[0]?.data !== "object" ? user[0].data.avatar : userById[0].data.avatar;
-
+//!userById.length  ? user[0].data.name : userById[0].data.name
+  const avatar =  !userById.length  ? user[0].data.avatar : userById[0].data.avatar
   return (
     <Provider>
 
@@ -82,16 +81,16 @@ function Profile(props) {
 
         <View style={styles.infoContainer}>
           <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>
-            { typeof userById[0]?.data !== "object" ? user[0].data.name : userById[0].data.name }
+            { !userById.length  ? user[0].data.name : userById[0].data.name }
           </Text>
           <Text style={[styles.text, styles.subText]}>
-            { typeof userById[0]?.data !== "object" ? user[0].data.age : userById[0].data.age }
+            { !userById.length ? user[0].data.age : userById[0].data.age }
           </Text>
           <Text style={[styles.text, styles.subText]}>
-            { typeof userById[0]?.data !== "object" ? user[0].data.nationality : userById[0].data.nationality }
+            { !userById.length ? user[0].data.nationality : userById[0].data.nationality }
           </Text>
           <Text style={[styles.text, { color: "AEB5BC", fontSize: 14}]}>
-            { typeof userById[0]?.data !== "object" ? user[0].data.sport : userById[0].data.sport }
+            { !userById.length ? user[0].data.sport : userById[0].data.sport }
           </Text>
         </View>
 
@@ -131,7 +130,7 @@ function Profile(props) {
             <View style={styles.descripcionIndicador}></View>
             <View style={{width: 250}}>
             <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-              { userById[0]?.data.description.trim() === "" ? 'Please fill in your description ...' : userById[0].data.description }
+              { !userById.length ? 'Please fill in your description ...' : userById[0].data.description }
             </Text>
             </View>
           </View>
