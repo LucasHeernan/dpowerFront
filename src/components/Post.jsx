@@ -24,8 +24,8 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
 
         <View style={styles.posts}>
 
-          <Text style={styles.description}>'Este es el titulo' {description}</Text>
-
+          
+          <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text>
           <View style={styles.contain} >
             
             <View>
@@ -37,9 +37,25 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
             />
             </TouchableOpacity>
             </View>
+
+            <Text style={styles.description}>Esta es la descripcion {description}</Text>
             <View style={styles.logos}>
 
-            <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text>
+            
+
+              
+      
+
+              {/* logica para el renderizado condicional de los powers  */}
+              { powersGained > 0 ? (
+              <View style={styles.container}>
+                <TouchableOpacity onPress={() => alert('Dar Power')}>
+                <Entypo style={styles.signos} name="battery" size={28} color="#C7D31E" />
+                </TouchableOpacity>
+                <Text style={styles.numbers}>{powersGained}</Text>
+              </View> ) : (<Text>                 </Text>)
+              }
+
 
               <View style={styles.container}>
                 <TouchableOpacity onPress={() => alert('dar like')}>
@@ -47,13 +63,8 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
                 </TouchableOpacity>
                 <Text style={styles.numbers}>{likes}</Text>
               </View>
-      
-              <View style={styles.container}>
-                <TouchableOpacity onPress={() => alert('Dar Power')}>
-                <Entypo style={styles.signos} name="battery" size={28} color="#C7D31E" />
-                </TouchableOpacity>
-                <Text style={styles.numbers}>{powersGained}</Text>
-              </View>
+
+
 
               <View style={styles.container}>
                 <TouchableOpacity onPress={() => alert('Comentar/Ver Comentarios')}>
@@ -110,7 +121,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 26,
     marginTop: 3,
-    marginRight: 35,
+    marginLeft: 40,
     alignSelf: 'flex-start',
     color: '#F5F5F5',
   },
@@ -130,10 +141,10 @@ const styles = StyleSheet.create({
     width: 290,
     fontSize: 24,
     color: '#F5F5F5',
-    marginTop: 15,
+    marginTop: 5,
     marginBottom: 2,
-    marginLeft: -40,
-    fontSize:22,
+    marginLeft: 6,
+    fontSize:18,
   },
   contain: {
     marginBottom: 0,
