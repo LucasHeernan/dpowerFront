@@ -14,7 +14,7 @@ export default function MarketPlace({producto}) {
   const dispatch = useDispatch();
   const { allProducts, filterProducts, categories, detail } = useSelector(store => store);
 
-  console.log('allproducts:    ', allProducts )
+  //console.log('allproducts:    ', allProducts )
 
   useEffect(() => {
     !categories.length && dispatch(getCategories());

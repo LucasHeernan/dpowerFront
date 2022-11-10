@@ -34,7 +34,11 @@ function ProfileStack() {
       initialRouteName='My Profile'
     >
       <ProfileStackNavigator.Screen
-        name="The Profile"
+        name="Profile"
+        options={{
+          headerStyle: {backgroundColor: "#4d4d4d"},
+          headerTitleStyle: {color: "white"}
+        }}
         children={() => <Profile
         key={user[0].data.id}
         name={user[0].data.name || user[0].data.username}
@@ -50,7 +54,10 @@ function ProfileStack() {
       <ProfileStackNavigator.Screen
         name="Form"
         component={FormRegisterUser}
-        
+        options={{
+          headerStyle: {backgroundColor: "#4d4d4d"},
+          headerTitleStyle: {color: "white"}
+        }}
       />
     </ProfileStackNavigator.Navigator>
   )
@@ -149,8 +156,9 @@ function MyTabs() {
     <Tab.Screen name="Add Product"
 
       component={PostPicture}
-
       options={{
+        headerStyle: {backgroundColor:"#4d4d4d"},
+        headerTitleStyle: {color: "white"},
         title: 'New Post',
         tabBarIcon: ({size,focused,color}) => {
           return (                
@@ -175,6 +183,8 @@ function MyTabs() {
     <Tab.Screen name="Profile"
       component={ProfileStack}
       options={{
+        headerStyle: {backgroundColor:"#4d4d4d"},
+        headerTitleStyle: {color: "white"},
         headerShown: false,
         title: 'My profile',
         tabBarIcon: ({size,focused,color}) => {

@@ -2,21 +2,27 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Button} from 'react-native';
 import { TextInput } from "react-native-paper";
 import Post from '../components/Post'
-import perfiles from "./perfiles";
-import axios from 'axios'
-import { useState } from 'react';
 
+import axios from 'axios'
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 
 
 function HomeScreen() {
  
 const [posteos, setPosteos ] = useState([])
+const dispatch = useDispatch();
+
+// useEffect(() => {
+//   !posteos.length && dispatch(allPost());
+  
+// }, [])
 
 
 async function allPost () {
   let res = await axios.get('https://dpower-production.up.railway.app/post');
  setPosteos( res.data)
-  
+  return posteos
   console.log('datallpost', posteos)
 }
 
@@ -29,8 +35,8 @@ async function allPost () {
 
   return (
     <View>
-      <Button onPress={allPost}title={'Refresh'}/>
 
+    <TouchableOpacity onPress={allPost()}></TouchableOpacity>
 
     <ScrollView>
       

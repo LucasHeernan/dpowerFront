@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
  import * as ImagePicker from 'expo-image-picker';
 import { createIconSetFromFontello } from '@expo/vector-icons';
 import axios from 'axios';
-
+import { useNavigation } from '@react-navigation/native';
 
 //  POST https://api.cloudinary.com/v1_1/dr6vvkghv/image/upload
 
@@ -28,6 +28,8 @@ import axios from 'axios';
         UserInfoId: user[0].data.id
 
     })
+
+    const navigation = useNavigation();
 
     // function handleChange(e) {
     //     setPost((post) => ({
@@ -99,8 +101,8 @@ import axios from 'axios';
             .then( async (res) => {
                 let imagenurl = await res.json()
                 let publicacion = {
-                    likes: 1,
-                    powersGained: 1,
+                    likes: 0,
+                    powersGained: 0,
                     description: ' ',
                     UserInfoId: user[0].data.id,
                     multimedia: imagenurl.secure_url
@@ -117,7 +119,7 @@ import axios from 'axios';
                 //console.log('media     :', imagenurl.secure_url ) 
             })
             .then ( () => {setImg(null) 
-            alert('Post') })
+           navigation.navigate("Home") })
             .catch(err => {
             console.log('Error del fetch:     ', err)
             })  
