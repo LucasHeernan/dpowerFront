@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native";
+import { Dialog, Button, CheckBox } from "@rneui/themed";
 import * as Sharing from 'expo-sharing';
 import { setNestedObjectValues } from "formik";
+import { useSelector } from "react-redux";
 
-function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
+function Post({UserInfoId, id, powersGained, likes, multimedia, description, userById}) {
+
+  
+
+  const [checked, setChecked] = useState(0);
+
+  const [visible, setVisible] = useState(false);
+
+  const showDialog = () => setVisible(true);
+
+  const hideDialog = () => setVisible(false);
 
   let openShareDialogAsync = async () => {
     // if (Platform.OS === 'web') {
@@ -49,11 +61,41 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
               {/* logica para el renderizado condicional de los powers  */}
               { powersGained > 0 ? (
               <View style={styles.container}>
-                <TouchableOpacity onPress={() => alert('Dar Power')}>
+                <TouchableOpacity onPress={showDialog}>
                 <Entypo style={styles.signos} name="battery" size={28} color="#C7D31E" />
                 </TouchableOpacity>
                 <Text style={styles.numbers}>{powersGained}</Text>
-              </View> ) : (<Text>                 </Text>)
+                <Dialog
+                  isVisible={visible}
+                  onBackdropPress={hideDialog}
+                >
+                  <Dialog.Title title="Give Powers"/>
+                  <Text>You have {!userById[0].data.powers ? 0 : userById[0].data.powers} Powers</Text>
+                  {["10 Powers", "25 Powers", "50 Powers", "100 Powers"].map((l, i) => (
+                    <CheckBox
+                      key={i}
+                      title={l}
+                      containerStyle={{backgroundColor: "white", borderWidth: 0}}
+                      checkedIcon="dot-circle-o"
+                      uncheckedIcon="circle-o"
+                      checked={checked === i + 1}
+                      onPress={() => setChecked(i + 1)}
+                    />
+                  ))}
+
+                  <Dialog.Actions>
+                    <Dialog.Button
+                      title="CONFIRM"
+                      onPress={() => {
+                        console.log(`Option ${checked} was selected!`);
+                        hideDialog()
+                      }}
+                    />
+                    <Dialog.Button title="CANCEL" onPress={hideDialog} />
+                  </Dialog.Actions>
+                </Dialog>
+              </View>
+               ) : (<Text>                 </Text>)
               }
 
 

@@ -30,12 +30,10 @@ function Profile(props) {
   const { powers, likes, followers, images } = props;
   
   const actualUser = user[0].data.id;
-  console.log('QUE HAY EN USER BY ID - ', userById)
   // console.log('QUE HAY EN USER - ', user[0].data)
 
   useEffect(() => {
     dispatch(getUserById(actualUser))
-    console.log('KELOKE ES LOOP O NO');
   }, [user])
 
   const navigation = useNavigation()

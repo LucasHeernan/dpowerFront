@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function HomeScreen() {
  
+const { userById } = useSelector(state => state)
 const [posteos, setPosteos ] = useState([])
 const dispatch = useDispatch();
 
@@ -52,6 +53,7 @@ async function allPost () {
          likes={p.likes}
          multimedia={p.multimedia}
          description={p.description}
+         userById={userById}
          /> 
         
         </View>
