@@ -30,6 +30,24 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
     const imageTmp  = await Sharing.shareAsync(multimedia);
   };
 
+  const Errores = () => {
+    if(userById[0].data.powers < 10) return (<Text>You dont have enough Powers!</Text>)
+
+    return (
+      ["10 Powers", "25 Powers", "50 Powers", "100 Powers"].map((l, i) => 
+                    <CheckBox
+                      key={i}
+                      title={l}
+                      containerStyle={{backgroundColor: "white", borderWidth: 0}}
+                      checkedIcon="dot-circle-o"
+                      uncheckedIcon="circle-o"
+                      checked={checked === i + 1}
+                      onPress={() => setChecked(i + 1)}
+                    />
+                  )
+    )
+  }
+
   return (
     <ScrollView >
 		  <View style={styles.bg} >
@@ -52,12 +70,6 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
 
             <Text style={styles.description}>Esta es la descripcion {description}</Text>
             <View style={styles.logos}>
-
-            
-
-              
-      
-
               {/* logica para el renderizado condicional de los powers  */}
               { powersGained > 0 ? (
               <View style={styles.container}>
@@ -71,17 +83,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
                 >
                   <Dialog.Title title="Give Powers"/>
                   <Text>You have {!userById[0].data.powers ? 0 : userById[0].data.powers} Powers</Text>
-                  {["10 Powers", "25 Powers", "50 Powers", "100 Powers"].map((l, i) => (
-                    <CheckBox
-                      key={i}
-                      title={l}
-                      containerStyle={{backgroundColor: "white", borderWidth: 0}}
-                      checkedIcon="dot-circle-o"
-                      uncheckedIcon="circle-o"
-                      checked={checked === i + 1}
-                      onPress={() => setChecked(i + 1)}
-                    />
-                  ))}
+                  <Errores />
 
                   <Dialog.Actions>
                     <Dialog.Button
