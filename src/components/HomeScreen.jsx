@@ -37,7 +37,11 @@ async function allPost () {
   return (
     <View>
 
-    <TouchableOpacity onPress={allPost()}></TouchableOpacity>
+    <View>
+    <TouchableOpacity onPress={allPost} style={styles.btncart}> 
+    <Text>Refresh</Text>
+    </TouchableOpacity>
+    </View>
 
     <ScrollView>
       
@@ -98,7 +102,13 @@ const styles = StyleSheet.create({
   inputview:{
     alignItems: 'flex-end',
 
-  }
+  },
+  btncart:{
+   
+   
+    backgroundColor: '#C7D31E',
+    
+  },
 })
 
 
