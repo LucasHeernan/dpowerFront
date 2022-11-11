@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Caption, Headline } from "react-native-paper";
 import { useDispatch } from "react-redux";
@@ -7,10 +7,27 @@ import { addToCart } from "../redux/actions";
 
 export default function ProductDetail({route}) {
 
-    // const dispatch = useDispatch();
-    const { image, price, name, description, category } = route.params.selectedProduct;
+    const dispatch = useDispatch();
+    const { image, price, name, description, category, id, stock } = route.params.selectedProduct;
+    const [product, setProduct] = useState(null)
 
-    console.log('QUE LLEGA -', route.params.selectedProduct);
+    useEffect(() => {
+        setProduct({
+            id: id,
+            name: name,
+            price: price,
+            image: image,
+            stock: stock
+        });
+    }, []);
+
+    const handleSubmit = () => {
+        dispatch(addToCart(product));
+        console.log('PRODUC SUBMIT - ', product)
+        alert("Producto añadido al carrito!");
+    }
+
+    // console.log('QUE LLEGA -', route.params.selectedProduct);
 
     // const handleSubmit = (e) => {
     //     dispatch(addToCart(e))
@@ -23,7 +40,7 @@ export default function ProductDetail({route}) {
                 <Caption style={{letterSpacing: 2, alignItems: "center", marginBottom:2, marginTop: 20}}>{category}</Caption>
                 <Headline style={styles.name}>{name}</Headline>
                 <Headline style={styles.price}>${price}</Headline>
-                <Button icon="cash" mode="contained" style={styles.carting} onPress={() => alert("Añadido al carrito!")}>ADD TO CART</Button>
+                <Button icon="cash" mode="contained" style={styles.carting} onPress={handleSubmit}>ADD TO CART</Button>
                 <Text style={styles.description}>{description}</Text>
             </ScrollView>
         </SafeAreaView>

@@ -12,7 +12,9 @@ import {
     CREATE_USER,
     UPDATE_USER,
     GET_USER_BY_ID,
-    ADD_TO_CART
+    ADD_TO_CART,
+    CLEAN_CART,
+    REMOVE_ITEM_FROM_CART
  } from '../actionTypes';
 
 
@@ -46,17 +48,7 @@ export function getProductById(id) {
 }
 
 export function getCategories() {
-    return async (dispatch) => {
-        try {
-            const data = await axios(`https://dpower-production.up.railway.app/products`).then(e => e.data);
-            return dispatch({
-                type: GET_CATEGORIES,
-                payload: data
-            })
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    return { type: GET_CATEGORIES }
 }
 
 export function createUser(info) {
@@ -134,4 +126,12 @@ export function cleanUser() {
 
 export function addToCart(product) {
     return { type: ADD_TO_CART, payload: product }
+}
+
+export function removeItemFromCart(id) {
+    return { type: REMOVE_ITEM_FROM_CART, payload: id }
+}
+
+export function cleanCart() {
+    return { type: CLEAN_CART }
 }

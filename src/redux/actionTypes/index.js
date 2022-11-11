@@ -11,3 +11,5 @@ export const CREATE_USER = "CREATE_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const GET_USER_BY_ID = 'GET_USER_BY_ID';
 export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART';
+export const CLEAN_CART = 'CLEAN_CART';

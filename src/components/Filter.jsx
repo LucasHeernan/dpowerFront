@@ -35,7 +35,7 @@ export default function Filter() {
             <SelectList
                 data={categories}
                 setSelected={setCategory}
-                onSelect={category => handlerByCatogory(category)}
+                onSelect={() => handlerByCatogory(category)}
                 placeholder='Category'
                 search={false}
                 inputStyles={styles.test}
