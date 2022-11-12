@@ -100,13 +100,22 @@ import { useNavigation } from '@react-navigation/native';
             })
             .then( async (res) => {
                 let imagenurl = await res.json()
-                let publicacion = {
+                let publicacion ={}
+                if (user[0].validated === true ) {
+                    publicacion = {
                     likes: 0,
                     powersGained: 0,
                     description: ' ',
                     UserInfoId: user[0].data.id,
                     multimedia: imagenurl.secure_url
-                }
+                } } else {
+                    publicacion = {
+                        likes: 0,
+                        powersGained: -1,
+                        description: ' ',
+                        UserInfoId: user[0].data.id,
+                        multimedia: imagenurl.secure_url
+                }}
                 // console.log('RESJSON:   ', imagenurl)
                 // console.log('estado', publicacion)
                 
