@@ -7,8 +7,10 @@ import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native";
 import * as Sharing from 'expo-sharing';
 import { setNestedObjectValues } from "formik";
+import { validate } from "react-native-web/dist/cjs/exports/StyleSheet/validate";
+import axios from 'axios'
 
-function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
+function Post({UserInfoId, id, powersGained, likes, multimedia, description, validated}) {
 
   let openShareDialogAsync = async () => {
     // if (Platform.OS === 'web') {
@@ -17,6 +19,12 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
     // }
     const imageTmp  = await Sharing.shareAsync(multimedia);
   };
+
+
+
+
+
+
 
   return (
     <ScrollView >
@@ -47,18 +55,18 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
       
 
               {/* logica para el renderizado condicional de los powers  */}
-              { powersGained > 0 ? (
+              {  powersGained >= 0 ? (
               <View style={styles.container}>
-                <TouchableOpacity onPress={() => alert('Dar Power')}>
+                <TouchableOpacity onPress={() => validate(UserInfoId)}>
                 <Entypo style={styles.signos} name="battery" size={28} color="#C7D31E" />
                 </TouchableOpacity>
                 <Text style={styles.numbers}>{powersGained}</Text>
               </View> ) : (<Text>                 </Text>)
+              
               }
 
-
               <View style={styles.container}>
-                <TouchableOpacity onPress={() => alert('dar like')}>
+                <TouchableOpacity onPress={() => validate(UserInfoId)}>
                 <MaterialIcons style={styles.signos} name="favorite" size={28} color="#C7D31E" />
                 </TouchableOpacity>
                 <Text style={styles.numbers}>{likes}</Text>
@@ -67,7 +75,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
 
 
               <View style={styles.container}>
-                <TouchableOpacity onPress={() => alert('Comentar/Ver Comentarios')}>
+                <TouchableOpacity onPress={() => console.log('validate', validate(UserInfoId))}>
                 <Entypo style={styles.signos} name="chat" size={28} color="#C7D31E" />
                 </TouchableOpacity>
                 </View>

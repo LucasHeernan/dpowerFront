@@ -11,27 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 function HomeScreen() {
  
 const [posteos, setPosteos ] = useState([])
-const dispatch = useDispatch();
 
-// useEffect(() => {
-//   !posteos.length && dispatch(allPost());
-  
-// }, [])
+const dispatch = useDispatch();
 
 
 async function allPost () {
   let res = await axios.get('https://dpower-production.up.railway.app/post');
  setPosteos( res.data)
   return posteos
-  console.log('datallpost', posteos)
 }
-
-
-
-
-
-
-
 
   return (
     <View>
