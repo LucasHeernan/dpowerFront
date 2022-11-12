@@ -30,7 +30,7 @@ async function allPost () {
 }
 
   return (
-    <View >
+    <View style={styles.bg1}>
 
     <ScrollView
     contentContainerStyle={styles.scrollView}
@@ -128,6 +128,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     justifyContent: 'center',
   },
+  bg1:{
+    backgroundColor: "#7D7D7D",
+    width: '100%',
+    margin: 0
+  }
   
 })
 

@@ -13,8 +13,9 @@ import { useNavigation } from '@react-navigation/native';
  export default function PostImage () {
     const { user } = useSelector(store => store )
     
-    const [image, setImage] = useState(null);
-    const [img, setImg] = useState(null)
+    const [ image, setImage ] = useState(null);
+    const [ img, setImg ] = useState(null)
+    const [ descr, setDescr ] = useState('')
 
 
     const [mediaurl, setmediaurl] = useState({});
@@ -31,12 +32,12 @@ import { useNavigation } from '@react-navigation/native';
 
     const navigation = useNavigation();
 
-    // function handleChange(e) {
-    //     setPost((post) => ({
-    //         ...post,
-    //         description: e
-    //     }))
-    // }
+    function handleChange(e) {
+        setPost((post) => ({
+            ...post,
+            description: e
+        }))
+    }
 
     function handleselectmedia(e) {
         setPost((post) => ({
@@ -89,7 +90,7 @@ import { useNavigation } from '@react-navigation/native';
 
     const cloudinaryUpload = () => {
           
-        console.log('upload console:     ', image)
+        //console.log('upload console:     ', image)
 
           fetch("https://api.cloudinary.com/v1_1/dr6vvkghv/image/upload", { 
             method: "POST",
@@ -105,19 +106,19 @@ import { useNavigation } from '@react-navigation/native';
                     publicacion = {
                     likes: 0,
                     powersGained: 0,
-                    description: ' ',
+                    description: descr,
                     UserInfoId: user[0].data.id,
                     multimedia: imagenurl.secure_url
                 } } else {
                     publicacion = {
                         likes: 0,
                         powersGained: -1,
-                        description: ' ',
+                        description: descr,
                         UserInfoId: user[0].data.id,
                         multimedia: imagenurl.secure_url
                 }}
                 // console.log('RESJSON:   ', imagenurl)
-                // console.log('estado', publicacion)
+                
                 
                 axios.post(`https://dpower-production.up.railway.app/post`, publicacion)
                 //.then(resp => alert('Post created!'))
@@ -127,43 +128,36 @@ import { useNavigation } from '@react-navigation/native';
                 // handleselectmedia(imagenurl.secure_url)
                 //console.log('media     :', imagenurl.secure_url ) 
             })
-            .then ( () => {setImg(null) 
-           navigation.navigate("Home") })
+            .then ( () => {setImg(null)
+             setDescr('')   
+           })
+
+           .finally(() =>  navigation.navigate("Home"))
             .catch(err => {
             console.log('Error del fetch:     ', err)
-            })  
-            
-           
+            })        
     }
 
 
-    const verificacion =  () => {
-        console.log('imagenurl2:  ', mediaurl.secure_url)
-      handleselectmedia(mediaurl.secure_url)
-      
-    }
-
-   
     
 
-
-
-    const submitphoto =  () => {
-        console.log('mediaurl:  ', mediaurl)
-        handleselectmedia(mediaurl)
-         console.log('POST2:       ', post)
-         
-    }
-
-    const postear = ()=>{
-        console.log(post)
-    }
+   
 
 
     
         return (
      
-        <View style={styles.container1}>             
+        <View style={styles.container1}>   
+          <View>
+
+            <Text style={styles.textdescr}>Description: (optional)</Text>
+            <TextInput 
+            style={styles.input}
+            onChangeText={setDescr}
+           placeholder={"..."}
+           value={descr}
+            />
+        </View>  
         <View style={styles.imagecontainer}>
             <Image source={ img ? ( {uri:img.uri}) : { uri: null }} style={styles.tinyLogo}/>
         </View> 
@@ -174,10 +168,7 @@ import { useNavigation } from '@react-navigation/native';
             <Text style={styles.picktext}>Pick a photo</Text>
         </TouchableOpacity>   
 
-        <View>
-     
-
-        </View>
+        
 
         <TouchableOpacity style={styles.postear} onPress={cloudinaryUpload}>
             <Text style={styles.posteartext}>Post</Text>
@@ -203,7 +194,10 @@ import { useNavigation } from '@react-navigation/native';
           borderRadius: 35,
         },
     container1:{
-        alignItems: 'center',  
+        alignItems: 'center',
+        backgroundColor: '#4d4d4d',
+        paddingVertical: 39,
+        marginBottom: 20,  
         
     },
     formContainer: {
@@ -215,12 +209,13 @@ import { useNavigation } from '@react-navigation/native';
           alignSelf: 'center',
           borderColor: '#EDEDED',
           borderWidth: 5,
-          margin: 25,
-          marginTop: 50,
+          margin: 18,
+          marginTop: 20,
     },
 
     pick:{
         margin: 10,
+        marginTop:-5,
         fontSize: 22,
         backgroundColor: '#E8E8E8',
         borderRadius: 8,
@@ -233,20 +228,40 @@ import { useNavigation } from '@react-navigation/native';
         
     },
     postear:{
-        marginTop: 30,
+        marginTop: 35,
         backgroundColor: '#C7D31E',
         color: '#C7D31E',
         borderRadius: 8,
-        width: 150,
+        width: 180,
         alignItems: 'center',
+        margin: 20,
         
         
     },
     posteartext:{
-       fontSize: 26,
+       fontSize: 28,
+       fontWeight: 'bold',
        margin: 8,
        marginHorizontal: 30,
-    }
+    },
+
+    input: {
+        width: 300,
+        margin: 15,
+        borderWidth: 5,
+        borderColor: '#EDEDED',
+        backgroundColor: '#E0E0E0',
+        padding: 10,
+        borderRadius: 15,
+
+      },
+      textdescr:{
+        marginTop: 10,
+        marginLeft: 22,
+        marginBottom: -8,
+        fontSize: 22,
+        color: '#EDEDED'
+      }
 
     
 
