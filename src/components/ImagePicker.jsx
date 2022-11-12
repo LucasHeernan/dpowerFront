@@ -89,7 +89,6 @@ import { useNavigation } from '@react-navigation/native';
 
     const cloudinaryUpload = () => {
           
-        console.log('upload console:     ', image)
 
           fetch("https://api.cloudinary.com/v1_1/dr6vvkghv/image/upload", { 
             method: "POST",
@@ -129,7 +128,6 @@ import { useNavigation } from '@react-navigation/native';
 
 
     const verificacion =  () => {
-        console.log('imagenurl2:  ', mediaurl.secure_url)
       handleselectmedia(mediaurl.secure_url)
       
     }
@@ -140,14 +138,11 @@ import { useNavigation } from '@react-navigation/native';
 
 
     const submitphoto =  () => {
-        console.log('mediaurl:  ', mediaurl)
         handleselectmedia(mediaurl)
-         console.log('POST2:       ', post)
          
     }
 
     const postear = ()=>{
-        console.log(post)
     }
 
 

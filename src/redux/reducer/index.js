@@ -1,5 +1,5 @@
 import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
-FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, CLEAN_USER, CREATE_USER, UPDATE_USER, GET_USER_BY_ID } from "../actionTypes";
+FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, CLEAN_USER, CREATE_USER, UPDATE_USER, GET_USER_BY_ID, UPDATE_POST } from "../actionTypes";
 
 const initialState = {
     allProducts: [],
@@ -54,6 +54,10 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 user: [...state.user, action.payload]
+            }
+        case UPDATE_POST:
+            return {
+                ...state
             }
         case ORDER_BY_PRICE:
             let allProductsPPrice = [...state.allProducts]

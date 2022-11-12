@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Button} from 'react-native';
 import { TextInput } from "react-native-paper";
 import Post from '../components/Post'
+import { getUserById } from "../redux/actions";
 
 import axios from 'axios'
 import { useState, useEffect } from 'react';
@@ -10,10 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 function HomeScreen() {
  
-const { userById } = useSelector(state => state)
+const { user, userById } = useSelector(state => state)
 const [posteos, setPosteos ] = useState([])
 const dispatch = useDispatch();
-
 // useEffect(() => {
 //   !posteos.length && dispatch(allPost());
   
@@ -23,6 +23,7 @@ const dispatch = useDispatch();
 async function allPost () {
   let res = await axios.get('https://dpower-production.up.railway.app/post');
  setPosteos( res.data)
+  dispatch(getUserById(user[0].data.id))
   return posteos
   console.log('datallpost', posteos)
 }
@@ -51,13 +52,14 @@ async function allPost () {
 
       <View key={p.id}>
         
-         <Post 
+         <Post
+         id={p.id} 
          UserInfoId={p.UserInfoId}
          powersGained={p.powersGained}
          likes={p.likes}
          multimedia={p.multimedia}
          description={p.description}
-         userById={userById}
+         userById={!userById ? user : userById}
          /> 
         
         </View>

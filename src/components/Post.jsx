@@ -8,11 +8,16 @@ import { TouchableOpacity } from "react-native";
 import { Dialog, Button, CheckBox } from "@rneui/themed";
 import * as Sharing from 'expo-sharing';
 import { setNestedObjectValues } from "formik";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePost, updateUser } from "../redux/actions";
+import { useEffect } from "react";
+import { Alert } from "react-native";
 
 function Post({UserInfoId, id, powersGained, likes, multimedia, description, userById}) {
 
-  
+  const [transaction, setTransaction] = useState(0)
+
+  const dispatch = useDispatch()
 
   const [checked, setChecked] = useState(0);
 
@@ -29,6 +34,10 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
     // }
     const imageTmp  = await Sharing.shareAsync(multimedia);
   };
+
+  useEffect(() => {
+    // getPostById()
+  }, [transaction])
 
   const Errores = () => {
     if(userById[0].data.powers < 10) return (<Text>You dont have enough Powers!</Text>)
@@ -76,8 +85,8 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
                 <TouchableOpacity onPress={showDialog}>
                 <Entypo style={styles.signos} name="battery" size={28} color="#C7D31E" />
                 </TouchableOpacity>
-                <Text style={styles.numbers}>{powersGained}</Text>
-                <Dialog
+
+                {transaction === 0 ? <Dialog
                   isVisible={visible}
                   onBackdropPress={hideDialog}
                 >
@@ -89,13 +98,48 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
                     <Dialog.Button
                       title="CONFIRM"
                       onPress={() => {
-                        console.log(`Option ${checked} was selected!`);
+                        if (checked === 1) {
+                          dispatch(updatePost({id, powers: powersGained + 10, likes}))
+                          dispatch(updateUser({...userById[0].data, powers: userById[0].data.powers - 10}))
+                          setTransaction(10)
+                          }
+                        if (checked === 2) {
+                          dispatch(updatePost({id, powers: powersGained + 25, likes}))
+                          dispatch(updateUser({...userById[0].data, powers: userById[0].data.powers - 25}))
+                          setTransaction(25)
+                          }
+                        if (checked === 3) {
+                          dispatch(updatePost({id, powers: powersGained + 50, likes}))
+                          dispatch(updateUser({...userById[0].data, powers: userById[0].data.powers - 50}))
+                          setTransaction(50)
+                          }
+                        if (checked === 4) {
+                          dispatch(updatePost({id, powers: powersGained + 100, likes}))
+                          dispatch(updateUser({...userById[0].data, powers: userById[0].data.powers - 100}))
+                          setTransaction(100)
+                          }
                         hideDialog()
                       }}
                     />
                     <Dialog.Button title="CANCEL" onPress={hideDialog} />
                   </Dialog.Actions>
-                </Dialog>
+                </Dialog> : <Dialog
+                              isVisible={visible}
+                              onBackdropPress={hideDialog}
+                            >
+                <Dialog.Title title="Cancel Transaction"/>
+                  <Text>You already gave Powers, you want to cancel the transaction?</Text>
+                  <Dialog.Actions>
+                    <Dialog.Button title="Yes" onPress={() => {
+                      dispatch(updatePost({id, powers: powersGained - transaction, likes}))
+                      dispatch(updateUser({...userById[0].data, powers: userById[0].data.powers + transaction}))
+                      setTransaction(0)
+                      hideDialog()
+                      }}/>
+                    <Dialog.Button title="No" onPress={() => hideDialog()}/>
+                  </Dialog.Actions>
+              </Dialog>}
+                <Text style={styles.numbers}>{powersGained}</Text>
               </View>
                ) : (<Text>                 </Text>)
               }
