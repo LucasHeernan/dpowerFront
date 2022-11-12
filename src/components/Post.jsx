@@ -46,7 +46,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, val
             </TouchableOpacity>
             </View>
 
-            <Text style={styles.description}>Esta es la descripcion {description}</Text>
+            <Text style={styles.description}>Description:   {description}</Text>
             <View style={styles.logos}>
 
             
@@ -121,17 +121,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   tinyLogo: {
-    width: 350,
-    height: 350,
+    width: 360,
+    height: 360,
     borderRadius: 20,
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 26,
-    marginTop: 3,
+    fontSize: 24,
+    marginTop: 20,
     marginLeft: 40,
     alignSelf: 'flex-start',
-    color: '#F5F5F5',
+    color: '#C7D31E',
   },
   numbers:{
     color: '#F5F5F5',
