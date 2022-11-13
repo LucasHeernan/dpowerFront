@@ -15,6 +15,7 @@ const wait = (timeout) => {
 
 function HomeScreen() {
  
+const { user, userById } = useSelector(state => state)
 const [posteos, setPosteos ] = useState([])
 const [refreshing, setRefreshing] = useState(false);
 
@@ -33,6 +34,7 @@ const dispatch = useDispatch();
   async function allPost() {
     let res = await axios.get('https://dpower-production.up.railway.app/post');
     setPosteos(res.data)
+    dispatch(getUserById(user[0].data.id))
     return posteos
   }
 

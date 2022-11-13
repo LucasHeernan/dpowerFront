@@ -9,9 +9,7 @@ import { TouchableOpacity } from "react-native";
 import { Dialog, Button, CheckBox } from "@rneui/themed";
 import * as Sharing from 'expo-sharing';
 import { setNestedObjectValues } from "formik";
-import { useDispatch, useSelector } from "react-redux";
 import { updatePost, updateUser } from "../redux/actions";
-import { useEffect } from "react";
 import { Alert } from "react-native";
 import { validate } from "react-native-web/dist/cjs/exports/StyleSheet/validate";
 import axios from 'axios'
@@ -208,7 +206,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
                     <Dialog.Button title="No" onPress={() => hideDialog()}/>
                   </Dialog.Actions>
               </Dialog>}
-                <Text style={styles.numbers}>{powersGained}</Text>
+                <Text style={styles.numbers}>{powersGained + transaction}</Text>
               </View>
                ) : (<Text>                 </Text>)
               }
