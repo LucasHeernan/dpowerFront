@@ -51,6 +51,7 @@ async function allPost () {
                likes={p.likes}
                multimedia={p.multimedia}
                description={p.description}
+               id={p.id}
                /> 
               </View>
       )
