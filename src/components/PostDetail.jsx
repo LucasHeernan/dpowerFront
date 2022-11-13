@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
-import { View, Text, Image, StyleSheet,ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 
-function Post({fullName, id, forksCount, stargazersCount, reviewCount, avatar, description}) {
+function Post({ fullName, id, forksCount, stargazersCount, reviewCount, avatar, description }) {
+
+  const [likesGlobales, setLikesGlobales] = useState(like)
+
   return (
     <ScrollView >
       <View style={styles.bg} >
         <View style={styles.posts}>
           <Text style={styles.title}>{fullName}</Text>
 
-          <View style={styles.contain} > 
-            <Image 
+          <View style={styles.contain} >
+            <Image
               style={styles.tinyLogo}
               source={{ uri: avatar }}
             />
@@ -38,30 +41,30 @@ function Post({fullName, id, forksCount, stargazersCount, reviewCount, avatar, d
                 <Fontisto name="share" size={28} color="#C7D31E" />
               </View>
             </View>
-          </View> 
+          </View>
           <Text style={styles.coments}>coments: {description}</Text>
         </View>
-      </View>        
+      </View>
     </ScrollView>
   );
 }
 
 
 const styles = StyleSheet.create({
-  bg:{
+  bg: {
     backgroundColor: "#4d4d4d",
   },
-	contain:{
-		alignItems: "center",
-		justifyContent: 'center',
+  contain: {
+    alignItems: "center",
+    justifyContent: 'center',
     flexDirection: 'row',
     margin: 10,
-	},
-  posts:{
-    alignItems: "center",
-		justifyContent: 'center',
   },
-  container:{
+  posts: {
+    alignItems: "center",
+    justifyContent: 'center',
+  },
+  container: {
     fontSize: 24,
     marginBottom: 12,
     marginTop: 12,
@@ -81,12 +84,12 @@ const styles = StyleSheet.create({
     marginLeft: -69,
     color: '#F5F5F5',
   },
-  numbers:{
+  numbers: {
     textDecorationLine: 'underline',
     color: '#F5F5F5',
     fontSize: 14,
   },
-  subtitle:{
+  subtitle: {
     justifyContent: 'flex-start',
     fontSize: 24,
   },
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
     color: '#F5F5F5',
     marginBottom: 60,
     marginLeft: -40,
-    fontSize:18,
+    fontSize: 18,
   }
 });
 

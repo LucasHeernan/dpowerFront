@@ -36,7 +36,11 @@ async function allPost () {
   return (
     <View>
 
-    <TouchableOpacity onPress={allPost()}></TouchableOpacity>
+    <View>
+    <TouchableOpacity onPress={allPost} style={styles.btncart}> 
+    <Text>Refresh</Text>
+    </TouchableOpacity>
+    </View>
 
     <ScrollView>
       
@@ -52,6 +56,7 @@ async function allPost () {
          likes={p.likes}
          multimedia={p.multimedia}
          description={p.description}
+         id={p.id}
          /> 
         
         </View>
@@ -96,7 +101,13 @@ const styles = StyleSheet.create({
   inputview:{
     alignItems: 'flex-end',
 
-  }
+  },
+  btncart:{
+   
+   
+    backgroundColor: '#C7D31E',
+    
+  },
 })
 
 
