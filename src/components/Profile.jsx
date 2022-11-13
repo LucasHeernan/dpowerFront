@@ -30,7 +30,6 @@ function Profile(props) {
 
   useEffect(() => {
     dispatch(getUserById(actualUser))
-    console.log('KELOKE ES LOOP O NO');
   }, [user])
 
   const navigation = useNavigation()

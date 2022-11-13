@@ -1,176 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { useSelector, useDispatch } from 'react-redux';
-import { cleanCart, removeItemFromCart } from '../redux/actions';
+import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { cleanCart } from '../redux/actions';
+import CartItem from './CartItem';
 
 
 export default function Cart() {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const cart = useSelector(store => store.cart);
-  
-  useEffect(() => {
-    console.log('KELOKE ES LOOP O NO');
-  }, [cart])
+  const [total, setTotal] = useState(0)
 
-  const handleDelete = (e) => {
-    dispatch(removeItemFromCart(e));
-    alert('PRODUCTO ELIMINADO');
+  const handleTotal = () => {
+    setTotal(cart.filter(e => e.total).reduce((acc, curr) => {
+      acc += curr.price * curr.total;
+      return acc;
+    }, 0));
   }
 
-  
-  const renderProducts = (data) => {
-    
-    const [change, setChange] = useState(1)
-    
-    const handleMinus = () => {
-      return change > 1 ? setChange(change - 1) : alert('NO PUEDE SER MENOS DE UNO');
-    }
-  
-    const handlePlus = () => {
-      return change < data.stock ? setChange(change + 1) : alert('NO HAY MAS STOCK')
-    }
-    
+  const handleClean = () => {
+    let clean = cart.map(e => typeof e);
+    if (clean.length && !clean.includes('object')) { dispatch(cleanCart()) } else null;
+  }
 
-    return (
-      <TouchableOpacity
-        key={data.id}
-        style={{
-          width: '100%',
-          height: 100,
-          marginVertical: 6,
-          flexDirection: 'row',
-          alignItems: 'center',
-          backgroundColor: 'white',
-          padding: 10,
-          borderRadius: 20
-        }}
-      >
-        <View
-          style={{
-            width: '30%',
-            height: 100,
-            padding: 14,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'white',
-            borderRadius: 10,
-            marginRight: 22,
-          }}
-        >
-          <Image
-            source={{uri: data.image}}
-            style={{
-              width: '100%',
-              height: '100%',
-              resizeMode: 'contain',
-            }}
-          />
-        </View>
-        <View
-          style={{
-            flex: 1,
-            height: '100%',
-            justifyContent: 'space-around',
-          }}
-        >
-          <View style={{}}>
-            <Text
-              style={{
-                fontSize: 14,
-                maxWidth: '100%',
-                color: '#000000',
-                fontWeight: '600',
-                letterSpacing: 1,
-              }}
-            >
-              {data.name}
-            </Text>
-            <View
-              style={{
-                marginTop: 4,
-                flexDirection: 'row',
-                alignItems: 'center',
-                opacity: 0.6,
-                justifyContent: 'space-between'
-              }}
-            >
-              
-              {/* --- MINUS && PLUS --- */}
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <TouchableOpacity
-                  onPress={handleMinus}
-                  style={{
-                    borderRadius: 100,
-                    marginRight: 10,
-                    padding: 5
-                  }}
-                >
-                  <Feather
-                    name="minus-circle"
-                    style={{
-                      fontSize: 22,
-                      color: 'black',
-                    }}
-                  />
-                </TouchableOpacity>
-                <Text> {change} </Text>
-                <TouchableOpacity
-                  onPress={handlePlus}
-                  style={{
-                    borderRadius: 100,
-                    marginLeft: 10,
-                    padding: 5
-                  }}
-                >
-                  <Feather
-                    name="plus-circle"
-                    style={{
-                      fontSize: 22,
-                      color: 'black',
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
-              
-              {/* --- PRICE --- */}
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: '700',
-                  maxWidth: '85%',
-                  marginRight: 4,
-                  color: 'black'
-                }}
-              >
-                $ {change * data.price}
-              </Text>
-
-              {/* --- DELETE --- */}
-              <TouchableOpacity
-                onPress={() => handleDelete(data.id)}
-              >
-                <Feather
-                  name="x-circle"
-                  style={{
-                    fontSize: 22,
-                    color: 'black',
-                    borderRadius: 100,
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
+  useEffect(() => {
+    handleClean();
+    handleTotal();
+  }, [cart])
 
   return (
     <View
@@ -196,8 +52,22 @@ export default function Cart() {
           Order Details
         </Text>
 
+        {/* --- RENDERIZADO DE PRODUCTOS --- */}
         <View style={{paddingHorizontal: 16}}>
-          {cart ? cart.map(renderProducts) : null}
+          {
+            cart.length ? (
+              cart.map(item => {
+                return typeof item !== 'object' ? null :
+                  (
+                    <CartItem
+                      key={item.id}
+                      data={item}
+                    />
+                  )
+                }
+              )
+            ) : null
+          }
         </View>
 
         {/* --- ORDER INFO --- */}
@@ -256,7 +126,7 @@ export default function Cart() {
                   opacity: 0.8,
                 }}
               >
-                $ 666.00
+                $ {total}
               </Text>
             </View>
 
@@ -277,7 +147,7 @@ export default function Cart() {
                   opacity: 0.5,
                 }}
               >
-                Shipping Tax
+                Welcome Discount  10%
               </Text>
               <Text
                 style={{
@@ -287,7 +157,7 @@ export default function Cart() {
                   opacity: 0.8,
                 }}
               >
-                +  10%
+                -   {total * 10 / 100}
               </Text>
             </View>
 
@@ -313,7 +183,7 @@ export default function Cart() {
                   fontWeight: '500',
                   color: 'black',
                 }}>
-                $ 722.00
+                $ {total - (total * 10 / 100)}
               </Text>
             </View>
 
@@ -334,6 +204,7 @@ export default function Cart() {
         }}
       >
         <TouchableOpacity
+          onPress={() => alert('PASARELA DE PAGO')}
           style={{
             width: '86%',
             height: '90%',

@@ -14,7 +14,9 @@ import {
     GET_USER_BY_ID,
     ADD_TO_CART,
     CLEAN_CART,
-    REMOVE_ITEM_FROM_CART
+    REMOVE_ITEM_FROM_CART,
+    ADD_TO_TOTAL,
+    LESS_TO_TOTAL
  } from '../actionTypes';
 
 
@@ -134,4 +136,12 @@ export function removeItemFromCart(id) {
 
 export function cleanCart() {
     return { type: CLEAN_CART }
+}
+
+export function addToTotal(id) {
+    return { type: ADD_TO_TOTAL, payload: id }
+}
+
+export function lessToTotal(id) {
+    return { type: LESS_TO_TOTAL, payload: id}
 }
