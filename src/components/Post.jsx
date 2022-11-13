@@ -29,7 +29,7 @@ function Post({ UserInfoId, id, powersGained, likes, multimedia, description }) 
     const imageTmp = await Sharing.shareAsync(multimedia);
   };
 
-  let aumentarLike = async function () {
+  let aumentarLike = async function () {  // para aumentar los likes
     try {
 
       let actualPost = await axios.get(`https://dpower-production.up.railway.app/post/${id}`);
