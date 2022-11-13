@@ -204,42 +204,6 @@ function MyTabs() {
 export default function Navigation() {
   const user = useSelector(state => state.user);
 
-  // useEffect(() =>{
-  //   console.log('USER DESDE USEEFFECT :', user)
-  // }, [user])
-
-  // const verificador = async (user) => {
-  //   try {
-  //     if ( typeof user[0] !== 'object' ) {
-  //       console.log("USER ===>", user)
-  //       return false
-  //     } else {
-  //       console.log("USER DESDE ELSE ====>", user)
-  //       const data = await axios.get(`https://dpower-production.up.railway.app/users/${user[0].id}`).then(e => e.data)
-  //       console.log("DATA ===>", data)
-  //       return data
-  //     }
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
-
-  // const resultGet = verificador(user);
-  // console.log('CONSOLE DESDE NAV --> ', user)
-  // console.log('CONSOLE DE RESULTGET', resultGet)
-  
-  //   return(
-  //   <NavigationContainer style={MyTheme} >
-  //     {
-  //       Object.keys(resultGet).includes("id") ? (
-  //         <MyTabs />
-  //       ) : (
-  //         <LandingStack />
-  //       )
-  //     }
-  //   </NavigationContainer>
-  // )}
-
   return(
     <NavigationContainer style={MyTheme} >
       {
@@ -252,24 +216,3 @@ export default function Navigation() {
     </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  container:{
-    backgroundColor: "#7D7D7D",
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center' 
-  },
-  title: {
-    marginTop: 16,
-    paddingVertical: 8,
-    borderWidth: 4,
-    borderColor: "#20232a",
-    borderRadius: 6,
-    backgroundColor: "#C7D31E",
-    color: "000000",
-    textAlign: "center",
-    fontSize: 30,
-    fontWeight: "bold"
-  },
-})

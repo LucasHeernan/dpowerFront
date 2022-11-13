@@ -10,6 +10,7 @@ import * as Yup from "yup";
 export default function FormRegisterUser({ navigation }) {
   const dispatch = useDispatch()
   const { user } = useSelector(state => state)
+
   const mail = user[0].data.id
   const userInfo = {
     name: '',
@@ -114,9 +115,7 @@ export default function FormRegisterUser({ navigation }) {
           dirty
         }) => {
           const { name, age, description, sport, nationality} = values;
-          const backgroundColor = isSubmitting
-      ? 'rgba(27,27,51,0.4)'
-      : 'rgba(27,27,51,1)';
+          const backgroundColor = isSubmitting ? 'rgba(27,27,51,0.4)' : 'rgba(27,27,51,1)';
           return (
             <>
               <FormInput
@@ -161,12 +160,12 @@ export default function FormRegisterUser({ navigation }) {
                 placeholder='Description...'
               />
               <TouchableOpacity
-                 disabled={!(isValid && dirty)}
-                 onPress={!isSubmitting ? handleSubmit : null}
-                 style={[styles.button, {backgroundColor}]}
+                disabled={!(isValid && dirty)}
+                onPress={!isSubmitting ? handleSubmit : null}
+                style={[styles.button, {backgroundColor}]}
               >
-                  <Text style={{ fontSize: 18, color: '#fff' }}>Update!</Text>
-               </TouchableOpacity>
+                <Text style={{ fontSize: 18, color: '#fff' }}>Update!</Text>
+              </TouchableOpacity>
             </>
           );
         }}
