@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native";
@@ -12,8 +13,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { updatePost, updateUser } from "../redux/actions";
 import { useEffect } from "react";
 import { Alert } from "react-native";
+import { validate } from "react-native-web/dist/cjs/exports/StyleSheet/validate";
+import axios from 'axios'
 
-function Post({UserInfoId, id, powersGained, likes, multimedia, description, userById}) {
+let shouldPost = true;
+let firstTime = true;
+
+function Post({UserInfoId, id, powersGained, likes, multimedia, description, userById, validated}) {
+
+  const { user } = useSelector(store => store)
+
+  const [likesGlobales, setLikesGlobales] = useState(likes)
 
   const [transaction, setTransaction] = useState(0)
 
@@ -27,13 +37,72 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
 
   const hideDialog = () => setVisible(false);
 
+  let userLiker = { userId: user[0].data.id }
+  const [favorito, setFavorito] = useState(false)
+
+  let fav
+  let getFav = async function () {
+    fav = await axios.get(`https://dpower-production.up.railway.app/post/likes/${id}/${userLiker.userId}`);
+    fav = fav.data
+    if (fav.length && firstTime) {
+      setFavorito(true);
+    }
+  }
+  getFav()
+
   let openShareDialogAsync = async () => {
     // if (Platform.OS === 'web') {
     //   alert(`Uh oh, sharing isn't available on your platform`);
     //   return;
     // }
-    const imageTmp  = await Sharing.shareAsync(multimedia);
+    const imageTmp = await Sharing.shareAsync(multimedia);
   };
+
+
+  let aumentarLike = async function () {  // para aumentar los likes
+    try {
+      if (shouldPost) {
+        shouldPost = false;
+        let actualPost = await axios.get(`https://dpower-production.up.railway.app/post/${id}`);
+        actualPost = actualPost.data
+
+        fav = await axios.get(`https://dpower-production.up.railway.app/post/likes/${id}/${userLiker.userId}`);
+        fav = fav.data
+
+        if (!fav.length) {
+          setFavorito(true);
+          actualPost.likes = likesGlobales + 1
+          setLikesGlobales(likesGlobales + 1)
+
+          let final = await axios.put(`https://dpower-production.up.railway.app/post/${id}`, actualPost)
+          let sendFav = await axios.post(`https://dpower-production.up.railway.app/post/likes/${id}/${userLiker.userId}`);
+
+          shouldPost = true;
+          return final;
+        }
+
+        else {
+          firstTime = false;
+          setFavorito(false);
+          actualPost.likes = likesGlobales - 1;
+          setLikesGlobales(likesGlobales - 1)
+
+          let final = axios.put(`https://dpower-production.up.railway.app/post/${id}`, actualPost)
+          let sendFav = await axios.delete(`https://dpower-production.up.railway.app/post/likes/${id}/${userLiker.userId}`);
+
+          shouldPost = true;
+          return final;
+        }
+      }
+    }
+
+    catch (err) {
+      console.log('error en el boton de like: ', err)
+    }
+  }
+
+
+
 
   useEffect(() => {
     // getPostById()
@@ -59,25 +128,25 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
 
   return (
     <ScrollView >
-		  <View style={styles.bg} >
+      <View style={styles.bg} >
 
         <View style={styles.posts}>
 
-          
+
           <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text>
           <View style={styles.contain} >
-            
+
             <View>
-           
-           <TouchableOpacity onPress={() => alert('Ir a PostDetail')}>
-            <Image
-              style={styles.tinyLogo}
-              source={{ uri: multimedia }}
-            />
-            </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => alert('Ir a PostDetail')}>
+                <Image
+                  style={styles.tinyLogo}
+                  source={{ uri: multimedia }}
+                />
+              </TouchableOpacity>
             </View>
 
-            <Text style={styles.description}>Esta es la descripcion {description}</Text>
+            <Text style={styles.description}>Description:   {description}</Text>
             <View style={styles.logos}>
               {/* logica para el renderizado condicional de los powers  */}
               { powersGained > 0 ? (
@@ -144,21 +213,20 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
                ) : (<Text>                 </Text>)
               }
 
-
               <View style={styles.container}>
-                <TouchableOpacity onPress={() => alert('dar like')}>
-                <MaterialIcons style={styles.signos} name="favorite" size={28} color="#C7D31E" />
+                <TouchableOpacity onPress={aumentarLike}>
+                  <MaterialIcons style={styles.signos} name="favorite" size={28} color={!favorito ? "#C7D31E" : "#d31e1e"} />
                 </TouchableOpacity>
-                <Text style={styles.numbers}>{likes}</Text>
+                <Text style={styles.numbers}>{likesGlobales}</Text>
               </View>
 
 
 
               <View style={styles.container}>
-                <TouchableOpacity onPress={() => alert('Comentar/Ver Comentarios')}>
-                <Entypo style={styles.signos} name="chat" size={28} color="#C7D31E" />
+                <TouchableOpacity onPress={() => console.log('validate', validate(UserInfoId))}>
+                  <Entypo style={styles.signos} name="chat" size={28} color="#C7D31E" />
                 </TouchableOpacity>
-                </View>
+              </View>
 
               {/* <View style={styles.container}>
                 <FontAwesome name="commenting" size={28} color="#C7D31E" />
@@ -173,57 +241,57 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
             </View>
           </View>
 
-          
+
         </View>
       </View>
-		</ScrollView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  bg:{
+  bg: {
     backgroundColor: "#4d4d4d",
   },
-	contain:{
-		alignItems: "center",
-		justifyContent: 'center',
+  contain: {
+    alignItems: "center",
+    justifyContent: 'center',
     flexDirection: 'row',
     margin: 10,
-	},
-  posts:{
-    alignItems: "center",
-		justifyContent: 'center',
   },
-  container:{
+  posts: {
+    alignItems: "center",
+    justifyContent: 'center',
+  },
+  container: {
     marginTop: 10,
     marginRight: 15,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
   tinyLogo: {
-    width: 350,
-    height: 350,
+    width: 360,
+    height: 360,
     borderRadius: 20,
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 26,
-    marginTop: 3,
+    fontSize: 24,
+    marginTop: 20,
     marginLeft: 40,
     alignSelf: 'flex-start',
-    color: '#F5F5F5',
+    color: '#C7D31E',
   },
-  numbers:{
+  numbers: {
     color: '#F5F5F5',
     fontSize: 26,
-   
+
     justifyContent: 'center',
     alignSelf: 'center',
   },
-  subtitle:{
+  subtitle: {
     justifyContent: 'center',
     fontSize: 24,
-   
+
   },
   description: {
     width: 290,
@@ -232,22 +300,22 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 2,
     marginLeft: 6,
-    fontSize:18,
+    fontSize: 18,
   },
   contain: {
     marginBottom: 0,
   },
-  logos:{
+  logos: {
     flexDirection: 'row',
     alignSelf: 'flex-end',
     marginTop: -2,
     marginBottom: 50,
   },
-  signos:{
-      marginTop: 3,
-      marginRight: 4,
+  signos: {
+    marginTop: 3,
+    marginRight: 4,
   },
- 
+
 });
 
- export default Post;
+export default Post;

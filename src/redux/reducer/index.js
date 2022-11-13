@@ -1,5 +1,6 @@
 import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
-FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, CLEAN_USER, CREATE_USER, UPDATE_USER, GET_USER_BY_ID, UPDATE_POST } from "../actionTypes";
+FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, CLEAN_USER, CREATE_USER, UPDATE_USER,
+GET_USER_BY_ID, ADD_TO_CART, REMOVE_ITEM_FROM_CART, CLEAN_CART, ADD_TO_TOTAL, LESS_TO_TOTAL, UPDATE_POST } from "../actionTypes";
 
 const initialState = {
     allProducts: [],
@@ -7,7 +8,8 @@ const initialState = {
     detail: [],
     categories: [],
     user: [],
-    userById: []
+    userById: [],
+    cart: []
 }
 
 const reducer = ( state = initialState, action ) => {
@@ -35,10 +37,16 @@ const reducer = ( state = initialState, action ) => {
                 detail: productByName
             }
         case GET_CATEGORIES:
-            const categoriesfilter = state.allProducts.map(e => e.category)
+            const categoriesfilter = [...state.allProducts]
+            const reduceCategories = categoriesfilter.map(e => e.category).reduce((acc, current) => {
+                if (!acc.includes(current)) {
+                    acc.push(current)
+                }
+                return acc;
+            }, [])
             return {
                 ...state,
-                categories: categoriesfilter
+                categories: reduceCategories
             }
         case GET_USER_BY_ID:
             return {
@@ -76,25 +84,25 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 filterProducts: state.filterProducts.length ? filterProductsPPrice : allProductsPPrice
             }
-            case ORDER_BY_NAME:
-                let abc = [...state.allProducts];
-                abc = abc.sort((a,b) => {
-                    if (a.name.toLowerCase() < b.name.toLowerCase()) return action.payload === 'A - Z' ? -1 : 1;
-                    if (a.name.toLowerCase() > b.name.toLowerCase()) return action.payload === 'Z - A' ? -1 : 1;
-                    return 0
-                })
-                let filterProductsAbc = [...state.filterProducts];
-                filterProductsAbc = filterProductsAbc.sort((a,b) => {
-                    if (a.name.toLowerCase() < b.name.toLowerCase()) return action.payload === 'A - Z' ? -1 : 1;
-                    if (a.name.toLowerCase() > b.name.toLowerCase()) return action.payload === 'Z - A' ? -1 : 1;
-                    return 0
-                })
-                return {
-                    ...state,
-                    filterProducts: state.filterProducts.length ? filterProductsAbc : abc
-                }
+        case ORDER_BY_NAME:
+            let abc = [...state.allProducts];
+            abc = abc.sort((a,b) => {
+                if (a.name.toLowerCase() < b.name.toLowerCase()) return action.payload === 'A - Z' ? -1 : 1;
+                if (a.name.toLowerCase() > b.name.toLowerCase()) return action.payload === 'Z - A' ? -1 : 1;
+                return 0
+            })
+            let filterProductsAbc = [...state.filterProducts];
+            filterProductsAbc = filterProductsAbc.sort((a,b) => {
+                if (a.name.toLowerCase() < b.name.toLowerCase()) return action.payload === 'A - Z' ? -1 : 1;
+                if (a.name.toLowerCase() > b.name.toLowerCase()) return action.payload === 'Z - A' ? -1 : 1;
+                return 0
+            })
+            return {
+                ...state,
+                filterProducts: state.filterProducts.length ? filterProductsAbc : abc
+            }
         case FILTER_BY_CATEGORY:
-            const all = state.allProducts
+            const all = [...state.allProducts]
             const filterCategories = all.filter(e => e.category === action.payload)
             return {
                 ...state,
@@ -104,6 +112,32 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 user: []
+            }
+        case ADD_TO_CART:
+            return {
+                ...state,
+                cart: [...state.cart, action.payload]
+            }
+        case REMOVE_ITEM_FROM_CART:
+            const productDelete = state.cart.filter(e => e.id !== action.payload);
+            return {
+                ...state,
+                cart: productDelete
+            }
+        case CLEAN_CART:
+            return {
+                ...state,
+                cart: []
+            }
+        case ADD_TO_TOTAL:
+            return {
+                ...state,
+                cart: [...state.cart, state.cart.find(e => e.id === action.payload).total += 1]
+            }
+        case LESS_TO_TOTAL:
+            return {
+                ...state,
+                cart: [...state.cart, state.cart.find(e => e.id === action.payload).total -= 1]
             }
         default:
         return { ...state };

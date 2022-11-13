@@ -37,7 +37,7 @@ function ProfileStack() {
         name="Profile"
         options={{
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
         children={() => <Profile
         key={user[0].data.id}
@@ -56,7 +56,7 @@ function ProfileStack() {
         component={FormRegisterUser}
         options={{
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
     </ProfileStackNavigator.Navigator>
@@ -73,7 +73,7 @@ function LandingStack() {
         component={LandingPage}
         options={{
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
     </LandingStackNavigator.Navigator>
@@ -90,7 +90,7 @@ function MyStack() {
         children={({item}) => <MarketPlace producto={item} />}
         options={{
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
       <MarketStackNavigator.Screen
@@ -98,7 +98,7 @@ function MyStack() {
         component={Cart}
         options={{
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
       <MarketStackNavigator.Screen
@@ -106,7 +106,7 @@ function MyStack() {
         component={ProductDetail}
         options={{
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
 
@@ -131,8 +131,9 @@ function MyTabs() {
       
   <Tab.Navigator 
     screenOptions={{
+      backgroundColor: "#4d4d4d",
       tabBarShowLabel: false,
-      tabBarStyle: {backgroundColor:"#4d4d4d", height: 60},
+      tabBarStyle: {backgroundColor:"#4d4d4d", height: 60, fontSize: 28},
       headerStyle:{ },
       tabBarInactiveTintColor: "#F5F5F5",
       tabBarActiveTintColor: "#C7D31E"
@@ -142,8 +143,9 @@ function MyTabs() {
     <Tab.Screen name="Home"
       component={HomeScreen}
       options={{
+        
         headerStyle: {backgroundColor:"#4d4d4d"},
-        headerTitleStyle: {color: "white"},
+        headerTitleStyle: {color: "white", fontSize: 28},
         title: 'Home',
         tabBarIcon: ({size,focused,color}) => {
           return (
@@ -158,11 +160,11 @@ function MyTabs() {
       component={PostPicture}
       options={{
         headerStyle: {backgroundColor:"#4d4d4d"},
-        headerTitleStyle: {color: "white"},
+        headerTitleStyle: {color: "white", fontSize: 28},
         title: 'New Post',
         tabBarIcon: ({size,focused,color}) => {
           return (                
-            <Entypo name="squared-plus" size={24} color={color} />
+            <Entypo name="squared-plus" size={28} color={color} />
           );
         },
       }}
@@ -174,7 +176,7 @@ function MyTabs() {
         headerShown: false,
         tabBarIcon: ({size,focused,color}) => {
           return (                
-            <Entypo name="shop" size={24} color={color} />
+            <Entypo name="shop" size={28} color={color} />
           );
         },
       }}
@@ -184,12 +186,12 @@ function MyTabs() {
       component={ProfileStack}
       options={{
         headerStyle: {backgroundColor:"#4d4d4d"},
-        headerTitleStyle: {color: "white"},
+        headerTitleStyle: {color: "white", fontSize: 28},
         headerShown: false,
         title: 'My profile',
         tabBarIcon: ({size,focused,color}) => {
           return (
-            <FontAwesome5 name="user-alt" size={24} color={color} />
+            <FontAwesome5 name="user-alt" size={28} color={color} />
           );
         },
       }} 
@@ -201,42 +203,6 @@ function MyTabs() {
 
 export default function Navigation() {
   const user = useSelector(state => state.user);
-
-  // useEffect(() =>{
-  //   console.log('USER DESDE USEEFFECT :', user)
-  // }, [user])
-
-  // const verificador = async (user) => {
-  //   try {
-  //     if ( typeof user[0] !== 'object' ) {
-  //       console.log("USER ===>", user)
-  //       return false
-  //     } else {
-  //       console.log("USER DESDE ELSE ====>", user)
-  //       const data = await axios.get(`https://dpower-production.up.railway.app/users/${user[0].id}`).then(e => e.data)
-  //       console.log("DATA ===>", data)
-  //       return data
-  //     }
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
-
-  // const resultGet = verificador(user);
-  // console.log('CONSOLE DESDE NAV --> ', user)
-  // console.log('CONSOLE DE RESULTGET', resultGet)
-  
-  //   return(
-  //   <NavigationContainer style={MyTheme} >
-  //     {
-  //       Object.keys(resultGet).includes("id") ? (
-  //         <MyTabs />
-  //       ) : (
-  //         <LandingStack />
-  //       )
-  //     }
-  //   </NavigationContainer>
-  // )}
 
   return(
     <NavigationContainer style={MyTheme} >
@@ -250,24 +216,3 @@ export default function Navigation() {
     </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  container:{
-    backgroundColor: "#7D7D7D",
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center' 
-  },
-  title: {
-    marginTop: 16,
-    paddingVertical: 8,
-    borderWidth: 4,
-    borderColor: "#20232a",
-    borderRadius: 6,
-    backgroundColor: "#C7D31E",
-    color: "000000",
-    textAlign: "center",
-    fontSize: 30,
-    fontWeight: "bold"
-  },
-})
