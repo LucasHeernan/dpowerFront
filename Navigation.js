@@ -34,7 +34,11 @@ function ProfileStack() {
       initialRouteName='My Profile'
     >
       <ProfileStackNavigator.Screen
-        name="The Profile"
+        name="Profile"
+        options={{
+          headerStyle: {backgroundColor: "#4d4d4d"},
+          headerTitleStyle: {color: "white", fontSize: 28}
+        }}
         children={() => <Profile
         key={user[0].data.id}
         name={user[0].data.name || user[0].data.username}
@@ -50,7 +54,10 @@ function ProfileStack() {
       <ProfileStackNavigator.Screen
         name="Form"
         component={FormRegisterUser}
-        
+        options={{
+          headerStyle: {backgroundColor: "#4d4d4d"},
+          headerTitleStyle: {color: "white", fontSize: 28}
+        }}
       />
     </ProfileStackNavigator.Navigator>
   )
@@ -66,7 +73,7 @@ function LandingStack() {
         component={LandingPage}
         options={{
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
     </LandingStackNavigator.Navigator>
@@ -83,7 +90,7 @@ function MyStack() {
         children={({item}) => <MarketPlace producto={item} />}
         options={{
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
       <MarketStackNavigator.Screen
@@ -91,7 +98,7 @@ function MyStack() {
         component={Cart}
         options={{
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
       <MarketStackNavigator.Screen
@@ -99,7 +106,7 @@ function MyStack() {
         component={ProductDetail}
         options={{
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
 
@@ -124,8 +131,9 @@ function MyTabs() {
       
   <Tab.Navigator 
     screenOptions={{
+      backgroundColor: "#4d4d4d",
       tabBarShowLabel: false,
-      tabBarStyle: {backgroundColor:"#4d4d4d", height: 60},
+      tabBarStyle: {backgroundColor:"#4d4d4d", height: 60, fontSize: 28},
       headerStyle:{ },
       tabBarInactiveTintColor: "#F5F5F5",
       tabBarActiveTintColor: "#C7D31E"
@@ -135,8 +143,9 @@ function MyTabs() {
     <Tab.Screen name="Home"
       component={HomeScreen}
       options={{
+        
         headerStyle: {backgroundColor:"#4d4d4d"},
-        headerTitleStyle: {color: "white"},
+        headerTitleStyle: {color: "white", fontSize: 28},
         title: 'Home',
         tabBarIcon: ({size,focused,color}) => {
           return (
@@ -149,12 +158,13 @@ function MyTabs() {
     <Tab.Screen name="Add Product"
 
       component={PostPicture}
-
       options={{
+        headerStyle: {backgroundColor:"#4d4d4d"},
+        headerTitleStyle: {color: "white", fontSize: 28},
         title: 'New Post',
         tabBarIcon: ({size,focused,color}) => {
           return (                
-            <Entypo name="squared-plus" size={24} color={color} />
+            <Entypo name="squared-plus" size={28} color={color} />
           );
         },
       }}
@@ -166,7 +176,7 @@ function MyTabs() {
         headerShown: false,
         tabBarIcon: ({size,focused,color}) => {
           return (                
-            <Entypo name="shop" size={24} color={color} />
+            <Entypo name="shop" size={28} color={color} />
           );
         },
       }}
@@ -175,11 +185,13 @@ function MyTabs() {
     <Tab.Screen name="Profile"
       component={ProfileStack}
       options={{
+        headerStyle: {backgroundColor:"#4d4d4d"},
+        headerTitleStyle: {color: "white", fontSize: 28},
         headerShown: false,
         title: 'My profile',
         tabBarIcon: ({size,focused,color}) => {
           return (
-            <FontAwesome5 name="user-alt" size={24} color={color} />
+            <FontAwesome5 name="user-alt" size={28} color={color} />
           );
         },
       }} 

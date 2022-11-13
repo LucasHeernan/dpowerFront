@@ -7,8 +7,10 @@ import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native";
 import * as Sharing from 'expo-sharing';
 import { setNestedObjectValues } from "formik";
+import { validate } from "react-native-web/dist/cjs/exports/StyleSheet/validate";
+import axios from 'axios'
 
-function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
+function Post({UserInfoId, id, powersGained, likes, multimedia, description, validated}) {
 
   let openShareDialogAsync = async () => {
     // if (Platform.OS === 'web') {
@@ -18,14 +20,20 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
     const imageTmp  = await Sharing.shareAsync(multimedia);
   };
 
+
+
+
+
+
+
   return (
     <ScrollView >
 		  <View style={styles.bg} >
 
         <View style={styles.posts}>
 
-          <Text style={styles.description}>'Este es el titulo' {description}</Text>
-
+          
+          <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text>
           <View style={styles.contain} >
             
             <View>
@@ -37,26 +45,37 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description}) {
             />
             </TouchableOpacity>
             </View>
+
+            <Text style={styles.description}>Description:   {description}</Text>
             <View style={styles.logos}>
 
-            <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text>
+            
+
+              
+      
+
+              {/* logica para el renderizado condicional de los powers  */}
+              {  powersGained >= 0 ? (
+              <View style={styles.container}>
+                <TouchableOpacity onPress={() => validate(UserInfoId)}>
+                <Entypo style={styles.signos} name="battery" size={28} color="#C7D31E" />
+                </TouchableOpacity>
+                <Text style={styles.numbers}>{powersGained}</Text>
+              </View> ) : (<Text>                 </Text>)
+              
+              }
 
               <View style={styles.container}>
-                <TouchableOpacity onPress={() => alert('dar like')}>
+                <TouchableOpacity onPress={() => validate(UserInfoId)}>
                 <MaterialIcons style={styles.signos} name="favorite" size={28} color="#C7D31E" />
                 </TouchableOpacity>
                 <Text style={styles.numbers}>{likes}</Text>
               </View>
-      
-              <View style={styles.container}>
-                <TouchableOpacity onPress={() => alert('Dar Power')}>
-                <Entypo style={styles.signos} name="battery" size={28} color="#C7D31E" />
-                </TouchableOpacity>
-                <Text style={styles.numbers}>{powersGained}</Text>
-              </View>
+
+
 
               <View style={styles.container}>
-                <TouchableOpacity onPress={() => alert('Comentar/Ver Comentarios')}>
+                <TouchableOpacity onPress={() => console.log('validate', validate(UserInfoId))}>
                 <Entypo style={styles.signos} name="chat" size={28} color="#C7D31E" />
                 </TouchableOpacity>
                 </View>
@@ -102,17 +121,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   tinyLogo: {
-    width: 350,
-    height: 350,
+    width: 360,
+    height: 360,
     borderRadius: 20,
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 26,
-    marginTop: 3,
-    marginRight: 35,
+    fontSize: 24,
+    marginTop: 20,
+    marginLeft: 40,
     alignSelf: 'flex-start',
-    color: '#F5F5F5',
+    color: '#C7D31E',
   },
   numbers:{
     color: '#F5F5F5',
@@ -130,10 +149,10 @@ const styles = StyleSheet.create({
     width: 290,
     fontSize: 24,
     color: '#F5F5F5',
-    marginTop: 15,
+    marginTop: 5,
     marginBottom: 2,
-    marginLeft: -40,
-    fontSize:22,
+    marginLeft: 6,
+    fontSize:18,
   },
   contain: {
     marginBottom: 0,
