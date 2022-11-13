@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
 import { TextInput } from "react-native-paper";
 import Post from '../components/Post'
+import { getUserById } from "../redux/actions";
 
 import axios from 'axios'
 import { useState, useCallback } from 'react';
@@ -13,19 +14,27 @@ const wait = (timeout) => {
 }
 
 function HomeScreen() {
-
-  const [posteos, setPosteos] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
+ 
+const { user, userById } = useSelector(state => state)
+const [posteos, setPosteos ] = useState([])
+const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
+const dispatch = useDispatch();
+
+// useEffect(() => {
+//   !posteos.length && dispatch(allPost());
+  
+// }, [])
 
 
   async function allPost() {
     let res = await axios.get('https://dpower-production.up.railway.app/post');
     setPosteos(res.data)
+    dispatch(getUserById(user[0].data.id))
     return posteos
   }
 
@@ -52,6 +61,7 @@ function HomeScreen() {
                 multimedia={p.multimedia}
                 description={p.description}
                 id={p.id}
+                userById={!userById ? user : userById}
               />
             </View>
           )

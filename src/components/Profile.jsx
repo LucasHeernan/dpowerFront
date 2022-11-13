@@ -141,10 +141,10 @@ function Profile(props) {
                 <Text style={[styles.text, { fontSize: 24 }]}>{likes}</Text>
                 <Text style={[styles.text, styles.subText]}>Likes</Text>
               </View>
-              <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1 }]}>
+              {userById[0].data.validated ? <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1 }]}>
                 <Text style={[styles.text, { fontSize: 24 }]}>{powers}</Text>
                 <Text style={[styles.text, styles.subText]}>Powers</Text>
-              </View>
+              </View> : <Text></Text>}
               <View style={styles.statsBox}>
                 <Text style={[styles.text, { fontSize: 24 }]}>{followers}</Text>
                 <Text style={[styles.text, styles.subText]}>Seguidores</Text>

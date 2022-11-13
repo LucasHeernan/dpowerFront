@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { useEffect } from 'react';
 import { Platform, StyleSheet, Image, Button, View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { createUser } from '../redux/actions';
+import { createUser, getUserById } from '../redux/actions';
 
 // you need to swap out these details with your auth0 credientals
 const auth0ClientId = "R7NnYEPxs5lx6uWZCLvcaSe1vNFAAiUf";
@@ -48,9 +48,10 @@ export default function Login() {
     if (result) {
       const token = result.params.id_token;
       const userInfo = jwtDecode(token);
-      // console.log("userInfo", userInfo);
+      console.log("userInfo", userInfo);
       // console.log("Result: ", result);
       dispatch(createUser(userInfo))
+      dispatch(getUserById(userInfo.email))
     }
   }, [result])
 

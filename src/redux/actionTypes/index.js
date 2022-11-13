@@ -15,3 +15,4 @@ export const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART';
 export const CLEAN_CART = 'CLEAN_CART';
 export const ADD_TO_TOTAL = 'ADD_TO_TOTAL';
 export const LESS_TO_TOTAL = 'LESS_TO_TOTAL';
+export const UPDATE_POST = "UPDATE_POST";

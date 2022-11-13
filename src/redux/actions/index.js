@@ -17,7 +17,9 @@ import {
     REMOVE_ITEM_FROM_CART,
     ADD_TO_TOTAL,
     LESS_TO_TOTAL
- } from '../actionTypes';
+,
+    UPDATE_POST    
+} from '../actionTypes';
 
 
 
@@ -98,6 +100,24 @@ export function updateUser(info) {
             })
         } catch (err) {
             console.log(err)
+        }
+    }
+}
+
+export function updatePost(info) {
+    return async (dispatch) => {
+        try {
+            const likesPowers = {
+                likes: info.likes,
+                powersGained: info.powers
+            }
+            const data = await axios.put(`https://dpower-production.up.railway.app/post/${info.id}`, likesPowers)
+            return dispatch({
+                type: UPDATE_POST,
+                payload: data
+            })
+        } catch (error) {
+            console.log(error)
         }
     }
 }
