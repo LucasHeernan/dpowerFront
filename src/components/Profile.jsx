@@ -1,84 +1,182 @@
-import React from "react";
-
-import { View, Text, StyleSheet, ScrollText, Button, ScrollView, Image, SafeAreaView } from 'react-native';
+import React, { useState } from "react";
+import * as AuthSession from "expo-auth-session"
+import { openAuthSessionAsync } from "expo-web-browser";
+import { View, Text, StyleSheet, ScrollText, ScrollView, Image, SafeAreaView, Alert, Platform, RefreshControl } from 'react-native';
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Title, Paragraph, Headline, Caption} from "react-native-paper";
-import axios from "axios";
+import { Button, Divider, IconButton, Menu, Provider } from "react-native-paper";
+import { cleanUser } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
+import { getUserById } from "../redux/actions";
+import axios from 'axios'
 
+const auth0ClientId = "R7NnYEPxs5lx6uWZCLvcaSe1vNFAAiUf";
+const authorizationEndpoint = "https://dpwr.us.auth0.com/v2/logout";
+
+const useProxy = Platform.select({ web: false, default: true });
+const redirectUri = AuthSession.makeRedirectUri({ useProxy }); // <-- must be set in allowed logout urls
+
+let update = true;
 function Profile(props) {
+  const [visible, setVisible] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [imagenes, setImagenes] = React.useState([]);
 
-  const {name, sport, age, nationality, description, post, powers, likes, followers, images, avatar} = props;
+  const { user, userById } = useSelector(state => state)
+  let userIdProfile = { userId: user[0].data.id }
+  const dispatch = useDispatch()
 
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
+
+
+  let getImagenes = async function () {
+    let likesId = await axios.get('https://dpower-production.up.railway.app/post/likes')
+    likesId = likesId.data
+    let posteos = await axios.get('https://dpower-production.up.railway.app/post')
+    posteos = posteos.data
+
+    likesId = likesId.filter(el => el.UserInfoId === userIdProfile.userId);
+    let posteosId = []
+    likesId.map(el => posteosId.push(el.PostId))
+
+    let final = []
+    posteosId.map(el => {
+      for (let i = 0; i < posteos.length; i++) {
+        if (el === posteos[i].id) {
+          return final.push(posteos[i])
+        }
+      }
+    })
+
+    let enlaces = []
+    final.map(el => enlaces.push(el.multimedia))
+    setImagenes(enlaces)
+    update = false
+    return enlaces
+  }
+
+  if (update) getImagenes()
+
+
+  const { powers, likes, followers, images } = props;
+
+  const actualUser = user[0].data.id;
+
+  useEffect(() => {
+    dispatch(getUserById(actualUser))
+  }, [user])
+
+  const navigation = useNavigation()
+
+  const logout = async () => {
+    try {
+      dispatch(cleanUser())
+      await openAuthSessionAsync(`${authorizationEndpoint}?client_id=${auth0ClientId}&returnTo=${redirectUri}`, 'redirectUrl');
+      // handle unsetting your user from store / context / memory
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  //!userById.length  ? user[0].data.name : userById[0].data.name
+  const avatar = !userById.length ? user[0].data.avatar : userById[0].data.avatar
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* <View style={styles.titleBar}>
-            <MaterialIcons name="more-vert" size={24} color="#52575D"></MaterialIcons>
-        </View> */}
+    <Provider>
 
-        <View style={{alignSelf: "center"}}>
-          <View style={styles.profileImage}>
-            <Image source={{uri: avatar}} style={styles.image} resizeMode="center"></Image>
-          </View>
-          {/* <View style={styles.dm}>
-            <MaterialIcons name="chat" size={18} color="#DFD8C8" />
-          </View> */}
-          {/* <View style={styles.add}>
-            <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2}}></Ionicons>
-          </View> */}
-        </View>
-
-        <View style={styles.infoContainer}>
-          <Text style={[styles.text, { fontWeight: "400", fontSize: 36 }]}>{name}</Text>
-          <Text style={[styles.text, styles.subText]}>{age} Años</Text>
-          <Text style={[styles.text, styles.subText]}>{nationality}</Text>
-          <Text style={[styles.text, { color: "AEB5BC", fontSize: 14}]}>{sport}</Text>
-        </View>
-
-        <View style={styles.statsContainer}>
-          <View style={styles.statsBox}>
-            <Text style={[styles.text, { fontSize: 24 }]}>{images.length}</Text>
-            <Text style={[styles.text, styles.subText]}>Posts</Text>
-          </View>
-          <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1}]}>
-            <Text style={[styles.text, { fontSize: 24 }]}>{likes}</Text>
-            <Text style={[styles.text, styles.subText]}>Likes</Text>
-          </View>
-          <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1}]}>
-            <Text style={[styles.text, { fontSize: 24 }]}>{powers}</Text>
-            <Text style={[styles.text, styles.subText]}>Powers</Text>
-          </View>
-          <View style={styles.statsBox}>
-            <Text style={[styles.text, { fontSize: 24 }]}>{followers}</Text>
-            <Text style={[styles.text, styles.subText]}>Seguidores</Text>
-          </View>
-        </View>
-
-        <View style={{ marginTop: 32}}>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {images.map(imagen => 
-              <View style={styles.mediaImageContainer}>
-              <Image source={{uri: imagen}} style={styles.image} resizeMode="cover"></Image>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={getImagenes}
+          />
+        }
+      >
+        <SafeAreaView style={styles.container}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.titleBar}>
+              <Menu
+                visible={visible}
+                onDismiss={closeMenu}
+                anchor={<IconButton icon="dots-vertical" size={24} color="#52575D" onPress={openMenu} />}
+              >
+                <Menu.Item onPress={logout} title="LogOut" />
+                <Divider />
+                <Menu.Item onPress={() => navigation.navigate("Form")} title="Edit profile" />
+              </Menu>
             </View>
-            )}
+
+            <View style={{ alignSelf: "center" }}>
+              <View style={styles.profileImage}>
+                <Image
+                  source={{ uri: avatar }}
+                  style={styles.image}
+                  resizeMode="center"
+                />
+              </View>
+            </View>
+
+            <View style={styles.infoContainer}>
+              <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>
+                {!userById.length ? user[0].data.name : userById[0].data.name}
+              </Text>
+              <Text style={[styles.text, styles.subText]}>
+                {!userById.length ? user[0].data.age : userById[0].data.age}
+              </Text>
+              <Text style={[styles.text, styles.subText]}>
+                {!userById.length ? user[0].data.nationality : userById[0].data.nationality}
+              </Text>
+              <Text style={[styles.text, { color: "AEB5BC", fontSize: 14 }]}>
+                {!userById.length ? user[0].data.sport : userById[0].data.sport}
+              </Text>
+            </View>
+
+            <View style={styles.statsContainer}>
+              <View style={styles.statsBox}>
+                <Text style={[styles.text, { fontSize: 24 }]}>{images.length}</Text>
+                <Text style={[styles.text, styles.subText]}>Posts</Text>
+              </View>
+              <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
+                <Text style={[styles.text, { fontSize: 24 }]}>{likes}</Text>
+                <Text style={[styles.text, styles.subText]}>Likes</Text>
+              </View>
+              {userById[0].data.validated ? <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1 }]}>
+                <Text style={[styles.text, { fontSize: 24 }]}>{powers}</Text>
+                <Text style={[styles.text, styles.subText]}>Powers</Text>
+              </View> : <Text></Text>}
+              <View style={styles.statsBox}>
+                <Text style={[styles.text, { fontSize: 24 }]}>{followers}</Text>
+                <Text style={[styles.text, styles.subText]}>Seguidores</Text>
+              </View>
+            </View>
+
+            <View style={{ marginTop: 32 }}>
+              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                {imagenes.slice(0).reverse().map((imagen, index) =>
+                  <View style={styles.mediaImageContainer} key={index} >
+                    <Image source={{ uri: imagen }} style={styles.image} resizeMode="cover"></Image>
+                  </View>
+                )}
+              </ScrollView>
+            </View>
+
+            <Text style={[styles.subText, styles.description]}>Description</Text>
+
+            <View style={{ alignItems: "center" }}>
+              <View style={styles.descripcion}>
+                <View style={styles.descripcionIndicador}></View>
+                <View style={{ width: 250 }}>
+                  <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
+                    {!userById.length ? 'Please fill in your description ...' : userById[0].data.description}
+                  </Text>
+                </View>
+              </View>
+            </View>
           </ScrollView>
-        </View>
-
-        <Text style={[styles.subText, styles.description]}>Descripcion</Text>
-
-
-        <View style={{alignItems: "center"}}>
-          <View style={styles.descripcion}>
-            <View style={styles.descripcionIndicador}></View>
-            <View style={{width: 250}}>
-            <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-            {description}
-            </Text>
-            </View>
-          </View>
-        </View>
+        </SafeAreaView>
       </ScrollView>
-    </SafeAreaView>
+    </Provider>
   )
 }
 
@@ -90,7 +188,7 @@ const styles = StyleSheet.create({
   text: {
     color: "#52575D"
   },
-  subText:{
+  subText: {
     fontSize: 12,
     color: "#AEB5BC",
     textTransform: "uppercase",
@@ -105,13 +203,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     marginTop: 24,
-    marginHorizontal: 16
+    marginHorizontal: 16,
+    marginBottom: 24
   },
   profileImage: {
-    width: 200,
-    height: 200,
+    width: 50,
+    height: 50,
     borderRadius: 100,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   dm: {
     backgroundColor: "#41444B",

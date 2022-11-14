@@ -38,6 +38,7 @@ export default function Filter() {
                 onSelect={() => handlerByCatogory(category)}
                 placeholder='Category'
                 search={false}
+                boxStyles={styles.box}
                 inputStyles={styles.test}
             />
             <SelectList
@@ -46,6 +47,7 @@ export default function Filter() {
                 onSelect={() => handlerPerPrice(price)}
                 placeholder='Order By Price'
                 search={false}
+                boxStyles={styles.box}
                 inputStyles={styles.test}
             />
             <SelectList
@@ -54,6 +56,7 @@ export default function Filter() {
                 onSelect={() => handlerPerName(byName)}
                 placeholder='Order By Name'
                 search={false}
+                boxStyles={styles.box}
                 inputStyles={styles.test}
             />
         </View>
@@ -64,20 +67,15 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: '#4d4d4d',
-        color:'#F6F5F5',
-        margin: 5,
-        borderRadius: 5,
-        borderColor:'#F6F5F5', 
-
-        
-        
+        backgroundColor: 'white'
+    },
+    box: {
+        borderColor: '#B9B9B9',
+        borderRadius: 14
     },
     test: {
-       fontSize: 12,
-       borderColor:'#F6F5F5',
-       tintColor: '#F6F5F5',
-       color: '#F6F5F5',
+        fontSize: 12,
+        tintColor: '#F6F5F5',
+        color: '#777777',
     }
-
 })
