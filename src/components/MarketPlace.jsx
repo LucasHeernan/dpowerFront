@@ -216,20 +216,20 @@ export default function MarketPlace() {
               <View>
                 {
                   filterProducts.length > 0 ? filterProducts.map(item => {
-                    return (
+                    return item.stock !== 0 ? (
                       <ProductCard
                         key={item.id}
                         producto={item}
                       />
-                    )
+                    ) : null
                   }) :
                   allProducts.map(item => {
-                    return (
+                    return item.stock !== 0 ? (
                       <ProductCard
                         key={item.id}
                         producto={item}
                       />
-                    )
+                    ) : null
                   })
                 }
               </View>
