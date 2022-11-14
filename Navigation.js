@@ -9,6 +9,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
+
 //screens
 import HomeScreen from './src/components/HomeScreen';
 import MarketPlace from './src/components/MarketPlace';
@@ -20,7 +21,7 @@ import ProductDetail from './src/components/ProductDetail';
 import LandingPage from './src/components/LandingPage';
 import FormRegisterUser from './src/components/FormRegisterUser';
 import PostPicture from './src/components/ImagePicker';
-
+import Comments from './src/components/Comments';
 
 
 const MarketStackNavigator = createNativeStackNavigator();
@@ -113,6 +114,15 @@ function MyStack() {
         }}
       />
 
+      <MarketStackNavigator.Screen
+        name="Comments"
+        component={Comments}
+        options={{
+          headerStyle: {backgroundColor: "#4d4d4d"},
+          headerTitleStyle: {color: "white"}
+        }}
+      />
+      
     </MarketStackNavigator.Navigator>
   )
 }

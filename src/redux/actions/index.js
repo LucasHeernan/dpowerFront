@@ -18,7 +18,8 @@ import {
     REMOVE_ITEM_FROM_CART,
     ADD_TO_TOTAL,
     LESS_TO_TOTAL,
-    UPDATE_POST
+    UPDATE_POST,
+    GET_COMMENTS_BY_ID
 } from '../actionTypes';
 
 
@@ -178,4 +179,30 @@ export function addToTotal(id) {
 
 export function lessToTotal(id) {
     return { type: LESS_TO_TOTAL, payload: id}
+}
+
+
+export function getCommentsById(id) {
+    return async (dispatch) => {
+        try {
+            const data = await axios.get(`https://dpower-production.up.railway.app/post/${id}`).then(e => e.data.Comments)
+            return dispatch({
+                type: GET_COMMENTS_BY_ID,
+                payload: data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const postComments = (payload) => {
+    return async function() {
+        const create = await axios.post('https://dpower-production.up.railway.app/comments', payload);
+        return create
+    }
+}
+
+export{
+    postComments,
 }

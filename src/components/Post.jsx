@@ -13,11 +13,15 @@ import { updatePost, updateUser } from "../redux/actions";
 import { Alert } from "react-native";
 import { validate } from "react-native-web/dist/cjs/exports/StyleSheet/validate";
 import axios from 'axios'
+import { useNavigation } from "@react-navigation/native";
+import { getCommentsById } from '../redux/actions'
 
 let shouldPost = true;
 let firstTime = true;
 
 function Post({UserInfoId, id, powersGained, likes, multimedia, description, userById, validated}) {
+
+  const navigation = useNavigation();
 
   const { user } = useSelector(store => store)
 
@@ -124,6 +128,11 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
     )
   }
 
+  function commentsDetails (commentId){
+    dispatch(getCommentsById(commentId)),
+    navigation.navigate("Comments")
+  }
+
   return (
     <ScrollView >
       <View style={styles.bg} >
@@ -221,7 +230,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
 
 
               <View style={styles.container}>
-                <TouchableOpacity onPress={() => console.log('validate', validate(UserInfoId))}>
+                <TouchableOpacity onPress={() => {commentsDetails(id)}}>
                   <Entypo style={styles.signos} name="chat" size={28} color="#C7D31E" />
                 </TouchableOpacity>
               </View>
