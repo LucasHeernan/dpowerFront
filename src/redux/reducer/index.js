@@ -31,7 +31,7 @@ const reducer = ( state = initialState, action ) => {
                 detail: action.payload
             }
         case GET_PRODUCT_BY_NAME:
-            const productByName = state.allProducts.filter(e => e.name.includes(action.payload))
+            const productByName = state.allProducts.filter(e => e.name.toLowerCase().includes(action.payload.toLowerCase()))
             return {
                 ...state,
                 detail: productByName

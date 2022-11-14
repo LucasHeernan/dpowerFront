@@ -89,6 +89,7 @@ function MyStack() {
         name="MarketPlace"
         children={({item}) => <MarketPlace producto={item} />}
         options={{
+          headerShown: false,
           headerStyle: {backgroundColor: "#4d4d4d"},
           headerTitleStyle: {color: "white", fontSize: 28}
         }}
@@ -97,6 +98,7 @@ function MyStack() {
         name="Cart"
         component={Cart}
         options={{
+          headerShown: false,
           headerStyle: {backgroundColor: "#4d4d4d"},
           headerTitleStyle: {color: "white", fontSize: 28}
         }}
@@ -105,6 +107,7 @@ function MyStack() {
         name="Detail"
         component={ProductDetail}
         options={{
+          headerShown: false,
           headerStyle: {backgroundColor: "#4d4d4d"},
           headerTitleStyle: {color: "white", fontSize: 28}
         }}

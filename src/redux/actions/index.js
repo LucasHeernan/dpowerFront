@@ -16,9 +16,8 @@ import {
     CLEAN_CART,
     REMOVE_ITEM_FROM_CART,
     ADD_TO_TOTAL,
-    LESS_TO_TOTAL
-,
-    UPDATE_POST    
+    LESS_TO_TOTAL,
+    UPDATE_POST
 } from '../actionTypes';
 
 

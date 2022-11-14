@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { cleanCart } from '../redux/actions';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import CartItem from './CartItem';
 
 
@@ -10,6 +12,7 @@ export default function Cart() {
   const dispatch = useDispatch();
   const cart = useSelector(store => store.cart);
   const [total, setTotal] = useState(0)
+  const navigation = useNavigation();
 
   const handleTotal = () => {
     setTotal(cart.filter(e => e.total).reduce((acc, curr) => {
@@ -38,6 +41,39 @@ export default function Cart() {
       }}
     >
       <ScrollView style={{ marginBottom: 15 }} >
+        <View
+          style={{
+            width: '100%',
+            flexDirection: 'row',
+            paddingTop: 16,
+            paddingHorizontal: 16,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons
+              name="chevron-back"
+              style={{
+                fontSize: 18,
+                color: '#777777',
+                padding: 12,
+                backgroundColor: 'white',
+                borderRadius: 12,
+              }}
+            />
+          </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 20,
+              color: 'black',
+              fontWeight: '500',
+            }}>
+            Order Details
+          </Text>
+          <View></View>
+        </View>
+
         <Text
           style={{
             fontSize: 20,
@@ -49,7 +85,7 @@ export default function Cart() {
             marginBottom: 10,
           }}
         >
-          Order Details
+          Cart
         </Text>
 
         {/* --- RENDERIZADO DE PRODUCTOS --- */}
