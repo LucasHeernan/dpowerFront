@@ -2,6 +2,7 @@ import axios from 'axios';
 import { 
     GET_ALL_PRODUCTS,
     GET_PRODUCT_BY_ID,
+    GET_USERS,
     GET_CATEGORIES,
     ORDER_BY_PRICE,
     ORDER_BY_NAME,
@@ -28,6 +29,20 @@ export function getAllProducts() {
             const data = await axios(`https://dpower-production.up.railway.app/products`).then(e => e.data);
             return dispatch({
                 type: GET_ALL_PRODUCTS,
+                payload: data
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+}
+
+export function getUsers() {
+    return async (dispatch) => {
+        try {
+            const data = await axios(`https://dpower-production.up.railway.app/users`).then(e => e.data);
+            return dispatch({
+                type: GET_USERS,
                 payload: data
             })
         } catch (err) {
