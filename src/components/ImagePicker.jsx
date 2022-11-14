@@ -102,7 +102,7 @@ export default function PostImage() {
             .then(async (res) => {
                 let imagenurl = await res.json()
                 let publicacion = {}
-                if (user[0].validated === true) {
+                if (user[0].data.validated === true) {
                     publicacion = {
                         likes: 0,
                         powersGained: 0,
@@ -119,7 +119,7 @@ export default function PostImage() {
                         multimedia: imagenurl.secure_url
                     }
                 }
-                // console.log('RESJSON:   ', imagenurl)
+                console.log('publicacion:   ', publicacion)
 
 
                 axios.post(`https://dpower-production.up.railway.app/post`, publicacion)
@@ -131,6 +131,7 @@ export default function PostImage() {
                 //console.log('media     :', imagenurl.secure_url ) 
             })
             .then(() => {
+                console.log(user[0])
                 setImg(null)
                 setDescr('')
             })
