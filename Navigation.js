@@ -159,9 +159,9 @@ function MyTabs() {
     />
 
     <Tab.Screen name="Add Product"
-
       component={PostPicture}
       options={{
+        headerShown: false,
         headerStyle: {backgroundColor:"#4d4d4d"},
         headerTitleStyle: {color: "white", fontSize: 28},
         title: 'New Post',
