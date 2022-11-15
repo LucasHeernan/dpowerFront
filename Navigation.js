@@ -39,16 +39,7 @@ function ProfileStack() {
           headerStyle: {backgroundColor: "#4d4d4d"},
           headerTitleStyle: {color: "white", fontSize: 28}
         }}
-        children={() => <Profile
-        key={user[0].data.id}
-        name={user[0].data.name || user[0].data.username}
-        age={user[0].data.age}
-        likes="65"
-        powers="150"
-        followers="1200"
-        avatar={user[0].data.avatar}
-        images={["https://www.rehagirona.com/wp-content/uploads/2021/07/atletismo_paralimpico_des.jpg", "https://billiken.lat/wp-content/uploads/2021/07/atle-para.jpg", "https://www.acnur.org/thumb1/60db219df.jpg", "https://img.olympicchannel.com/images/image/private/t_16-9_360-203_2x/f_auto/v1538355600/primary/mjdvlnu0gpflzhuvgkbw"]}
-      />}
+        component={Profile}
         
       />
       <ProfileStackNavigator.Screen
