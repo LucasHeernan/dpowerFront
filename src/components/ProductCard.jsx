@@ -7,27 +7,30 @@ import { Headline } from 'react-native-paper';
 export default function ProductCard({producto}) {
 
   const navigation = useNavigation();
-  const { name, id, image, price } = producto
+  const { name, id, image, price, stock } = producto
 
   return (
-    <ScrollView>
+    // <ScrollView style={{ backgroundColor: 'black' }} >
       <View style={styles.view}>
-          <Pressable key={id} style={styles.product}
-            onPress={() => {
-              navigation.navigate("Detail", {
-              selectedProduct: producto
-            })
-          }}>
-            <Image source={{uri: image}} alt={name} style={styles.image} />
-            <View style={styles.price}>
-              <Headline style={{fontWeight: "bold"}}>
-                ${price}
-              </Headline>
-              <Text style={{marginTop: 10}} numberOfLines={3}>{name}</Text>
-            </View>
-          </Pressable>
+        <Pressable key={id} style={styles.product}
+          onPress={() => {
+            navigation.navigate("Detail", {
+            selectedProduct: producto
+          })
+        }}>
+          {
+            stock ? <Image source={{uri: image}} alt={name} style={styles.image} /> :
+            <Image source={{uri: image}} alt={name} style={styles.noStock} />
+          }
+          <View style={styles.price}>
+            <Headline style={ stock ? ({fontWeight: "bold"}) : {fontWeight: "bold", opacity: 0.3}}>
+              ${price}
+            </Headline>
+            <Text style={{marginTop: 10}} numberOfLines={3}>{name}</Text>
+          </View>
+        </Pressable>
       </View>
-    </ScrollView>
+    // </ScrollView>
   );
 }
 
@@ -49,7 +52,14 @@ const styles = StyleSheet.create({
     width: "85%", 
     height: 220, 
     resizeMode: "contain",
+    alignSelf: 'center'
+  },
+  noStock: {
+    width: "85%", 
+    height: 220, 
+    resizeMode: "contain",
     alignSelf: 'center',
+    opacity: 0.3
   },
   text: {
     marginTop: 9,
@@ -90,16 +100,15 @@ const styles = StyleSheet.create({
   },
   view: {
     marginLeft: 25,
-    
     justifyContent:"center", 
     paddingLeft: 6, 
     paddingRight: 6
   },
   product: {
-    width: "60%", 
-    backgroundColor: "white", 
+    width: "65%",
+    backgroundColor: "white",
     alignSelf: 'center',
-    borderRadius: 6, 
+    borderRadius: 12,
     shadowColor: "#000", 
     shadowOffset: {
       width: 0,
@@ -111,7 +120,7 @@ const styles = StyleSheet.create({
     paddingTop: 3, 
     marginTop: 30, 
     marginBottom: 30, 
-    paddingBottom: 20, 
+    paddingBottom: 20,
     overflow: "hidden"
   },
   price: {
