@@ -20,6 +20,7 @@ import ProductDetail from './src/components/ProductDetail';
 import LandingPage from './src/components/LandingPage';
 import FormRegisterUser from './src/components/FormRegisterUser';
 import PostPicture from './src/components/ImagePicker';
+import StripeApp from './src/components/CheckOutForm';
 
 
 
@@ -103,6 +104,17 @@ function MyStack() {
           headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
+      <MarketStackNavigator.Screen
+        name="CheckOut"
+        component={StripeApp}
+        options={{
+          headerShown: false,
+          headerStyle: {backgroundColor: "#4d4d4d"},
+          headerTitleStyle: {color: "white", fontSize: 28}
+        }}
+      />
+
+
 
     </MarketStackNavigator.Navigator>
   )
