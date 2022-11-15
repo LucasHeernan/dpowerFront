@@ -103,6 +103,7 @@ function Profile(props) {
 
       <ScrollView
         contentContainerStyle={styles.scrollView}
+        style={{ backgroundColor: 'white' }}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
