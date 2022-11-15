@@ -128,11 +128,11 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
     )
   }
 
-  function commentsDetails (commentId){
-    dispatch(getCommentsById(commentId)),
+  function commentsDetails (id){
+    dispatch(getCommentsById(id)),
     navigation.navigate("Comments")
   }
-
+  
   return (
     <ScrollView >
       <View style={styles.bg} >
@@ -140,7 +140,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
         <View style={styles.posts}>
 
 
-          <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text>
+          {/* <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text> */}
           <View style={styles.contain} >
 
             <View>
@@ -230,7 +230,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
 
 
               <View style={styles.container}>
-                <TouchableOpacity onPress={() => {commentsDetails(id)}}>
+                <TouchableOpacity onPress={() => navigation.navigate("Comments", {id})}>
                   <Entypo style={styles.signos} name="chat" size={28} color="#C7D31E" />
                 </TouchableOpacity>
               </View>
