@@ -131,7 +131,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
         <View style={styles.posts}>
 
 
-          <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text>
+          <Text style={styles.title}>{UserInfoId?.split('@')[0]}</Text>
           <View style={styles.contain} >
 
             <View>
