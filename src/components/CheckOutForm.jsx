@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { CardField, useConfirmPayment, useStripe  } from "@stripe/stripe-react-native";
-import { ViewPagerAndroidBase } from "react-native";
+
 
 
 
