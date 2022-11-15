@@ -1,6 +1,6 @@
 import { GET_ALL_PRODUCTS, GET_PRODUCT_BY_ID, GET_CATEGORIES, ORDER_BY_PRICE, ORDER_BY_NAME,
 FILTER_BY_CATEGORY, GET_PRODUCT_BY_NAME, CLEAR_MARKET, CLEAN_USER, CREATE_USER, UPDATE_USER,
-GET_USER_BY_ID, ADD_TO_CART, REMOVE_ITEM_FROM_CART, CLEAN_CART, ADD_TO_TOTAL, LESS_TO_TOTAL, UPDATE_POST } from "../actionTypes";
+GET_USER_BY_ID, ADD_TO_CART, REMOVE_ITEM_FROM_CART, CLEAN_CART, ADD_TO_TOTAL, LESS_TO_TOTAL, UPDATE_POST, GET_USERS } from "../actionTypes";
 
 const initialState = {
     allProducts: [],
@@ -19,6 +19,11 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 allProducts:  action.payload,    
             }
+        case GET_USERS:
+            return {
+                ...state,
+                user: action.payload,
+            }
         case CLEAR_MARKET:
             return {
                 ...state,
@@ -31,7 +36,7 @@ const reducer = ( state = initialState, action ) => {
                 detail: action.payload
             }
         case GET_PRODUCT_BY_NAME:
-            const productByName = state.allProducts.filter(e => e.name.includes(action.payload))
+            const productByName = state.allProducts.filter(e => e.name.toLowerCase().includes(action.payload.toLowerCase()))
             return {
                 ...state,
                 detail: productByName
