@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 import FormInput from "./FormInput";
 import { useDispatch, useSelector } from "react-redux";
 import {updateUser} from "../redux/actions/index"
@@ -98,6 +99,39 @@ export default function FormRegisterUser({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          width: '100%',
+          flexDirection: 'row',
+          paddingVertical: 10,
+          marginTop: 15,
+          marginBottom: 30,
+          justifyContent: "space-between",
+          alignItems: 'center',
+        }}
+      >
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons
+            name="chevron-back"
+            style={{
+              fontSize: 18,
+              color: '#777777',
+              padding: 12,
+              backgroundColor: 'white',
+              borderRadius: 12,
+            }}
+          />
+        </TouchableOpacity>
+        <Text
+            style={{
+              fontSize: 20,
+              color: 'black',
+              fontWeight: '500',
+            }}>
+            Edit Profile Info
+        </Text>
+        <View></View>
+      </View>
       <Formik
         initialValues={userInfo}
         validationSchema={validationSchema}
@@ -115,7 +149,7 @@ export default function FormRegisterUser({ navigation }) {
           dirty
         }) => {
           const { name, age, description, sport, nationality} = values;
-          const backgroundColor = isSubmitting ? 'rgba(27,27,51,0.4)' : 'rgba(27,27,51,1)';
+          // const backgroundColor = isSubmitting ? 'rgba(27,27,51,0.4)' : 'rgba(27,27,51,1)';
           return (
             <>
               <FormInput
@@ -162,9 +196,18 @@ export default function FormRegisterUser({ navigation }) {
               <TouchableOpacity
                 disabled={!(isValid && dirty)}
                 onPress={!isSubmitting ? handleSubmit : null}
-                style={[styles.button, {backgroundColor}]}
+                // style={[styles.button, {backgroundColor}]}
+                style={styles.button}
               >
-                <Text style={{ fontSize: 18, color: '#fff' }}>Update!</Text>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: '500',
+                    letterSpacing: 1,
+                    color: 'white',
+                    textTransform: 'uppercase',
+                  }}
+                >Update</Text>
               </TouchableOpacity>
             </>
           );
@@ -176,14 +219,15 @@ export default function FormRegisterUser({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   button: {
-    height: 45,
-    borderRadius: 8,
-    justifyContent: 'center',
+    padding: 15,
+    borderRadius: 14,
     alignItems: 'center',
-    marginTop: 70
+    alignSelf: 'center',
+    marginTop: 70,
+    width: '70%',
+    backgroundColor: "#C7D31E",
   },
 });

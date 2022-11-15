@@ -37,6 +37,7 @@ function ProfileStack() {
       <ProfileStackNavigator.Screen
         name="Profile"
         options={{
+          headerShown: false,
           headerStyle: {backgroundColor: "#4d4d4d"},
           headerTitleStyle: {color: "white", fontSize: 28}
         }}
@@ -47,6 +48,7 @@ function ProfileStack() {
         name="Form"
         component={FormRegisterUser}
         options={{
+          headerShown: false,
           headerStyle: {backgroundColor: "#4d4d4d"},
           headerTitleStyle: {color: "white", fontSize: 28}
         }}
