@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import * as AuthSession from "expo-auth-session"
 import { openAuthSessionAsync } from "expo-web-browser";
 import { View, Text, StyleSheet, ScrollText, ScrollView, Image, SafeAreaView, Alert, Platform, RefreshControl } from 'react-native';
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Button, Divider, IconButton, Menu, Provider } from "react-native-paper";
-import { cleanUser } from "../redux/actions";
+import { cleanUser, getPosts } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
@@ -19,6 +19,8 @@ const redirectUri = AuthSession.makeRedirectUri({ useProxy }); // <-- must be se
 
 let update = true;
 function Profile(props) {
+  const [powers, setPowers] = React.useState(0)
+  const [likes, setLikes] = React.useState(0)
   const [visible, setVisible] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const [imagenes, setImagenes] = React.useState([]);
@@ -30,6 +32,23 @@ function Profile(props) {
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
+  let getFilteredPosts = async function() {
+    let posts = await axios.get("https://dpower-production.up.railway.app/post").then(e => e.data)
+    let filteredPosts = posts.filter(e => e.UserInfoId === userById[0].data.id)
+    let likes = filteredPosts.map(e => e.likes)
+    let totalLikes = likes.reduce((accumulator, value) => {
+      return accumulator + value;
+    }, 0)
+    let powers = filteredPosts.map(e => e.powersGained)
+    let totalPowers = powers.reduce((accumulator, value) => {
+      return accumulator + value;
+    }, 0)
+    setPowers(totalPowers)
+    setLikes(totalLikes)
+    return (totalLikes, totalPowers)
+  }
+
+  const totalLikes = getFilteredPosts()
 
   let getImagenes = async function () {
     let likesId = await axios.get('https://dpower-production.up.railway.app/post/likes')
@@ -59,8 +78,6 @@ function Profile(props) {
 
   if (update) getImagenes()
 
-
-  const { powers, likes, followers, images } = props;
 
   const actualUser = user[0].data.id;
 
@@ -96,6 +113,9 @@ function Profile(props) {
         <SafeAreaView style={styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.titleBar}>
+              <FontAwesome5 name="bolt" size={20} color="black">
+                <Text> {userById[0].data.powers}</Text>
+              </FontAwesome5>
               <Menu
                 visible={visible}
                 onDismiss={closeMenu}
@@ -134,7 +154,7 @@ function Profile(props) {
 
             <View style={styles.statsContainer}>
               <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 24 }]}>{images.length}</Text>
+                <Text style={[styles.text, { fontSize: 24 }]}>{imagenes.length}</Text>
                 <Text style={[styles.text, styles.subText]}>Posts</Text>
               </View>
               <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
@@ -142,13 +162,13 @@ function Profile(props) {
                 <Text style={[styles.text, styles.subText]}>Likes</Text>
               </View>
               {userById[0].data.validated ? <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1 }]}>
-                <Text style={[styles.text, { fontSize: 24 }]}>{powers}</Text>
+                <Text style={[styles.text, { fontSize: 24 }]}>{powers >= 0 ? powers : 0}</Text>
                 <Text style={[styles.text, styles.subText]}>Powers</Text>
               </View> : <Text></Text>}
-              <View style={styles.statsBox}>
+              {/* <View style={styles.statsBox}>
                 <Text style={[styles.text, { fontSize: 24 }]}>{followers}</Text>
                 <Text style={[styles.text, styles.subText]}>Seguidores</Text>
-              </View>
+              </View> */}
             </View>
 
             <View style={{ marginTop: 32 }}>
@@ -201,7 +221,7 @@ const styles = StyleSheet.create({
   },
   titleBar: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     marginTop: 24,
     marginHorizontal: 16,
     marginBottom: 24
