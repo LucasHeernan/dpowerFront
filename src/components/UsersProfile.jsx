@@ -104,7 +104,10 @@ function UsersProfile({route}) {
                     marginBottom: 20
                 }}
             >
-                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <TouchableOpacity onPress={() => {
+                    setLoading(true)
+                    navigation.goBack()
+                    }}>
                     <Ionicons
                     name="chevron-back"
                     style={{

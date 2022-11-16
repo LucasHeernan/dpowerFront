@@ -225,7 +225,7 @@ function Profile(props) {
                 <View style={styles.descripcionIndicador}></View>
                 <View style={{ width: 250 }}>
                   <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-                    {!userById.length ? 'Please fill in your description ...' : userById[0].data.description}
+                    {!userById[0].data.description ? 'Please fill in your description ...' : userById[0].data.description}
                   </Text>
                 </View>
               </View>
