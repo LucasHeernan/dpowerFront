@@ -9,6 +9,7 @@ import { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 
+
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
@@ -44,7 +45,7 @@ const dispatch = useDispatch();
 
   return (
     <View style={styles.bg1}>
-
+      <View style={styles.header}></View>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
@@ -144,9 +145,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   bg1: {
-    backgroundColor: "#7D7D7D",
+    backgroundColor: "#F0F0F3",
     width: '100%',
     margin: 0
+  },
+  header:{
+   
+    backgroundColor: '#F0F0F3',
+    height: 10,
   }
 
 })

@@ -40,7 +40,7 @@ function HomePost() {
         name="HomeLanding"
       component={HomeScreen}
       options={{
-        
+        headerShown: false,
         headerStyle: {backgroundColor:"#4d4d4d"},
         headerTitleStyle: {color: "white", fontSize: 28},
         title: 'Home',
@@ -70,7 +70,7 @@ function ProfileStack() {
         name="Profile"
         options={{
           headerShown: false,
-          headerStyle: {backgroundColor: "#4d4d4d"},
+          headerStyle: {backgroundColor: "#F0F0F3"},
           headerTitleStyle: {color: "white", fontSize: 28}
         }}
         component={Profile}
@@ -98,6 +98,7 @@ function LandingStack() {
         name="Login"
         component={LandingPage}
         options={{
+          headerShown: false,
           headerStyle: {backgroundColor: "#4d4d4d"},
           headerTitleStyle: {color: "white", fontSize: 28}
         }}
