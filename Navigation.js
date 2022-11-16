@@ -259,7 +259,7 @@ export default function Navigation() {
         user.length ? (
           <MyTabs />
         ) : (
-          <LandingStack />
+          <MyTabs />
         )
       }
     </NavigationContainer>
