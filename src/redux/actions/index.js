@@ -20,8 +20,8 @@ import {
     LESS_TO_TOTAL,
     UPDATE_POST,
     GET_COMMENTS_BY_ID
+    UPDATE_CART
 } from '../actionTypes';
-
 
 
 export function getAllProducts() {
@@ -138,6 +138,22 @@ export function updatePost(info) {
     }
 }
 
+export function updateCart(products) {
+    return async (dispatch) => {
+        try {
+            products.map( async (el) => {
+                await axios.put(`https://dpower-production.up.railway.app/products/${el.id}/${el.stock - el.total}`)
+            })
+            return dispatch({
+                type: UPDATE_CART,
+                payload: []
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 export function orderByPrice(payload) {
     return { type: ORDER_BY_PRICE, payload }
 }
@@ -207,3 +223,4 @@ const postComments = (payload) => {
 export{
     postComments,
 }
+
