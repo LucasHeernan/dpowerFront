@@ -1,6 +1,6 @@
 import  React, {useState, useEffect} from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity, ScrollView, Button } from 'react-native';
-import { getCommentsById } from '../redux/actions';
+import { getCommentsById, getpostById } from '../redux/actions';
 import { useDispatch, useSelector} from 'react-redux';
 import { useNavigation } from "@react-navigation/native";
 import { postComments } from '../redux/actions';
@@ -14,6 +14,7 @@ import { shouldUseActivityState } from 'react-native-screens';
       // console.log('soy id =>', id);
 
     const { comments } = useSelector(state => state);
+    const { postbyid } = useSelector(state => state)
     const { user } = useSelector(state => state);
     const dispatch = useDispatch();
 
@@ -22,9 +23,12 @@ import { shouldUseActivityState } from 'react-native-screens';
       dispatch(getCommentsById(id))
     }, [])
     // console.log('COMENTARIOS (comments) => ',comments)
+
     
       // console.log('lo que hay en user => ',user[0].data.name);
 
+
+      console.log(postbyid)
     const [text, setText] = useState('');
     
       function handleSubmit(){
