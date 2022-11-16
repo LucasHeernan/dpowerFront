@@ -18,9 +18,9 @@ import {
     REMOVE_ITEM_FROM_CART,
     ADD_TO_TOTAL,
     LESS_TO_TOTAL,
-    UPDATE_POST
+    UPDATE_POST,
+    UPDATE_CART
 } from '../actionTypes';
-
 
 
 export function getAllProducts() {
@@ -130,6 +130,34 @@ export function updatePost(info) {
             return dispatch({
                 type: UPDATE_POST,
                 payload: data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export function updateCart(products) {
+    return async (dispatch) => {
+        try {
+            products.map( async (el) => {
+                await axios.put(`https://dpower-production.up.railway.app/products/${el.id}/${el.stock}`)
+            })
+            // products.map(async (el) => {
+            //     await axios({
+            //         method: "PUT",
+            //         url: `https://dpower-production.up.railway.app/products/${el.id}`,
+            //         headers: {
+            //             'Content-Type': 'application/json',
+            //         },
+            //         data: {
+            //           el
+            //         }
+            //       })
+            // })
+            return dispatch({
+                type: UPDATE_POST,
+                payload: []
             })
         } catch (error) {
             console.log(error)

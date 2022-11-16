@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { cleanCart } from '../redux/actions';
+import { cleanCart, updateCart } from '../redux/actions';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import CartItem from './CartItem';
@@ -304,6 +304,29 @@ export default function Cart() {
         }}
       >
         <TouchableOpacity
+          onPress={() => dispatch(updateCart(cart))}
+          style={{
+            width: '86%',
+            height: '90%',
+            backgroundColor: "#C7D31E",
+            borderRadius: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: '500',
+              letterSpacing: 1,
+              color: 'white',
+              textTransform: 'uppercase',
+            }}
+          >
+            PROBANDO ACCIÓN
+          </Text>
+        </TouchableOpacity>
+        {/* <TouchableOpacity
           variant="primary"
           disabled={!loading}
           title="Checkout"
@@ -329,7 +352,7 @@ export default function Cart() {
           >
             CHECKOUT
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   )
