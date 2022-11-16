@@ -158,7 +158,7 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 cart: action.payload
             }
-        case GET_COMMENTS_BY_ID:
+        case GET_POST_BY_ID:
             return{
                 ...state,
                 postbyid: action.payload
