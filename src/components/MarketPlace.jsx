@@ -12,13 +12,13 @@ export default function MarketPlace() {
 
   const [text, setText] = useState('')
   const dispatch = useDispatch();
-  const { allProducts, filterProducts, detail } = useSelector(store => store);
+  const { allProducts, filterProducts, detail, cart } = useSelector(store => store);
   const navigation = useNavigation();
 
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getAllProducts());
-  }, [dispatch, filterProducts])
+  }, [dispatch, filterProducts, cart])
 
   function onSubmit(e) {
     dispatch(getProductByName(e));
