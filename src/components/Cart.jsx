@@ -72,10 +72,8 @@ export default function Cart() {
         paymentIntentClientSecret: paymentIntent,
         // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
         //methods that complete payment after a delay, like SEPA Debit and Sofort.
-        allowsDelayedPaymentMethods: true,
         defaultBillingDetails: {
-          name: user[0].data.name,
-          email: user[0].data.mail,
+          name: user[0].data.name
         }
       });
       if (!error) {
