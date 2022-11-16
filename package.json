@@ -48,7 +48,8 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "yup": "^0.32.11",
-    "@stripe/stripe-react-native": "0.13.1"
+    "@stripe/stripe-react-native": "0.13.1",
+    "expo-updates": "~0.14.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
