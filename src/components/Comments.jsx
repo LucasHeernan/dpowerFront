@@ -35,9 +35,10 @@ import { shouldUseActivityState } from 'react-native-screens';
         };
         console.log(crear);
         dispatch(postComments(crear));
+        setText('');
       }
 
-    
+    // console.log('usuario =>', user[0].data.name)
       return (
         <ScrollView style={styles.todo}>
           <View style={styles.container}>
@@ -46,9 +47,7 @@ import { shouldUseActivityState } from 'react-native-screens';
               {
               comments?.map((e)=>(e.content)) !== undefined ? 
               (comments.map((e)=>
-              <Text style={styles.name} key={e.id}>{user[0].data.name}: 
-              
-              <Text style={styles.text} key={e.id}>{e.content}</Text></Text>)
+              <Text style={styles.name} key={e.id}>{user[0].data.name} : <Text style={styles.text} key={e.id}>{e.content}</Text></Text>)
               
               ) : (
               
@@ -59,17 +58,18 @@ import { shouldUseActivityState } from 'react-native-screens';
               <TextInput
                     style={styles.input}
                     onChangeText={setText}
-                    placeholder={"..."}
+                    placeholder={"Agrega Un Comentario..."}
                     value={text}
                 />
                   
-                  <Button
+                  <TouchableOpacity
                     style={styles.button}
                     type='submit'
                     title="Enviar"
                     onPress={handleSubmit}>
-                      Enviar
-                    </Button>
+                      <Text style={styles.buttonTxt}>
+                      Enviar </Text>
+                    </TouchableOpacity>
               </View>
               </View>
               
@@ -99,13 +99,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   name: {
-    fontSize: 8,
+    fontSize: 15,
     paddingBottom: 15,
-    fontWeight: 600,
+    fontWeight: 'bold',
     marginHorizontal: 10,
     marginTop: 15,
     marginVertical: 8,
-    backgroundColor: '#444753',
+    backgroundColor: '#e2e6da',
     borderRadius: 10,
   },
   text: {
@@ -115,26 +115,32 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 15,
     marginVertical: 8,
-    backgroundColor: '#f5eded',
     borderRadius: 12,
   },
   button: {
-    color: '#090909',
-    padding: 0.7,
-    fontsize: 18,
-    borderradius: 0.5,
-    backgroundColor: '#EDEDED',
-    border: 1,
-    transition: 0.3,
+    width: 160,
+    height: 40,
+    backgroundColor: "#9ad31e",
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 115,
+    marginTop: 10,
+  },
+  buttonTxt: {
+    fontSize: 15,
+    fontWeight: 'bold',
   },
   input: {
     fontsize: 0.9,  
     backgroundColor: '#C7D31E',
     paddinginline: 0.5,
     paddingblock: 0.7,
-    marginTop: 363,
+    marginTop: 400,
     border: 'none',
     borderbottom: 'black',
+    width: '100%',
+    height: 50,
   },
   else: {
     fontSize: 15,
