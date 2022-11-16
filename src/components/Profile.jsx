@@ -3,7 +3,7 @@ import * as AuthSession from "expo-auth-session"
 import { openAuthSessionAsync } from "expo-web-browser";
 import { View, Text, StyleSheet, ScrollText, ScrollView, Image, SafeAreaView, Alert, Platform, RefreshControl } from 'react-native';
 import { FontAwesome5, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { Button, Divider, IconButton, Menu, Provider } from "react-native-paper";
+import { ActivityIndicator, Button, Divider, IconButton, Menu, Provider } from "react-native-paper";
 import { cleanUser, getPosts } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
@@ -21,6 +21,7 @@ let update = true;
 let updatePosteos = true;
 
 function Profile(props) {
+  const [loading, setLoading] = React.useState(true)
   const [powers, setPowers] = React.useState(0)
   const [likes, setLikes] = React.useState(0)
   const [visible, setVisible] = React.useState(false);
@@ -103,6 +104,10 @@ function Profile(props) {
   useEffect(() => {
     dispatch(getUserById(actualUser))
   }, [user])
+
+  useEffect(() => {
+    setLoading(false)
+  }, [posteos])
 
   const navigation = useNavigation()
 
@@ -193,13 +198,13 @@ function Profile(props) {
 
             <Text style={[styles.subText, styles.description]}>My Posts</Text>
             <View style={{ marginTop: 32 }}>
-              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {loading ? <ActivityIndicator animating={true} /> : <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 {posteos.slice(0).reverse().map((imagen, index) =>
                   <View style={styles.mediaImageContainer} key={index} >
                     <Image source={{ uri: imagen }} style={styles.image} resizeMode="cover"></Image>
                   </View>
                 )}
-              </ScrollView>
+              </ScrollView>}
             </View>
 
             <Text style={[styles.subText, styles.description]}>My Favorites</Text>

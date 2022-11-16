@@ -48,7 +48,7 @@ export default function Login() {
     if (result) {
       const token = result.params.id_token;
       const userInfo = jwtDecode(token);
-      console.log("userInfo", userInfo);
+      // console.log("userInfo", userInfo);
       // console.log("Result: ", result);
       dispatch(createUser(userInfo))
       dispatch(getUserById(userInfo.email))
