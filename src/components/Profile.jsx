@@ -18,12 +18,15 @@ const useProxy = Platform.select({ web: false, default: true });
 const redirectUri = AuthSession.makeRedirectUri({ useProxy }); // <-- must be set in allowed logout urls
 
 let update = true;
+let updatePosteos = true;
+
 function Profile(props) {
   const [powers, setPowers] = React.useState(0)
   const [likes, setLikes] = React.useState(0)
   const [visible, setVisible] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const [imagenes, setImagenes] = React.useState([]);
+  const [posteos, setPosteos] = React.useState([]);
 
   const { user, userById } = useSelector(state => state)
   let userIdProfile = { userId: user[0].data.id }
@@ -49,6 +52,19 @@ function Profile(props) {
   }
 
   const totalLikes = getFilteredPosts()
+
+  let getPosteos = async function() {
+    let finalPosteos = await axios.get('https://dpower-production.up.railway.app/post')
+    finalPosteos = finalPosteos.data
+
+    finalPosteos = finalPosteos.filter(el => el.UserInfoId === userIdProfile.userId)
+    let final = [];
+
+    finalPosteos.map(el => final.push(el.multimedia))
+    setPosteos(final)
+    updatePosteos = false
+    return final;
+  }
 
   let getImagenes = async function () {
     let likesId = await axios.get('https://dpower-production.up.railway.app/post/likes')
@@ -77,6 +93,7 @@ function Profile(props) {
   }
 
   if (update) getImagenes()
+  if (updatePosteos) getPosteos()
 
 
   const actualUser = user[0].data.id;
@@ -172,6 +189,18 @@ function Profile(props) {
               </View> */}
             </View>
 
+            <Text style={[styles.subText, styles.description]}>My Posts</Text>
+            <View style={{ marginTop: 32 }}>
+              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                {posteos.slice(0).reverse().map((imagen, index) =>
+                  <View style={styles.mediaImageContainer} key={index} >
+                    <Image source={{ uri: imagen }} style={styles.image} resizeMode="cover"></Image>
+                  </View>
+                )}
+              </ScrollView>
+            </View>
+
+            <Text style={[styles.subText, styles.description]}>My Favorites</Text>
             <View style={{ marginTop: 32 }}>
               <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 {imagenes.slice(0).reverse().map((imagen, index) =>
