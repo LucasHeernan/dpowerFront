@@ -19,8 +19,9 @@ import {
     ADD_TO_TOTAL,
     LESS_TO_TOTAL,
     UPDATE_POST,
-    UPDATE_CART,
-    GET_COMMENTS_BY_ID
+    GET_COMMENTS_BY_ID,
+    UPDATE_CART
+
 } from '../actionTypes';
 
 
@@ -198,6 +199,7 @@ export function lessToTotal(id) {
     return { type: LESS_TO_TOTAL, payload: id}
 }
 
+
 export function getCommentsById(id) {
     return async (dispatch) => {
         try {
@@ -222,4 +224,3 @@ const postComments = (payload) => {
 export{
     postComments,
 }
-

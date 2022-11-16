@@ -17,6 +17,7 @@ export const CLEAN_CART = 'CLEAN_CART';
 export const ADD_TO_TOTAL = 'ADD_TO_TOTAL';
 export const LESS_TO_TOTAL = 'LESS_TO_TOTAL';
 export const UPDATE_POST = "UPDATE_POST";
+
 export const GET_COMMENTS_BY_ID = 'GET_COMMENTS_BY_ID';
 
 export const UPDATE_CART = 'UPDATE_CART';
