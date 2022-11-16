@@ -135,7 +135,7 @@ function Profile(props) {
   const deleteAccount = async () => {
     try {
       const { data } = await axios.patch(
-        `https://dpower-production.up.railway.app/products/${userById.id}`,
+        `https://dpower-production.up.railway.app/users/${userById.id}`,
         { active: false }
       );
     } catch (error) {
