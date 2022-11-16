@@ -9,6 +9,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
+
 //screens
 import HomeScreen from './src/components/HomeScreen';
 import MarketPlace from './src/components/MarketPlace';
@@ -20,12 +21,44 @@ import ProductDetail from './src/components/ProductDetail';
 import LandingPage from './src/components/LandingPage';
 import FormRegisterUser from './src/components/FormRegisterUser';
 import PostPicture from './src/components/ImagePicker';
+import Comments from './src/components/Comments';
+// import StripeApp from './src/components/CheckOutForm';
 
 
 
 const MarketStackNavigator = createNativeStackNavigator();
 const LandingStackNavigator = createNativeStackNavigator();
 const ProfileStackNavigator = createNativeStackNavigator();
+const HomeStackNavigator = createNativeStackNavigator();
+
+function HomePost() {
+  return (
+    <HomeStackNavigator.Navigator
+    initialRouteName='HomePost'
+    >
+      <HomeStackNavigator.Screen
+        name="HomeLanding"
+      component={HomeScreen}
+      options={{
+        headerShown: false,
+        headerStyle: {backgroundColor:"#4d4d4d"},
+        headerTitleStyle: {color: "white", fontSize: 28},
+        title: 'Home',
+        tabBarIcon: ({size,focused,color}) => {
+          return (
+            <MaterialIcons name="home" size={28} color={color}/>
+          );
+        },
+      }}
+        />
+    
+      <HomeStackNavigator.Screen
+      name="Comments"
+      component={Comments}
+    />
+    </HomeStackNavigator.Navigator>
+  )
+}
 
 function ProfileStack() {
   const { user } = useSelector(state => state)
@@ -36,27 +69,20 @@ function ProfileStack() {
       <ProfileStackNavigator.Screen
         name="Profile"
         options={{
-          headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerShown: false,
+          headerStyle: {backgroundColor: "#F0F0F3"},
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
-        children={() => <Profile
-        key={user[0].data.id}
-        name={user[0].data.name || user[0].data.username}
-        age={user[0].data.age}
-        likes="65"
-        powers="150"
-        followers="1200"
-        avatar={user[0].data.avatar}
-        images={["https://www.rehagirona.com/wp-content/uploads/2021/07/atletismo_paralimpico_des.jpg", "https://billiken.lat/wp-content/uploads/2021/07/atle-para.jpg", "https://www.acnur.org/thumb1/60db219df.jpg", "https://img.olympicchannel.com/images/image/private/t_16-9_360-203_2x/f_auto/v1538355600/primary/mjdvlnu0gpflzhuvgkbw"]}
-      />}
+        component={Profile}
         
       />
       <ProfileStackNavigator.Screen
         name="Form"
         component={FormRegisterUser}
         options={{
+          headerShown: false,
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
     </ProfileStackNavigator.Navigator>
@@ -72,8 +98,9 @@ function LandingStack() {
         name="Login"
         component={LandingPage}
         options={{
+          headerShown: false,
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
     </LandingStackNavigator.Navigator>
@@ -89,27 +116,50 @@ function MyStack() {
         name="MarketPlace"
         children={({item}) => <MarketPlace producto={item} />}
         options={{
+          headerShown: false,
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
       <MarketStackNavigator.Screen
         name="Cart"
         component={Cart}
         options={{
+          headerShown: false,
           headerStyle: {backgroundColor: "#4d4d4d"},
-          headerTitleStyle: {color: "white"}
+          headerTitleStyle: {color: "white", fontSize: 28}
         }}
       />
       <MarketStackNavigator.Screen
         name="Detail"
         component={ProductDetail}
         options={{
+          headerShown: false,
+          headerStyle: {backgroundColor: "#4d4d4d"},
+          headerTitleStyle: {color: "white", fontSize: 28}
+        }}
+      />
+      {/* <MarketStackNavigator.Screen
+        name="CheckOut"
+        component={StripeApp}
+        options={{
+          headerShown: false,
+          headerStyle: {backgroundColor: "#4d4d4d"},
+          headerTitleStyle: {color: "white", fontSize: 28}
+        }}
+      /> */}
+
+
+
+      {/* <MarketStackNavigator.Screen
+        name="Comments"
+        component={Comments}
+        options={{
           headerStyle: {backgroundColor: "#4d4d4d"},
           headerTitleStyle: {color: "white"}
         }}
-      />
-
+      /> */}
+      
     </MarketStackNavigator.Navigator>
   )
 }
@@ -131,8 +181,9 @@ function MyTabs() {
       
   <Tab.Navigator 
     screenOptions={{
+      backgroundColor: "#4d4d4d",
       tabBarShowLabel: false,
-      tabBarStyle: {backgroundColor:"#4d4d4d", height: 60},
+      tabBarStyle: {backgroundColor:"#4d4d4d", height: 60, fontSize: 28},
       headerStyle:{ },
       tabBarInactiveTintColor: "#F5F5F5",
       tabBarActiveTintColor: "#C7D31E"
@@ -140,13 +191,14 @@ function MyTabs() {
   >
 
     <Tab.Screen name="Home"
-      component={HomeScreen}
+      component={HomePost}
       options={{
-        headerStyle: {backgroundColor:"#4d4d4d"},
+        headerShown: false,
+        headerStyle: {backgroundColor: "#4d4d4d"},
         headerTitleStyle: {color: "white"},
-        title: 'Home',
         tabBarIcon: ({size,focused,color}) => {
-          return (
+          return (                
+    
             <MaterialIcons name="home" size={28} color={color}/>
           );
         },
@@ -154,15 +206,15 @@ function MyTabs() {
     />
 
     <Tab.Screen name="Add Product"
-
       component={PostPicture}
       options={{
+        headerShown: false,
         headerStyle: {backgroundColor:"#4d4d4d"},
-        headerTitleStyle: {color: "white"},
+        headerTitleStyle: {color: "white", fontSize: 28},
         title: 'New Post',
         tabBarIcon: ({size,focused,color}) => {
           return (                
-            <Entypo name="squared-plus" size={24} color={color} />
+            <Entypo name="squared-plus" size={28} color={color} />
           );
         },
       }}
@@ -174,7 +226,7 @@ function MyTabs() {
         headerShown: false,
         tabBarIcon: ({size,focused,color}) => {
           return (                
-            <Entypo name="shop" size={24} color={color} />
+            <Entypo name="shop" size={28} color={color} />
           );
         },
       }}
@@ -184,12 +236,12 @@ function MyTabs() {
       component={ProfileStack}
       options={{
         headerStyle: {backgroundColor:"#4d4d4d"},
-        headerTitleStyle: {color: "white"},
+        headerTitleStyle: {color: "white", fontSize: 28},
         headerShown: false,
         title: 'My profile',
         tabBarIcon: ({size,focused,color}) => {
           return (
-            <FontAwesome5 name="user-alt" size={24} color={color} />
+            <FontAwesome5 name="user-alt" size={28} color={color} />
           );
         },
       }} 
@@ -201,42 +253,6 @@ function MyTabs() {
 
 export default function Navigation() {
   const user = useSelector(state => state.user);
-
-  // useEffect(() =>{
-  //   console.log('USER DESDE USEEFFECT :', user)
-  // }, [user])
-
-  // const verificador = async (user) => {
-  //   try {
-  //     if ( typeof user[0] !== 'object' ) {
-  //       console.log("USER ===>", user)
-  //       return false
-  //     } else {
-  //       console.log("USER DESDE ELSE ====>", user)
-  //       const data = await axios.get(`https://dpower-production.up.railway.app/users/${user[0].id}`).then(e => e.data)
-  //       console.log("DATA ===>", data)
-  //       return data
-  //     }
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
-
-  // const resultGet = verificador(user);
-  // console.log('CONSOLE DESDE NAV --> ', user)
-  // console.log('CONSOLE DE RESULTGET', resultGet)
-  
-  //   return(
-  //   <NavigationContainer style={MyTheme} >
-  //     {
-  //       Object.keys(resultGet).includes("id") ? (
-  //         <MyTabs />
-  //       ) : (
-  //         <LandingStack />
-  //       )
-  //     }
-  //   </NavigationContainer>
-  // )}
 
   return(
     <NavigationContainer style={MyTheme} >
@@ -250,24 +266,3 @@ export default function Navigation() {
     </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  container:{
-    backgroundColor: "#7D7D7D",
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center' 
-  },
-  title: {
-    marginTop: 16,
-    paddingVertical: 8,
-    borderWidth: 4,
-    borderColor: "#20232a",
-    borderRadius: 6,
-    backgroundColor: "#C7D31E",
-    color: "000000",
-    textAlign: "center",
-    fontSize: 30,
-    fontWeight: "bold"
-  },
-})

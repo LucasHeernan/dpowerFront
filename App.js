@@ -2,20 +2,19 @@ import React from 'react';
 import Navigation from './Navigation';
 import { Provider } from 'react-redux';
 import { store, persistor } from './src/redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { Text } from 'react-native';
-import { StripeProvider } from '@stripe/stripe-react-native';
-import CheckoutForm from './src/components/CheckoutForm';
+import { PersistGate } from 'redux-persist/integration/react'
+import { Text } from "react-native";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-        <Navigation />
-      </PersistGate>
-      {/* <StripeProvider publishableKey='pk_test_51M2e4QDkxUT8dvAmJVln7ly2JTzdSGAKTwKmoj5Oo9azUxYohYz6upz0ER8JboiIDVMOgFzzgd0CLQbJlKYjoMqm00wXrVxeUY'>
-        <CheckoutForm />
-      </StripeProvider> */}
-    </Provider>
+    //pk_test_51M4E9pEh4Kq9bXBevoiyg0Hj62Wpftk46CMLdh3EeXKrzuTRcQ183sVmxQqdCYFiiwih6ncz6hxFluRgC8jOQacj00rV3b75qe
+    <StripeProvider publishableKey="pk_live_51M4E9pEh4Kq9bXBe3cJWSiz7dGFC9QTIO45dcNT3cuaRNuo66mMChGfSsOQCtXH8TxDLrvvg6JYcP7Rjl1MUYXGf005YbszUUl">
+      <Provider store={store}>
+        <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
+          <Navigation/>
+        </PersistGate>
+      </Provider>
+      </StripeProvider> 
   );
 }
