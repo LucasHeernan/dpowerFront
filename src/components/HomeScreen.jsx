@@ -13,8 +13,11 @@ const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
+let updateHome = true;
+
 function HomeScreen() {
- 
+ if (updateHome) allPost()
+
 const { user, userById } = useSelector(state => state)
 const [posteos, setPosteos ] = useState([])
 const [refreshing, setRefreshing] = useState(false);
@@ -35,6 +38,7 @@ const dispatch = useDispatch();
     let res = await axios.get('https://dpower-production.up.railway.app/post');
     setPosteos(res.data)
     dispatch(getUserById(user[0].data.id))
+    updateHome = false;
     return posteos
   }
 

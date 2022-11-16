@@ -13,7 +13,7 @@ import { CardField, useConfirmPayment, useStripe  } from "@stripe/stripe-react-n
 
 export default function Cart() {
 
-  const { user } = useSelector(store => store)
+  const { user, userInfo } = useSelector(store => store)
   const dispatch = useDispatch();
   const cart = useSelector(store => store.cart);
   const [total, setTotal] = useState(0)
@@ -73,7 +73,7 @@ export default function Cart() {
         // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
         //methods that complete payment after a delay, like SEPA Debit and Sofort.
         defaultBillingDetails: {
-          name: user[0].data.name
+          name: 'name'
         }
       });
       if (!error) {
