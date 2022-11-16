@@ -90,9 +90,9 @@ export default function Cart() {
           alert('Success', 'Your order is confirmed!');
         }
       };
-        
+      
+    initializePaymentSheet();    
     useEffect(() => {
-        initializePaymentSheet();
       }, []);
  // ------------ Termina PAyment ---------------------------------------
   return (

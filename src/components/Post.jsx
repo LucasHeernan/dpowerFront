@@ -146,7 +146,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
 
             <View>
 
-              <TouchableOpacity onPress={() => alert('Ir a PostDetail')}>
+              <TouchableOpacity onPress={() => navigation.navigate("Comments", {id})}>
                 <Image
                   style={styles.tinyLogo}
                   source={{ uri: multimedia }}
