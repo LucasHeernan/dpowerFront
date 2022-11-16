@@ -73,7 +73,7 @@ export default function Cart() {
         // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
         //methods that complete payment after a delay, like SEPA Debit and Sofort.
         defaultBillingDetails: {
-          name: 'client'
+          name: 'name'
         }
       });
       if (!error) {
