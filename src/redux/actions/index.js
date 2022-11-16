@@ -19,7 +19,8 @@ import {
     ADD_TO_TOTAL,
     LESS_TO_TOTAL,
     UPDATE_POST,
-    GET_COMMENTS_BY_ID
+    GET_COMMENTS_BY_ID,
+    GET_POST_BY_ID
 } from '../actionTypes';
 
 
@@ -189,6 +190,20 @@ export function getCommentsById(id) {
             const data = await axios.get(`https://dpower-production.up.railway.app/post/${id}`).then(e => e.data.Comments)
             return dispatch({
                 type: GET_COMMENTS_BY_ID,
+                payload: data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export function getpostById(id) {
+    return async (dispatch) => {
+        try {
+            const data = await axios.get(`https://dpower-production.up.railway.app/post/${id}`).then(e => e.data)
+            return dispatch({
+                type: GET_POST_BY_ID,
                 payload: data
             })
         } catch (error) {
