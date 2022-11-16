@@ -10,6 +10,7 @@ import { Dialog, Button, CheckBox } from "@rneui/themed";
 import * as Sharing from 'expo-sharing';
 import { setNestedObjectValues } from "formik";
 import { updatePost, updateUser } from "../redux/actions";
+import { Avatar } from "@rneui/themed";
 import { Alert } from "react-native";
 import { validate } from "react-native-web/dist/cjs/exports/StyleSheet/validate";
 import axios from 'axios'
@@ -26,6 +27,8 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
   const { user } = useSelector(store => store)
 
   const [likesGlobales, setLikesGlobales] = useState(likes)
+
+  const [postOwner, setPostOwner] = useState([])
 
   const [transaction, setTransaction] = useState(0)
 
@@ -60,7 +63,16 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
     const imageTmp = await Sharing.shareAsync(multimedia);
   };
 
-
+  let getPostOwner = async function () {
+    try {
+      let postOwner = await axios.get(`https://dpower-production.up.railway.app/users/${UserInfoId}`).then(e => e.data)
+      setPostOwner([postOwner])
+      return postOwner
+    } catch (error) {
+      
+    }
+  }
+  getPostOwner()
   let aumentarLike = async function () {  // para aumentar los likes
     try {
       if (shouldPost) {
@@ -141,7 +153,25 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
 
 
 
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-around",
+              marginBottom: 20
+            }}
+          >
+          <Avatar
+            onPress={() =>
+              navigation.navigate("User Profile", {
+                user: postOwner
+              })
+            }
+            size={50}
+            rounded
+            source={!postOwner.length ? {} : {uri: postOwner[0].avatar}}
+          />
           <Text style={styles.title}>{UserInfoId?.split('@')[0]}</Text>
+          </View>
           <View style={styles.contain} >
 
             <View>
@@ -284,7 +314,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 24,
-    marginTop: 20,
+    marginTop: 10,
     marginLeft: 40,
     alignSelf: 'flex-start',
     color: '#C7D31E',

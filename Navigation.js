@@ -23,6 +23,7 @@ import FormRegisterUser from './src/components/FormRegisterUser';
 import PostPicture from './src/components/ImagePicker';
 import Comments from './src/components/Comments';
 import StripeApp from './src/components/CheckOutForm';
+import UsersProfile from './src/components/UsersProfile';
 
 
 
@@ -56,6 +57,15 @@ function HomePost() {
       name="Comments"
       component={Comments}
     />
+    <HomeStackNavigator.Screen
+      name="User Profile"
+      component={UsersProfile}
+      options={{
+        headerShown: false,
+          headerStyle: {backgroundColor: "#4d4d4d"},
+          headerTitleStyle: {color: "white", fontSize: 28}
+      }}
+      />
     </HomeStackNavigator.Navigator>
   )
 }
@@ -231,7 +241,7 @@ function MyTabs() {
       }}
     />
     
-    <Tab.Screen name="Profile"
+    <Tab.Screen name="Your Profile"
       component={ProfileStack}
       options={{
         headerStyle: {backgroundColor:"#4d4d4d"},

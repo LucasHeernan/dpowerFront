@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 import { getUserById } from "../redux/actions";
 import axios from 'axios'
+import { TouchableOpacity } from "react-native";
 
 const auth0ClientId = "R7NnYEPxs5lx6uWZCLvcaSe1vNFAAiUf";
 const authorizationEndpoint = "https://dpwr.us.auth0.com/v2/logout";
@@ -20,7 +21,7 @@ const redirectUri = AuthSession.makeRedirectUri({ useProxy }); // <-- must be se
 let update = true;
 let updatePosteos = true;
 
-function Profile(props) {
+function UsersProfile({route}) {
   const [powers, setPowers] = React.useState(0)
   const [likes, setLikes] = React.useState(0)
   const [visible, setVisible] = React.useState(false);
@@ -28,17 +29,18 @@ function Profile(props) {
   const [imagenes, setImagenes] = React.useState([]);
   const [posteos, setPosteos] = React.useState([]);
 
-  const { user, userById } = useSelector(state => state)
-  let userIdProfile = { userId: user[0].data.id }
-  let UserById = userById[0].data.id
+  const { user } = route.params
+  console.log(user)
+  let userIdProfile = { userId: user[0].id }
   const dispatch = useDispatch()
+
 
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
   let getFilteredPosts = async function() {
     let posts = await axios.get("https://dpower-production.up.railway.app/post").then(e => e.data)
-    let filteredPosts = posts.filter(e => e.UserInfoId === userById[0].data.id)
+    let filteredPosts = posts.filter(e => e.UserInfoId === user[0].id)
     let likes = filteredPosts.map(e => e.likes)
     let totalLikes = likes.reduce((accumulator, value) => {
       return accumulator + value;
@@ -53,6 +55,7 @@ function Profile(props) {
   }
 
   const totalLikes = getFilteredPosts()
+  console.log(likes)
 
   let getPosteos = async function() {
     let finalPosteos = await axios.get('https://dpower-production.up.railway.app/post')
@@ -67,6 +70,8 @@ function Profile(props) {
     return final;
   }
 
+  console.log(posteos)
+
   let getImagenes = async function () {
     let likesId = await axios.get('https://dpower-production.up.railway.app/post/likes')
     likesId = likesId.data
@@ -74,7 +79,7 @@ function Profile(props) {
     posteos = posteos.data
 
     if (userIdProfile.userId) likesId = likesId.filter(el => el.UserInfoId === userIdProfile.userId);
-    if (UserById.userId) likesId = likesId.filter(el => el.UserInfoId === UserById.userId);
+    if (user[0].id) likesId = likesId.filter(el => el.UserInfoId === user[0].id);
     let posteosId = []
     likesId.map(el => posteosId.push(el.PostId))
 
@@ -98,27 +103,13 @@ function Profile(props) {
   if (updatePosteos) getPosteos()
 
 
-  const actualUser = user[0].data.id;
-
-  useEffect(() => {
-    dispatch(getUserById(actualUser))
-  }, [user])
+  const actualUser = user[0].id;
 
   const navigation = useNavigation()
 
-  const logout = async () => {
-    try {
-      dispatch(cleanUser())
-      await openAuthSessionAsync(`${authorizationEndpoint}?client_id=${auth0ClientId}&returnTo=${redirectUri}`, 'redirectUrl');
-      // handle unsetting your user from store / context / memory
-    } catch (err) {
-      console.error(err)
-    }
-  }
-  //!userById.length  ? user[0].data.name : userById[0].data.name
-  const avatar = !userById.length ? user[0].data.avatar : userById[0].data.avatar
+
+  const avatar = user.avatar ? "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" : user[0].avatar
   return (
-    <Provider>
 
       <ScrollView
         contentContainerStyle={styles.scrollView}
@@ -126,27 +117,36 @@ function Profile(props) {
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
-            onRefresh={getImagenes}
+            onRefresh={getPosteos}
           />
         }
       >
+      <View
+                style={{
+                    width: '100%',
+                    flexDirection: 'row',
+                    paddingTop: 25,
+                    paddingHorizontal: 16,
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: 20
+                }}
+            >
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Ionicons
+                    name="chevron-back"
+                    style={{
+                        fontSize: 18,
+                        color: '#777777',
+                        padding: 12,
+                        backgroundColor: '#F0F0F3',
+                        borderRadius: 12,
+                    }}
+                    />
+                </TouchableOpacity>
+            </View>
         <SafeAreaView style={styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.titleBar}>
-              <FontAwesome5 name="bolt" size={20} color="black">
-                <Text> {userById[0].data.powers}</Text>
-              </FontAwesome5>
-              <Menu
-                visible={visible}
-                onDismiss={closeMenu}
-                anchor={<IconButton icon="dots-vertical" size={24} color="#52575D" onPress={openMenu} />}
-              >
-                <Menu.Item onPress={logout} title="LogOut" />
-                <Divider />
-                <Menu.Item onPress={() => navigation.navigate("Form")} title="Edit profile" />
-              </Menu>
-            </View>
-
             <View style={{ alignSelf: "center" }}>
               <View style={styles.profileImage}>
                 <Image
@@ -159,16 +159,16 @@ function Profile(props) {
 
             <View style={styles.infoContainer}>
               <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>
-                {!userById.length ? user[0].data.name : userById[0].data.name}
+                {user.length ? user[0].name : "No name"}
               </Text>
               <Text style={[styles.text, styles.subText]}>
-                {!userById.length ? user[0].data.age : userById[0].data.age}
+                {user.length ? user[0].age : ""}
               </Text>
               <Text style={[styles.text, styles.subText]}>
-                {!userById.length ? user[0].data.nationality : userById[0].data.nationality}
+                {user.length ? user[0].nationality : ""}
               </Text>
               <Text style={[styles.text, { color: "AEB5BC", fontSize: 14 }]}>
-                {!userById.length ? user[0].data.sport : userById[0].data.sport}
+                {user.length ? user[0].sport : ""}
               </Text>
             </View>
 
@@ -181,7 +181,7 @@ function Profile(props) {
                 <Text style={[styles.text, { fontSize: 24 }]}>{likes}</Text>
                 <Text style={[styles.text, styles.subText]}>Likes</Text>
               </View>
-              {userById[0].data.validated ? <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1 }]}>
+              {user[0].validated ? <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1 }]}>
                 <Text style={[styles.text, { fontSize: 24 }]}>{powers >= 0 ? powers : 0}</Text>
                 <Text style={[styles.text, styles.subText]}>Powers</Text>
               </View> : <Text></Text>}
@@ -202,17 +202,6 @@ function Profile(props) {
               </ScrollView>
             </View>
 
-            <Text style={[styles.subText, styles.description]}>My Favorites</Text>
-            <View style={{ marginTop: 32 }}>
-              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                {imagenes.slice(0).reverse().map((imagen, index) =>
-                  <View style={styles.mediaImageContainer} key={index} >
-                    <Image source={{ uri: imagen }} style={styles.image} resizeMode="cover"></Image>
-                  </View>
-                )}
-              </ScrollView>
-            </View>
-
             <Text style={[styles.subText, styles.description]}>Description</Text>
 
             <View style={{ alignItems: "center" }}>
@@ -220,7 +209,7 @@ function Profile(props) {
                 <View style={styles.descripcionIndicador}></View>
                 <View style={{ width: 250 }}>
                   <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-                    {!userById.length ? 'Please fill in your description ...' : userById[0].data.description}
+                    {!user[0].description ? 'There is no description' : user[0].description}
                   </Text>
                 </View>
               </View>
@@ -228,7 +217,6 @@ function Profile(props) {
           </ScrollView>
         </SafeAreaView>
       </ScrollView>
-    </Provider>
   )
 }
 
@@ -339,4 +327,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default Profile
+export default UsersProfile
