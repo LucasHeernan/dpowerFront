@@ -18,7 +18,7 @@ const reducer = ( state = initialState, action ) => {
         case GET_ALL_PRODUCTS:
             return {
                 ...state,
-                allProducts:  action.payload,    
+                allProducts: action.payload,
             }
         case GET_USERS:
             return {
