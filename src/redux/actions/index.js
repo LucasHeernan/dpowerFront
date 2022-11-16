@@ -19,7 +19,7 @@ import {
     ADD_TO_TOTAL,
     LESS_TO_TOTAL,
     UPDATE_POST,
-    GET_COMMENTS_BY_ID
+    GET_COMMENTS_BY_ID,
 } from '../actionTypes';
 
 
