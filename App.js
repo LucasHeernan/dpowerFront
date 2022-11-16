@@ -1,21 +1,21 @@
-import * as React from 'react';
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from './src/components/HomeScreen';
-import MarketPlace from './src/components/MarketPlace';
-import Profile from './src/components/Profile';
-
-const Tab = createBottomTabNavigator();
+import React from "react";
+import ReactDOM from "react-dom";
+import Navigation from './Navigation'
+import { Provider } from 'react-redux';
+import { store, persistor } from './src/redux';
+import { PersistGate } from 'redux-persist/integration/react'
+import { Text } from "react-native";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="MarketPlace" component={MarketPlace} />
-        <Tab.Screen name="Profile" component={Profile} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    //pk_test_51M4E9pEh4Kq9bXBevoiyg0Hj62Wpftk46CMLdh3EeXKrzuTRcQ183sVmxQqdCYFiiwih6ncz6hxFluRgC8jOQacj00rV3b75qe
+    <StripeProvider publishableKey="pk_live_51M4E9pEh4Kq9bXBe3cJWSiz7dGFC9QTIO45dcNT3cuaRNuo66mMChGfSsOQCtXH8TxDLrvvg6JYcP7Rjl1MUYXGf005YbszUUl">
+      <Provider store={store}>
+        <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
+          <Navigation/>
+        </PersistGate>
+      </Provider>
+      </StripeProvider> 
   );
 }

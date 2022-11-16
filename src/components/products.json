@@ -1,0 +1,99 @@
+[{
+    "name": "Speedo Aletas de Paleta Corta",
+    "category": "water sport",
+    "price": 125.2,
+    "stock": 3,
+    "published": 1,
+    "image": "https://m.media-amazon.com/images/I/71VivrLA14L._AC_SX679_.jpg",
+    "description": "Aspa corta de silicona suave para ayudar a desarrollar una patada más fuerte y rápida"
+},
+{
+    "name": "Voit Balon Futbol",
+    "category": "Soccer",
+    "price": 15.23,
+    "stock": 5,
+    "published": 1,
+    "image": "https://m.media-amazon.com/images/I/61wmzfaasgL._AC_SX679_.jpg",
+    "description": "balon de futbol amateur"
+},
+{
+    "name": "Santic Zapatos de ciclismo sin bloqueo",
+    "category": "cycling clothing",
+    "price": 160,
+    "stock": 5,
+    "published": 1,
+    "image": "https://m.media-amazon.com/images/I/61qEtqHfuSL._AC_SY695_.jpg",
+    "description": "Comodidad óptima: los zapatos de ciclismo Santic están diseñados ergonómicamente para tus pies, lo que proporciona comodidad en tus paseos más duros, también proporciona la máxima transferencia de potencia y trazos de pedal eficientes"
+},
+{
+    "name": "prueba",
+    "category": "fresh",
+    "price": 1,
+    "stock": 1,
+    "published": 1,
+    "image": "sdhfgbgidfbgui",
+    "description": "khjdbsgfiufdgybifg"
+},
+{
+    "name": "Gorra Marca API",
+    "category": "caps and hats",
+    "price": 25.95,
+    "stock": 5,
+    "published": 1,
+    "image": "https://m.media-amazon.com/images/I/61tQupVp8jL._AC_SX679_.jpg",
+    "description": "Esta gorra de ciclismo de mezcla de algodón súper ligera fue fabricada en Italia exclusivamente para este equipo de ciclismo profesional."
+},
+{
+    "name": "Sombrero Columbia",
+    "category": "caps and hats",
+    "price": 35.8,
+    "stock": 2,
+    "published": 1,
+    "image": "https://m.media-amazon.com/images/I/51o2t0l6sUL._AC_SX679_.jpg",
+    "description": "Hecho para los entusiastas de la pesca, este sombrero proporcionará sombra de ese sol caliente. Este sombrero de sol cuenta con UPF 50 incorporado, una diadema ultra absorbente del sudor y un panel de ventilación de malla para días al aire libre."
+},
+{
+    "name": "Speedo Team Pull Buoy",
+    "category": "water sport",
+    "price": 8.56,
+    "stock": 6,
+    "published": 1,
+    "image": "https://m.media-amazon.com/images/I/813kCWDx8eL._AC_SX679_.jpg",
+    "description": "Este accesorio permite enfocar la fuerza en los brazos al ayudar a tu cuerpo y piernas a no patear. Para fortalecer la fuerza en la parte superior del cuerpo. "
+},
+{
+    "name": "Gorra deportiva con reflejante",
+    "category": "caps and hats",
+    "price": 45.85,
+    "stock": 2,
+    "published": 1,
+    "image": "https://m.media-amazon.com/images/I/71I2j3W8LSL._AC_SX679_.jpg",
+    "description": "La Gorra Sport MACAR sin malla es UNISEX, ligera, práctica y todo lo que necesitas para salir a hacer ese deporte que tanto amas."
+},
+{
+    "name": "Camiseta Ciclismo JPO",
+    "category": "cycling clothing",
+    "price": 120.5,
+    "stock": 2,
+    "published": 1,
+    "image": "https://m.media-amazon.com/images/I/71B0za57hVL._AC_SX679_.jpg",
+    "description": "Tejido de mallas de alta calidad: ligero y reduce el viento. Puede mantenerte seco y fresco en condiciones de calor y cálido en condiciones de frío.."
+},
+{
+    "name": "Speedo Sports Towel",
+    "category": "water sport",
+    "price": 12,
+    "stock": 12,
+    "published": 1,
+    "image": "https://m.media-amazon.com/images/I/61dMQHcJcgL._AC_SY879_.jpg",
+    "description": "Toalla de baño. Absorbe más veces su peso en agua. En un tamaño ideal para portar a vacaciones o entrenamientos. Ligera y de secado . rápido. Ideal para todos los deportes acuáticos"
+},
+{
+    "name": "Nike Gorra Gorra para Unisex Adulto",
+    "category": "caps and hats",
+    "price": 60.85,
+    "stock": 1,
+    "published": 1,
+    "image": "https://m.media-amazon.com/images/I/518l2Xo9jAL._AC_SX679_.jpg",
+    "description": "La gorra Nike Sportswear Cap ajustable tiene un cierre de botón de presión para un ajuste individual y actualiza un perfil clásico y deportivo con un pico plano y bordado en 3D."
+}]
