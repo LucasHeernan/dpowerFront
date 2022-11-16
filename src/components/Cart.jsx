@@ -5,10 +5,15 @@ import { cleanCart } from '../redux/actions';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import CartItem from './CartItem';
+import { } from './CheckOutForm';
+import { CardField, useConfirmPayment, useStripe  } from "@stripe/stripe-react-native";
+
+
 
 
 export default function Cart() {
 
+  const { user } = useSelector(store => store)
   const dispatch = useDispatch();
   const cart = useSelector(store => store.cart);
   const [total, setTotal] = useState(0)
@@ -30,7 +35,66 @@ export default function Cart() {
     handleClean();
     handleTotal();
   }, [cart])
+  
 
+  // ------ PAYMENT!!!! --------------
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+    const [loading, setLoading] = useState(false);
+  
+    const fetchPaymentSheetParams = async () => {
+      const response = await fetch(`https://dpower-production.up.railway.app/products/pay/${(total * 100 )}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const { paymentIntent, ephemeralKey, customer} = await response.json();
+  
+      return {
+        paymentIntent,
+        ephemeralKey,
+        customer,
+      };
+    };
+  
+    const initializePaymentSheet = async () => {
+      const {
+        paymentIntent,
+        ephemeralKey,
+        customer,
+        publishableKey,
+      } = await fetchPaymentSheetParams();
+  
+      const { error } = await initPaymentSheet({
+        merchantDisplayName: "DPWR",
+        customerId: customer,
+        customerEphemeralKeySecret: ephemeralKey,
+        paymentIntentClientSecret: paymentIntent,
+        // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+        //methods that complete payment after a delay, like SEPA Debit and Sofort.
+        defaultBillingDetails: {
+          name: user[0].data.name
+        }
+      });
+      if (!error) {
+        setLoading(true);
+      }
+    };
+
+    const openPaymentSheet = async () => {
+        const { error } = await presentPaymentSheet();
+    
+        if (error) {
+          alert(`Error code: ${error.code}`, error.message);
+        } else {
+          alert('Success', 'Your order is confirmed!');
+        }
+      };
+        
+    useEffect(() => {
+        initializePaymentSheet();
+      }, []);
+ // ------------ Termina PAyment ---------------------------------------
   return (
     <View
       style={{
@@ -174,7 +238,7 @@ export default function Cart() {
                 marginBottom: 7
               }}
             >
-              <Text
+              {/* <Text
                 style={{
                   fontSize: 12,
                   fontWeight: '400',
@@ -194,7 +258,7 @@ export default function Cart() {
                 }}
               >
                 -   {total * 10 / 100}
-              </Text>
+              </Text> */}
             </View>
 
             <View
@@ -219,7 +283,7 @@ export default function Cart() {
                   fontWeight: '500',
                   color: 'black',
                 }}>
-                $ {total - (total * 10 / 100)}
+                $ {total}
               </Text>
             </View>
 
@@ -240,7 +304,10 @@ export default function Cart() {
         }}
       >
         <TouchableOpacity
-          onPress={() => alert('PASARELA DE PAGO')}
+          variant="primary"
+          disabled={!loading}
+          title="Checkout"
+          onPress={openPaymentSheet}
           style={{
             width: '86%',
             height: '90%',
@@ -250,6 +317,7 @@ export default function Cart() {
             alignItems: 'center',
           }}
         >
+
           <Text
             style={{
               fontSize: 18,
