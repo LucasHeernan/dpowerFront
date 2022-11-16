@@ -9,6 +9,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
+
 //screens
 import HomeScreen from './src/components/HomeScreen';
 import MarketPlace from './src/components/MarketPlace';
@@ -20,6 +21,7 @@ import ProductDetail from './src/components/ProductDetail';
 import LandingPage from './src/components/LandingPage';
 import FormRegisterUser from './src/components/FormRegisterUser';
 import PostPicture from './src/components/ImagePicker';
+import Comments from './src/components/Comments';
 import StripeApp from './src/components/CheckOutForm';
 
 
@@ -27,6 +29,36 @@ import StripeApp from './src/components/CheckOutForm';
 const MarketStackNavigator = createNativeStackNavigator();
 const LandingStackNavigator = createNativeStackNavigator();
 const ProfileStackNavigator = createNativeStackNavigator();
+const HomeStackNavigator = createNativeStackNavigator();
+
+function HomePost() {
+  return (
+    <HomeStackNavigator.Navigator
+    initialRouteName='HomePost'
+    >
+      <HomeStackNavigator.Screen
+        name="HomeLanding"
+      component={HomeScreen}
+      options={{
+        
+        headerStyle: {backgroundColor:"#4d4d4d"},
+        headerTitleStyle: {color: "white", fontSize: 28},
+        title: 'Home',
+        tabBarIcon: ({size,focused,color}) => {
+          return (
+            <MaterialIcons name="home" size={28} color={color}/>
+          );
+        },
+      }}
+        />
+    
+      <HomeStackNavigator.Screen
+      name="Comments"
+      component={Comments}
+    />
+    </HomeStackNavigator.Navigator>
+  )
+}
 
 function ProfileStack() {
   const { user } = useSelector(state => state)
@@ -118,6 +150,15 @@ function MyStack() {
 
 
 
+      {/* <MarketStackNavigator.Screen
+        name="Comments"
+        component={Comments}
+        options={{
+          headerStyle: {backgroundColor: "#4d4d4d"},
+          headerTitleStyle: {color: "white"}
+        }}
+      /> */}
+      
     </MarketStackNavigator.Navigator>
   )
 }
@@ -149,14 +190,14 @@ function MyTabs() {
   >
 
     <Tab.Screen name="Home"
-      component={HomeScreen}
+      component={HomePost}
       options={{
-        
-        headerStyle: {backgroundColor:"#4d4d4d"},
-        headerTitleStyle: {color: "white", fontSize: 28},
-        title: 'Home',
+        headerShown: false,
+        headerStyle: {backgroundColor: "#4d4d4d"},
+        headerTitleStyle: {color: "white"},
         tabBarIcon: ({size,focused,color}) => {
-          return (
+          return (                
+    
             <MaterialIcons name="home" size={28} color={color}/>
           );
         },
