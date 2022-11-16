@@ -30,6 +30,7 @@ function Profile(props) {
 
   const { user, userById } = useSelector(state => state)
   let userIdProfile = { userId: user[0].data.id }
+  let UserById = userById[0].data.id
   const dispatch = useDispatch()
 
   const openMenu = () => setVisible(true);
@@ -72,7 +73,8 @@ function Profile(props) {
     let posteos = await axios.get('https://dpower-production.up.railway.app/post')
     posteos = posteos.data
 
-    likesId = likesId.filter(el => el.UserInfoId === userIdProfile.userId);
+    if (userIdProfile.userId) likesId = likesId.filter(el => el.UserInfoId === userIdProfile.userId);
+    if (UserById.userId) likesId = likesId.filter(el => el.UserInfoId === UserById.userId);
     let posteosId = []
     likesId.map(el => posteosId.push(el.PostId))
 
