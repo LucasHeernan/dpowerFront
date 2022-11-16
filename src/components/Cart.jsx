@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, DevSettings } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { cleanCart } from '../redux/actions';
 import { Ionicons } from '@expo/vector-icons';
@@ -48,6 +48,7 @@ export default function Cart() {
           'Content-Type': 'application/json',
         },
       });
+      console.log('entre al fetch')
       const { paymentIntent, ephemeralKey, customer} = await response.json();
   
       return {
@@ -82,17 +83,20 @@ export default function Cart() {
     };
 
     const openPaymentSheet = async () => {
+      console.log('abri el payment')
         const { error } = await presentPaymentSheet();
     
         if (error) {
           alert(`Error code: ${error.code}`, error.message);
+          DevSettings.reload()
         } else {
           alert('Success', 'Your order is confirmed!');
+          DevSettings.reload()
         }
       };
         
-    useEffect(() => {
-        initializePaymentSheet();
+      initializePaymentSheet();
+      useEffect(() => {
       }, []);
  // ------------ Termina PAyment ---------------------------------------
   return (
