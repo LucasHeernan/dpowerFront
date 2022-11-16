@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "dpowerFront",
-    "slug": "dpowerFront",
+    "name": "Dpower App",
+    "slug": "dpower-app",
     "description": "The application to support paralympic athletes",
     "version": "1.0.0",
     "orientation": "portrait",
