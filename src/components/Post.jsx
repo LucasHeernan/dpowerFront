@@ -140,7 +140,8 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
         <View style={styles.posts}>
 
 
-          {/* <Text style={styles.title}>{UserInfoId.split('@')[0]}</Text> */}
+
+          <Text style={styles.title}>{UserInfoId?.split('@')[0]}</Text>
           <View style={styles.contain} >
 
             <View>
@@ -156,7 +157,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
             <Text style={styles.description}>Description:   {description}</Text>
             <View style={styles.logos}>
               {/* logica para el renderizado condicional de los powers  */}
-              { powersGained > 0 ? (
+              { powersGained >= 0 ? (
               <View style={styles.container}>
                 <TouchableOpacity onPress={showDialog}>
                 <Entypo style={styles.signos} name="battery" size={28} color="#C7D31E" />

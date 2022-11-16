@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, TextInput, StyleSheet, View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { TextInput, StyleSheet, View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import * as ImagePicker from 'expo-image-picker';
 import { createIconSetFromFontello } from '@expo/vector-icons';
+import { Button } from 'react-native-paper';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
@@ -102,7 +103,7 @@ export default function PostImage() {
             .then(async (res) => {
                 let imagenurl = await res.json()
                 let publicacion = {}
-                if (user[0].validated === true) {
+                if (user[0].data.validated === true) {
                     publicacion = {
                         likes: 0,
                         powersGained: 0,
@@ -119,7 +120,7 @@ export default function PostImage() {
                         multimedia: imagenurl.secure_url
                     }
                 }
-                // console.log('RESJSON:   ', imagenurl)
+                console.log('publicacion:   ', publicacion)
 
 
                 axios.post(`https://dpower-production.up.railway.app/post`, publicacion)
@@ -131,6 +132,7 @@ export default function PostImage() {
                 //console.log('media     :', imagenurl.secure_url ) 
             })
             .then(() => {
+                console.log(user[0])
                 setImg(null)
                 setDescr('')
             })
@@ -141,23 +143,14 @@ export default function PostImage() {
             })
     }
 
-
-
-
-
-
-
-
     return (
-
         <View style={styles.container1}>
             <View>
-
-                <Text style={styles.textdescr}>Description: (optional)</Text>
+                <Text style={styles.textdescr}>Photo description</Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={setDescr}
-                    placeholder={"..."}
+                    placeholder={"  White a caption ..."}
                     value={descr}
                 />
             </View>
@@ -165,89 +158,70 @@ export default function PostImage() {
                 <Image source={img ? ({ uri: img.uri }) : { uri: null }} style={styles.tinyLogo} />
             </View>
 
-
-            <TouchableOpacity style={styles.pick} onPress={pickImage} >
-
-                <Text style={styles.picktext}>Pick a photo</Text>
-            </TouchableOpacity>
-
-
+            <Button style={styles.pick} icon="camera" color='#C7D31E' mode="elevated" onPress={pickImage}>
+                Pick a photo
+            </Button>
 
             <TouchableOpacity style={styles.postear} onPress={cloudinaryUpload}>
                 <Text style={styles.posteartext}>Post</Text>
             </TouchableOpacity>
-
-
         </View>
-
     )
 };
-
-
-
-
-
-
-
 
 const styles = StyleSheet.create({
     tinyLogo: {
         width: 300,
         height: 300,
         borderRadius: 35,
+        backgroundColor: 'white',
     },
     container1: {
         alignItems: 'center',
-        backgroundColor: '#4d4d4d',
+        backgroundColor: '#F0F0F3',
+        justifyContent: 'center',
         paddingVertical: 39,
         marginBottom: 20,
-
+        height: '100%'
     },
     formContainer: {
         padding: 8,
     },
-
     imagecontainer: {
         borderRadius: 35,
         alignSelf: 'center',
-        borderColor: '#EDEDED',
+        borderColor: '#F0F0F3',
         borderWidth: 5,
         margin: 18,
         marginTop: 20,
     },
-
     pick: {
         margin: 10,
-        marginTop: -5,
-        fontSize: 22,
-        backgroundColor: '#E8E8E8',
-        borderRadius: 8,
-        width: 150,
-        alignItems: 'center',
+        backgroundColor: 'white',
+        borderRadius: 12,
+        borderColor: "#d9ed92",
+        borderWidth: 1.5
     },
     picktext: {
-        marginHorizontal: 10,
-        fontSize: 22,
-
+        color: '#777777'
     },
     postear: {
-        marginTop: 35,
+        marginTop: 50,
         backgroundColor: '#C7D31E',
         color: '#C7D31E',
-        borderRadius: 8,
-        width: 180,
+        width: '65%',
+        borderRadius: 19,
         alignItems: 'center',
         margin: 20,
-
-
     },
     posteartext: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        margin: 8,
-        marginHorizontal: 30,
+        padding: 13,
+        fontSize: 20,
+        fontWeight: '500',
+        letterSpacing: 1,
+        color: 'white',
+        textTransform: 'uppercase',
     },
-
     input: {
         width: 300,
         margin: 15,
@@ -256,16 +230,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#E0E0E0',
         padding: 10,
         borderRadius: 15,
-
+        backgroundColor: 'white',
     },
     textdescr: {
         marginTop: 10,
-        marginLeft: 22,
-        marginBottom: -8,
         fontSize: 22,
-        color: '#EDEDED'
+        color: 'black',
+        alignSelf: 'center'
     }
-
-
-
 });

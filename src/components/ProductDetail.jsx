@@ -63,11 +63,19 @@ export default function ProductDetail({route}) {
                 </TouchableOpacity>
             </View>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                <Image source={{uri: image}} style={styles.image} alt="Image" />
+                {
+                    stock ? <Image source={{uri: image}} alt={name} style={styles.image} /> :
+                    <Image source={{uri: image}} alt={name} style={styles.noStock}/>
+                }
                 <Caption style={{letterSpacing: 2, alignItems: "center", marginBottom:2, marginTop: 20}}>{category}</Caption>
                 <Headline style={styles.name}>{name}</Headline>
                 <Headline style={styles.price}>${price}</Headline>
-                <Button icon="cash" mode="contained" style={styles.carting} onPress={handleSubmit}>ADD TO CART</Button>
+                {
+                    stock ? <Button icon="cash" mode="contained" style={styles.carting} onPress={handleSubmit}>ADD TO CART</Button> :
+                    <Button icon="cash" mode="contained" style={styles.noCarting}
+                        onPress={() => alert('At the moment we do not have this product')}>NO STOCK
+                    </Button>
+                }
                 <Text style={styles.description}>{description}</Text>
             </ScrollView>
         </SafeAreaView>
@@ -86,6 +94,13 @@ const styles = StyleSheet.create({
         height: 300,
         resizeMode: "contain",
         borderRadius: 12
+    },
+    noStock: {
+        width: "100%",
+        height: 300,
+        resizeMode: "contain",
+        borderRadius: 12,
+        opacity: 0.6
     },
     name: {
         lineHeight: 20,
@@ -106,6 +121,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#C7D31E",
         color: "white",
         marginTop: 15,
-        marginBottom: 15
+        marginBottom: 15,
+        borderRadius: 12
+    },
+    noCarting: {
+        backgroundColor: "#C7D31E",
+        color: "white",
+        marginTop: 15,
+        marginBottom: 15,
+        borderRadius: 12,
+        opacity: 0.6
     }
 });
