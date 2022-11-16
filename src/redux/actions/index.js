@@ -214,6 +214,20 @@ export function getCommentsById(id) {
     }
 }
 
+export function getpostById(id) {
+    return async (dispatch) => {
+        try {
+            const data = await axios.get(`https://dpower-production.up.railway.app/post/${id}`).then(e => e.data)
+            return dispatch({
+                type: GET_POST_BY_ID,
+                payload: data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 const postComments = (payload) => {
     return async function() {
         const create = await axios.post('https://dpower-production.up.railway.app/comments', payload);
