@@ -19,9 +19,8 @@ import {
     ADD_TO_TOTAL,
     LESS_TO_TOTAL,
     UPDATE_POST,
-
     GET_COMMENTS_BY_ID,
-    GET_POST_BY_ID
+    GET_POST_BY_ID,
     UPDATE_CART
 
 } from '../actionTypes';

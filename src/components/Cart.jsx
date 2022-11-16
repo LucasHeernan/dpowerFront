@@ -303,30 +303,8 @@ export default function Cart() {
           alignItems: 'center',
         }}
       >
+        
         <TouchableOpacity
-          onPress={() => dispatch(updateCart(cart))}
-          style={{
-            width: '86%',
-            height: '90%',
-            backgroundColor: "#C7D31E",
-            borderRadius: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: '500',
-              letterSpacing: 1,
-              color: 'white',
-              textTransform: 'uppercase',
-            }}
-          >
-            PROBANDO ACCIÓN
-          </Text>
-        </TouchableOpacity>
-        {/* <TouchableOpacity
           variant="primary"
           disabled={!loading}
           title="Checkout"
@@ -352,7 +330,7 @@ export default function Cart() {
           >
             CHECKOUT
           </Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
     </View>
   )

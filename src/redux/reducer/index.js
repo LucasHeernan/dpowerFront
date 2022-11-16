@@ -152,6 +152,7 @@ const reducer = ( state = initialState, action ) => {
             return{
                 ...state,
                 comments: action.payload
+            }
         case UPDATE_CART:
             return {
                 ...state,
