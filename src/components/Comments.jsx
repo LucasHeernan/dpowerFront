@@ -1,6 +1,4 @@
 import  React, {useState, useEffect} from 'react';
-import { Text, View, StyleSheet, Image, TouchableOpacity, ScrollView, Button } from 'react-native';
-import { getCommentsById, getpostById } from '../redux/actions';
 import { Text, View, StyleSheet, Image, TouchableOpacity, ScrollView, Button, RefreshControl} from 'react-native';
 import { getCommentsById, getpostById, removeState } from '../redux/actions';
 import { useDispatch, useSelector} from 'react-redux';
@@ -12,16 +10,17 @@ import { shouldUseActivityState } from 'react-native-screens';
 
 
 
-// let updateComments = true;
+let updateComments = true;
 
     export default function CommentsPost({route, navigation}){
       const {id} = route.params;
       // console.log('soy id =>', id);
-      // if (updateComments) getCommentsById()
+      if (updateComments) getCommentsById()
 
       const [refreshing, setRefreshing] = useState(false);
 
     const { comments } = useSelector(state => state);
+    const { postbyid } = useSelector(state => state)
     const { user } = useSelector(state => state);
     const dispatch = useDispatch();
 
@@ -37,8 +36,13 @@ import { shouldUseActivityState } from 'react-native-screens';
    
 
     // console.log('COMENTARIOS (comments) => ',comments)
+
+   // usefeect con postbyid, consologear postby id, poner postbyid.data.(imagen), y centrarlan
     
       // console.log('lo que hay en user => ',user[0].data.name);
+      
+
+      // console.log('post by id =>', postbyid)
 
     const [text, setText] = useState('');
     
@@ -61,7 +65,14 @@ import { shouldUseActivityState } from 'react-native-screens';
       console.log(multimedia);
     // console.log('usuario =>', user[0].data.name)
       return (
-        <ScrollView style={styles.todo}>
+        <ScrollView style={styles.todo}
+          refreshControl={
+            <RefreshControl
+            refreshing={refreshing}
+            onRefresh={getCommentsById}
+          />
+        }
+      >
           <View style={styles.container}>
           <View style={styles.imagen}>
 
