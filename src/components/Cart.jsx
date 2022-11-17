@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { cleanCart } from '../redux/actions';
+import { cleanCart, updateCart } from '../redux/actions';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import CartItem from './CartItem';
@@ -90,9 +90,9 @@ export default function Cart() {
           alert('Success', 'Your order is confirmed!');
         }
       };
-        
+      
+    initializePaymentSheet();    
     useEffect(() => {
-        initializePaymentSheet();
       }, []);
  // ------------ Termina PAyment ---------------------------------------
   return (
@@ -303,6 +303,7 @@ export default function Cart() {
           alignItems: 'center',
         }}
       >
+        
         <TouchableOpacity
           variant="primary"
           disabled={!loading}

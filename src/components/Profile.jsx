@@ -166,6 +166,9 @@ function Profile(props) {
               <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>
                 {!userById.length ? user[0].data.name : userById[0].data.name}
               </Text>
+              <Text style={[styles.text, { fontWeight: "400", fontSize: 18, fontWeight: '700', textDecorationLine: 'underline',  }]}>
+                {(userById.validated === true) ? 'Athlete' : null}
+              </Text>
               <Text style={[styles.text, styles.subText]}>
                 {!userById.length ? user[0].data.age : userById[0].data.age}
               </Text>

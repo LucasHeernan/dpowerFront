@@ -176,7 +176,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
 
             <View>
 
-              <TouchableOpacity onPress={() => alert('Ir a PostDetail')}>
+              <TouchableOpacity onPress={() => navigation.navigate("Comments", {id})}>
                 <Image
                   style={styles.tinyLogo}
                   source={{ uri: multimedia }}
@@ -288,7 +288,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
 
 const styles = StyleSheet.create({
   bg: {
-    backgroundColor: "#4d4d4d",
+    backgroundColor: "#F0F0F3",
   },
   contain: {
     alignItems: "center",
@@ -317,10 +317,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 40,
     alignSelf: 'flex-start',
-    color: '#C7D31E',
+    color: '#4d4d4d',
   },
   numbers: {
-    color: '#F5F5F5',
+    color: '#888888',
     fontSize: 26,
 
     justifyContent: 'center',
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
   description: {
     width: 290,
     fontSize: 24,
-    color: '#F5F5F5',
+    color: '#4d4d4d',
     marginTop: 5,
     marginBottom: 2,
     marginLeft: 6,
