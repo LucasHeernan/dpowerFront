@@ -144,7 +144,7 @@ android {
 
     defaultConfig {
 // @generated begin react-native-auth0-manifest-placeholder - expo prebuild (DO NOT MODIFY) sync-08b2c4ce7f4baed3bb8c764293844858cbe721ad
-manifestPlaceholders = [auth0Domain: "dev-tgmuj241vtx0h7yl.us.auth0.com", auth0Scheme: "com.dpowerapp"]
+manifestPlaceholders = [auth0Domain: "https://dpwr.us.auth0.com/", auth0Scheme: "${applicationId}"]
 // @generated end react-native-auth0-manifest-placeholder
         applicationId 'com.dpowerapp'
         minSdkVersion rootProject.ext.minSdkVersion
