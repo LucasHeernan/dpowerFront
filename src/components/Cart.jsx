@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { cleanCart, updateCart } from '../redux/actions';
+import { cleanCart, updateCart, getUserById} from '../redux/actions';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import CartItem from './CartItem';
 import { } from './CheckOutForm';
 import { CardField, useConfirmPayment, useStripe  } from "@stripe/stripe-react-native";
 import  axios  from 'axios';
-import { getUserById } from '../redux/actions';
+
 
 
 export default function Cart() {
@@ -130,7 +130,9 @@ export default function Cart() {
         if (error) {
           alert(`Error code: ${error.code}`, error.message);
         } else {
-          (alert('Success, Your order is confirmed!'), sumpowers());
+          (alert('Success, Your order is confirmed!'), 
+          editpowers(),
+          dispatch(updateCart()));
         }
       };
       
