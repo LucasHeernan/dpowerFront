@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 //  POST https://api.cloudinary.com/v1_1/dr6vvkghv/image/upload
 
 export default function PostImage() {
-    const { user } = useSelector(store => store)
+    const { user, userById } = useSelector(store => store)
 
     const [image, setImage] = useState(null);
     const [img, setImg] = useState(null)
@@ -103,12 +103,12 @@ export default function PostImage() {
             .then(async (res) => {
                 let imagenurl = await res.json()
                 let publicacion = {}
-                if (user[0].data.validated === true) {
+                if (userById[0]?.data?.validated === true) {
                     publicacion = {
                         likes: 0,
                         powersGained: 0,
                         description: descr,
-                        UserInfoId: user[0].data.id,
+                        UserInfoId: userById[0]?.data?.id,
                         multimedia: imagenurl.secure_url
                     }
                 } else {
@@ -116,7 +116,7 @@ export default function PostImage() {
                         likes: 0,
                         powersGained: -1,
                         description: descr,
-                        UserInfoId: user[0].data.id,
+                        UserInfoId: userById[0]?.data?.id,
                         multimedia: imagenurl.secure_url
                     }
                 }
