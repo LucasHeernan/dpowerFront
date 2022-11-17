@@ -20,6 +20,7 @@ import {
     LESS_TO_TOTAL,
     UPDATE_POST,
     GET_COMMENTS_BY_ID,
+    REMOVE_STATE,
 } from '../actionTypes';
 
 
@@ -204,6 +205,13 @@ const postComments = (payload) => {
     }
 }
 
+const removeState = (payload) => {
+    return {
+        type: REMOVE_STATE
+    }
+}
+
 export{
     postComments,
+    removeState,
 }
