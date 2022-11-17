@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { cleanCart } from '../redux/actions';
+import { cleanCart, updateCart } from '../redux/actions';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import CartItem from './CartItem';
@@ -13,7 +13,7 @@ import { CardField, useConfirmPayment, useStripe  } from "@stripe/stripe-react-n
 
 export default function Cart() {
 
-  const { user } = useSelector(store => store)
+  const { user, userInfo } = useSelector(store => store)
   const dispatch = useDispatch();
   const cart = useSelector(store => store.cart);
   const [total, setTotal] = useState(0)
@@ -73,7 +73,7 @@ export default function Cart() {
         // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
         //methods that complete payment after a delay, like SEPA Debit and Sofort.
         defaultBillingDetails: {
-          name: user[0].data.name
+          name: 'name'
         }
       });
       if (!error) {
@@ -90,9 +90,9 @@ export default function Cart() {
           alert('Success', 'Your order is confirmed!');
         }
       };
-        
+      
+    initializePaymentSheet();    
     useEffect(() => {
-        initializePaymentSheet();
       }, []);
  // ------------ Termina PAyment ---------------------------------------
   return (
@@ -303,6 +303,7 @@ export default function Cart() {
           alignItems: 'center',
         }}
       >
+        
         <TouchableOpacity
           variant="primary"
           disabled={!loading}

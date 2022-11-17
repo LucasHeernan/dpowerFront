@@ -21,8 +21,9 @@ import {
     UPDATE_POST,
     GET_COMMENTS_BY_ID,
     REMOVE_STATE,
+    GET_POST_BY_ID,
+    UPDATE_CART
 } from '../actionTypes';
-
 
 
 export function getAllProducts() {
@@ -139,6 +140,22 @@ export function updatePost(info) {
     }
 }
 
+export function updateCart(products) {
+    return async (dispatch) => {
+        try {
+            products.map( async (el) => {
+                await axios.put(`https://dpower-production.up.railway.app/products/${el.id}/${el.stock - el.total}`)
+            })
+            return dispatch({
+                type: UPDATE_CART,
+                payload: []
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 export function orderByPrice(payload) {
     return { type: ORDER_BY_PRICE, payload }
 }
@@ -190,6 +207,20 @@ export function getCommentsById(id) {
             const data = await axios.get(`https://dpower-production.up.railway.app/post/${id}`).then(e => e.data.Comments)
             return dispatch({
                 type: GET_COMMENTS_BY_ID,
+                payload: data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export function getpostById(id) {
+    return async (dispatch) => {
+        try {
+            const data = await axios.get(`https://dpower-production.up.railway.app/post/${id}`).then(e => e.data)
+            return dispatch({
+                type: GET_POST_BY_ID,
                 payload: data
             })
         } catch (error) {

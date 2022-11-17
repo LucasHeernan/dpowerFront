@@ -161,6 +161,9 @@ function Profile(props) {
               <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>
                 {!userById.length ? user[0].data.name : userById[0].data.name}
               </Text>
+              <Text style={[styles.text, { fontWeight: "400", fontSize: 18, fontWeight: '700', textDecorationLine: 'underline',  }]}>
+                {(userById.validated === true) ? 'Athlete' : null}
+              </Text>
               <Text style={[styles.text, styles.subText]}>
                 {!userById.length ? user[0].data.age : userById[0].data.age}
               </Text>
@@ -174,7 +177,7 @@ function Profile(props) {
 
             <View style={styles.statsContainer}>
               <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 24 }]}>{imagenes.length}</Text>
+                <Text style={[styles.text, { fontSize: 24 }]}>{posteos.length}</Text>
                 <Text style={[styles.text, styles.subText]}>Posts</Text>
               </View>
               <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
