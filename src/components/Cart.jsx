@@ -351,7 +351,7 @@ export default function Cart() {
           variant="primary"
           disabled={!loading}
           title="Checkout"
-          onPress={editpowers}
+          onPress={openPaymentSheet}
           style={{
             width: '86%',
             height: '90%',
