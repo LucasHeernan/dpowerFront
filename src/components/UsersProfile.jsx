@@ -22,7 +22,6 @@ let update = true;
 let updatePosteos = true;
 
 function UsersProfile({route}) {
-  const [loading, setLoading] = React.useState(true)
   const [powers, setPowers] = React.useState(0)
   const [likes, setLikes] = React.useState(0)
   const [visible, setVisible] = React.useState(false);
@@ -72,9 +71,6 @@ function UsersProfile({route}) {
   }
 
   console.log(posteos)
-  useEffect(() => {
-    setLoading(false)
-  }, [posteos])
   if (updatePosteos) getPosteos()
 
   const navigation = useNavigation()
@@ -105,7 +101,6 @@ function UsersProfile({route}) {
                 }}
             >
                 <TouchableOpacity onPress={() => {
-                    setLoading(true)
                     navigation.goBack()
                     }}>
                     <Ionicons
@@ -120,7 +115,7 @@ function UsersProfile({route}) {
                     />
                 </TouchableOpacity>
             </View>
-        <SafeAreaView style={styles.container}>
+        {user[0].active ? <SafeAreaView style={styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{ alignSelf: "center" }}>
               <View style={styles.profileImage}>
@@ -168,13 +163,13 @@ function UsersProfile({route}) {
 
             <Text style={[styles.subText, styles.description]}>My Posts</Text>
             <View style={{ marginTop: 32 }}>
-              {loading ? <ActivityIndicator animating={true} /> : <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 {posteos.slice(0).reverse().map((imagen, index) =>
                   <View style={styles.mediaImageContainer} key={index} >
                     <Image source={{ uri: imagen }} style={styles.image} resizeMode="cover"></Image>
                   </View>
                 )}
-              </ScrollView>}
+              </ScrollView>
             </View>
 
             <Text style={[styles.subText, styles.description]}>Description</Text>
@@ -190,7 +185,9 @@ function UsersProfile({route}) {
               </View>
             </View>
           </ScrollView>
-        </SafeAreaView>
+        </SafeAreaView> : <View>
+          <Text>This profile isnt available</Text>
+        </View>}
       </ScrollView>
   )
 }

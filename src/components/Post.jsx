@@ -118,9 +118,6 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
 
 
 
-  useEffect(() => {
-    // getPostById()
-  }, [transaction])
 
   const Errores = () => {
     if(userById[0].data.powers < 10) return (<Text>You dont have enough Powers!</Text>)

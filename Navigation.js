@@ -7,7 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 //screens
@@ -24,6 +24,7 @@ import PostPicture from './src/components/ImagePicker';
 import Comments from './src/components/Comments';
 import StripeApp from './src/components/CheckOutForm';
 import UsersProfile from './src/components/UsersProfile';
+import { getUserById } from './src/redux/actions';
 
 
 
@@ -262,17 +263,15 @@ function MyTabs() {
 }
 
 export default function Navigation() {
-  const user = useSelector(state => state.user);
+  const {user, userById} = useSelector(state => state);
+  const dispatch = useDispatch()
 
+  useEffect(() => {
+    dispatch(getUserById(userById[0].data.id))
+  }, [user])
   return(
     <NavigationContainer style={MyTheme} >
-      {
-        user.length ? (
-          <MyTabs />
-        ) : (
-          <LandingStack />
-        )
-      }
+      {user.length ? <>{userById[0].data.active ? <MyTabs /> : <ProfileStack />}</> : <LandingStack />}
     </NavigationContainer>
   )
 }

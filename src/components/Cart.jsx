@@ -5,7 +5,6 @@ import { cleanCart, updateCart } from '../redux/actions';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import CartItem from './CartItem';
-import { } from './CheckOutForm';
 import { CardField, useConfirmPayment, useStripe  } from "@stripe/stripe-react-native";
 
 

@@ -3,8 +3,9 @@ import * as AuthSession from "expo-auth-session"
 import { openAuthSessionAsync } from "expo-web-browser";
 import { View, Text, StyleSheet, ScrollText, ScrollView, Image, SafeAreaView, Alert, Platform, RefreshControl } from 'react-native';
 import { FontAwesome5, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { ActivityIndicator, Button, Divider, IconButton, Menu, Provider } from "react-native-paper";
-import { cleanUser, getPosts } from "../redux/actions";
+import { Button } from "@rneui/themed";
+import { ActivityIndicator, Divider, IconButton, Menu, Provider } from "react-native-paper";
+import { cleanUser, getPosts, updateUser } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
@@ -21,7 +22,6 @@ let update = true;
 let updatePosteos = true;
 
 function Profile(props) {
-  const [loading, setLoading] = React.useState(true)
   const [powers, setPowers] = React.useState(0)
   const [likes, setLikes] = React.useState(0)
   const [visible, setVisible] = React.useState(false);
@@ -105,9 +105,7 @@ function Profile(props) {
     dispatch(getUserById(actualUser))
   }, [user])
 
-  useEffect(() => {
-    setLoading(false)
-  }, [posteos])
+
 
   const navigation = useNavigation()
 
@@ -120,12 +118,31 @@ function Profile(props) {
       console.error(err)
     }
   }
+
+  const deleteAccount = async () => {
+    try {
+      let usuario = {...userById[0].data, active: false}
+      dispatch(updateUser(usuario))
+      ;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const restoreAccount = async () => {
+    try {
+      let usuario = {...userById[0].data, active: true}
+      dispatch(updateUser(usuario))
+    } catch (error) {
+      console.log(error)
+    }
+  }
   //!userById.length  ? user[0].data.name : userById[0].data.name
   const avatar = !userById.length ? user[0].data.avatar : userById[0].data.avatar
   return (
     <Provider>
 
-      <ScrollView
+      {userById[0].data.active ? <ScrollView
         contentContainerStyle={styles.scrollView}
         style={{ backgroundColor: 'white' }}
         refreshControl={
@@ -149,6 +166,8 @@ function Profile(props) {
                 <Menu.Item onPress={logout} title="LogOut" />
                 <Divider />
                 <Menu.Item onPress={() => navigation.navigate("Form")} title="Edit profile" />
+                <Divider />
+                <Menu.Item onPress={deleteAccount} title='Delete account' />
               </Menu>
             </View>
 
@@ -201,13 +220,13 @@ function Profile(props) {
 
             <Text style={[styles.subText, styles.description]}>My Posts</Text>
             <View style={{ marginTop: 32 }}>
-            {loading ? <ActivityIndicator animating={true} /> : <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 {posteos.slice(0).reverse().map((imagen, index) =>
                   <View style={styles.mediaImageContainer} key={index} >
                     <Image source={{ uri: imagen }} style={styles.image} resizeMode="cover"></Image>
                   </View>
                 )}
-              </ScrollView>}
+              </ScrollView>
             </View>
 
             <Text style={[styles.subText, styles.description]}>My Favorites</Text>
@@ -235,7 +254,10 @@ function Profile(props) {
             </View>
           </ScrollView>
         </SafeAreaView>
-      </ScrollView>
+      </ScrollView> : <View style={{flexDirection: "column" ,justifyContent: "center", alignItems:"center", width: "100%", height: "100%"}}>
+        <Text>Your account isnt active</Text>
+        <Button color="error" onPress={restoreAccount}>Reset Profile</Button>
+      </View>}
     </Provider>
   )
 }
