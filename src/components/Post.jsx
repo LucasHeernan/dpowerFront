@@ -168,7 +168,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
                   onBackdropPress={hideDialog}
                 >
                   <Dialog.Title title="Give Powers"/>
-                  <Text>You have {!userById[0].data.powers ? 0 : userById[0].data.powers} Powers</Text>
+                  <Text>You have {!userById[0]?.data.powers ? 0 : userById[0].data.powers} Powers</Text>
                   <Errores />
 
                   <Dialog.Actions>

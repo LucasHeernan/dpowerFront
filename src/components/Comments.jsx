@@ -29,7 +29,7 @@ import { shouldUseActivityState } from 'react-native-screens';
       dispatch(removeState())
       dispatch(getCommentsById(id));
       dispatch(getpostById(id));
-    }, [])
+    }, [dispatch, id])
 
    
 
@@ -64,14 +64,7 @@ import { shouldUseActivityState } from 'react-native-screens';
  
     // console.log('usuario =>', user[0].data.name)
       return (
-        <ScrollView style={styles.todo}
-        //   refreshControl={
-        //     <RefreshControl
-        //     refreshing={refreshing}
-        //     onRefresh={getCommentsById}
-        //   />
-        // }
-      >
+        <ScrollView style={styles.todo}>
           <View style={styles.container}>
           <View style={styles.imagen}>
 
