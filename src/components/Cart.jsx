@@ -45,7 +45,7 @@ export default function Cart() {
   }, [cart])
 
   useEffect(() => {
-    dispatch(getUserById(userById[0]?.data.id))
+    dispatch(getUserById(user[0]?.data.id))
   }, [] )
 
   

@@ -126,7 +126,9 @@ function Profile(props) {
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
-            onRefresh={getImagenes}
+            onRefresh={(getImagenes,
+              getPosteos)
+            }
           />
         }
       >

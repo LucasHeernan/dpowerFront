@@ -143,7 +143,7 @@ export default function MarketPlace() {
               }) :
               <View>
                 {
-                  filterProducts.length > 0 ? filterProducts.map(item => {
+                  filterProducts.length > 0 ? filterProducts?.map(item => {
                     return (
                       <ProductCard
                         key={item.id}
@@ -151,7 +151,7 @@ export default function MarketPlace() {
                       />
                     )
                   }) :
-                  allProducts.map(item => {
+                  allProducts?.map(item => {
                     return (
                       <ProductCard
                         key={item.id}
