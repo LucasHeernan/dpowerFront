@@ -55,14 +55,6 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
   }
   getFav()
 
-  let openShareDialogAsync = async () => {
-    // if (Platform.OS === 'web') {
-    //   alert(`Uh oh, sharing isn't available on your platform`);
-    //   return;
-    // }
-    const imageTmp = await Sharing.shareAsync(multimedia);
-  };
-
   let getPostOwner = async function () {
     try {
       let postOwner = await axios.get(`https://dpower-production.up.railway.app/users/${UserInfoId}`).then(e => e.data)
@@ -72,7 +64,6 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
       
     }
   }
-  getPostOwner()
   let aumentarLike = async function () {  // para aumentar los likes
     try {
       if (shouldPost) {
@@ -137,10 +128,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
     )
   }
 
-  function commentsDetails (id){
-    dispatch(getCommentsById(id)),
-    navigation.navigate("Comments")
-  }
+
   
   return (
     <ScrollView >
@@ -157,7 +145,7 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
               marginBottom: 20
             }}
           >
-          <Avatar
+          {/* <Avatar
             onPress={() =>
               navigation.navigate("User Profile", {
                 user: postOwner
@@ -166,8 +154,17 @@ function Post({UserInfoId, id, powersGained, likes, multimedia, description, use
             size={50}
             rounded
             source={!postOwner.length ? {} : {uri: postOwner[0].avatar}}
-          />
-          <Text style={styles.title}>{UserInfoId?.split('@')[0]}</Text>
+          /> */}
+          <View>
+            <TouchableOpacity onPress={() => {
+              getPostOwner()
+              navigation.navigate("User Profile", {
+                user: postOwner
+              })
+            }}>
+              <Text style={styles.title}>{UserInfoId?.split('@')[0]}</Text>
+            </TouchableOpacity>
+          </View>
           </View>
           <View style={styles.contain} >
 

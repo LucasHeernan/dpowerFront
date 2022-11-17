@@ -22,23 +22,25 @@ let update = true;
 let updatePosteos = true;
 
 function UsersProfile({route}) {
-  const [powers, setPowers] = React.useState(0)
-  const [likes, setLikes] = React.useState(0)
-  const [visible, setVisible] = React.useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
-  const [imagenes, setImagenes] = React.useState([]);
-  const [posteos, setPosteos] = React.useState([]);
+  const [powers, setPowers] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [likes, setLikes] = useState(0)
+  const [visible, setVisible] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [imagenes, setImagenes] = useState([]);
+  const [posteos, setPosteos] = useState([]);
 
   const { user } = route.params
   console.log(user)
-  let userIdProfile = { userId: user[0].id }
   const dispatch = useDispatch()
 
 
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
-  let getFilteredPosts = async function() {
+  
+
+  let getFilteredPosts = async function(user) {
     let posts = await axios.get("https://dpower-production.up.railway.app/post").then(e => e.data)
     let filteredPosts = posts.filter(e => e.UserInfoId === user[0].id)
     let likes = filteredPosts.map(e => e.likes)
@@ -54,14 +56,14 @@ function UsersProfile({route}) {
     return (totalLikes, totalPowers)
   }
 
-  const totalLikes = getFilteredPosts()
+  const totalLikes = getFilteredPosts(user)
   console.log(likes)
 
-  let getPosteos = async function() {
+  let getPosteos = async function(user) {
     let finalPosteos = await axios.get('https://dpower-production.up.railway.app/post')
     finalPosteos = finalPosteos.data
 
-    finalPosteos = finalPosteos.filter(el => el.UserInfoId === userIdProfile.userId)
+    finalPosteos = finalPosteos.filter(el => el.UserInfoId === user[0].id)
     let final = [];
 
     finalPosteos.map(el => final.push(el.multimedia))
@@ -70,125 +72,135 @@ function UsersProfile({route}) {
     return final;
   }
 
+  useEffect(() => {
+    getFilteredPosts()
+    getPosteos()
+    setLoading(false)
+  }, [])
+
   console.log(posteos)
-  if (updatePosteos) getPosteos()
+  if (updatePosteos) getPosteos(user)
 
   const navigation = useNavigation()
 
 
   const avatar = user.avatar ? "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" : user[0].avatar
   return (
-
-      <ScrollView
-        contentContainerStyle={styles.scrollView}
-        style={{ backgroundColor: 'white' }}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={getPosteos}
-          />
-        }
-      >
+    <ScrollView
+      contentContainerStyle={styles.scrollView}
+      style={{ backgroundColor: 'white' }}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={getPosteos}
+        />
+      }
+    >
       <View
-                style={{
-                    width: '100%',
-                    flexDirection: 'row',
-                    paddingTop: 25,
-                    paddingHorizontal: 16,
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: 20
-                }}
-            >
-                <TouchableOpacity onPress={() => {
-                    navigation.goBack()
-                    }}>
-                    <Ionicons
-                    name="chevron-back"
-                    style={{
-                        fontSize: 18,
-                        color: '#777777',
-                        padding: 12,
-                        backgroundColor: '#F0F0F3',
-                        borderRadius: 12,
-                    }}
+        style={{
+            width: '100%',
+            flexDirection: 'row',
+            paddingTop: 25,
+            paddingHorizontal: 16,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 20
+        }}
+      >
+        <TouchableOpacity onPress={() => {
+            navigation.goBack()
+            }}>
+            <Ionicons
+            name="chevron-back"
+            style={{
+              fontSize: 18,
+              color: '#777777',
+              padding: 12,
+              backgroundColor: '#F0F0F3',
+              borderRadius: 12,
+            }}
+            />
+        </TouchableOpacity>
+      </View>
+
+        {
+          !loading && user[0].active ?
+            <SafeAreaView style={styles.container}>
+              <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ alignSelf: "center" }}>
+                  <View style={styles.profileImage}>
+                    <Image
+                      source={{ uri: avatar }}
+                      style={styles.image}
+                      resizeMode="center"
                     />
-                </TouchableOpacity>
-            </View>
-        {user[0].active ? <SafeAreaView style={styles.container}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{ alignSelf: "center" }}>
-              <View style={styles.profileImage}>
-                <Image
-                  source={{ uri: avatar }}
-                  style={styles.image}
-                  resizeMode="center"
-                />
-              </View>
-            </View>
-
-            <View style={styles.infoContainer}>
-              <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>
-                {user.length ? user[0].name : "No name"}
-              </Text>
-              <Text style={[styles.text, styles.subText]}>
-                {user.length ? user[0].age : ""}
-              </Text>
-              <Text style={[styles.text, styles.subText]}>
-                {user.length ? user[0].nationality : ""}
-              </Text>
-              <Text style={[styles.text, { color: "AEB5BC", fontSize: 14 }]}>
-                {user.length ? user[0].sport : ""}
-              </Text>
-            </View>
-
-            <View style={styles.statsContainer}>
-              <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 24 }]}>{posteos.length}</Text>
-                <Text style={[styles.text, styles.subText]}>Posts</Text>
-              </View>
-              <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                <Text style={[styles.text, { fontSize: 24 }]}>{likes}</Text>
-                <Text style={[styles.text, styles.subText]}>Likes</Text>
-              </View>
-              {user[0].validated ? <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1 }]}>
-                <Text style={[styles.text, { fontSize: 24 }]}>{powers >= 0 ? powers : 0}</Text>
-                <Text style={[styles.text, styles.subText]}>Powers</Text>
-              </View> : <Text></Text>}
-              {/* <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 24 }]}>{followers}</Text>
-                <Text style={[styles.text, styles.subText]}>Seguidores</Text>
-              </View> */}
-            </View>
-
-            <Text style={[styles.subText, styles.description]}>My Posts</Text>
-            <View style={{ marginTop: 32 }}>
-              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                {posteos.slice(0).reverse().map((imagen, index) =>
-                  <View style={styles.mediaImageContainer} key={index} >
-                    <Image source={{ uri: imagen }} style={styles.image} resizeMode="cover"></Image>
                   </View>
-                )}
-              </ScrollView>
-            </View>
+                </View>
 
-            <Text style={[styles.subText, styles.description]}>Description</Text>
-
-            <View style={{ alignItems: "center" }}>
-              <View style={styles.descripcion}>
-                <View style={styles.descripcionIndicador}></View>
-                <View style={{ width: 250 }}>
-                  <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-                    {!user[0].description ? 'There is no description' : user[0].description}
+                <View style={styles.infoContainer}>
+                  <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>
+                    {user.length ? user[0].name : "No name"}
+                  </Text>
+                  <Text style={[styles.text, styles.subText]}>
+                    {user.length ? user[0].age : ""}
+                  </Text>
+                  <Text style={[styles.text, styles.subText]}>
+                    {user.length ? user[0].nationality : ""}
+                  </Text>
+                  <Text style={[styles.text, { color: "AEB5BC", fontSize: 14 }]}>
+                    {user.length ? user[0].sport : ""}
                   </Text>
                 </View>
-              </View>
+
+                <View style={styles.statsContainer}>
+                  <View style={styles.statsBox}>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{posteos.length}</Text>
+                    <Text style={[styles.text, styles.subText]}>Posts</Text>
+                  </View>
+                  <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{likes}</Text>
+                    <Text style={[styles.text, styles.subText]}>Likes</Text>
+                  </View>
+                  {user[0].validated ? <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1 }]}>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{powers >= 0 ? powers : 0}</Text>
+                    <Text style={[styles.text, styles.subText]}>Powers</Text>
+                  </View> : <Text></Text>}
+                  {/* <View style={styles.statsBox}>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{followers}</Text>
+                    <Text style={[styles.text, styles.subText]}>Seguidores</Text>
+                  </View> */}
+                </View>
+
+                <Text style={[styles.subText, styles.description]}>My Posts</Text>
+                <View style={{ marginTop: 32 }}>
+                  <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                    {posteos.slice(0).reverse().map((imagen, index) =>
+                      <View style={styles.mediaImageContainer} key={index} >
+                        <Image source={{ uri: imagen }} style={styles.image} resizeMode="cover"></Image>
+                      </View>
+                    )}
+                  </ScrollView>
+                </View>
+
+                <Text style={[styles.subText, styles.description]}>Description</Text>
+
+                <View style={{ alignItems: "center" }}>
+                  <View style={styles.descripcion}>
+                    <View style={styles.descripcionIndicador}></View>
+                    <View style={{ width: 250 }}>
+                      <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
+                        {!user[0].description ? 'There is no description' : user[0].description}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </ScrollView>
+            </SafeAreaView> : 
+            <View>
+              <Text>This profile isnt available</Text>
             </View>
-          </ScrollView>
-        </SafeAreaView> : <View>
-          <Text>This profile isnt available</Text>
-        </View>}
-      </ScrollView>
+        }
+    </ScrollView>
   )
 }
 
