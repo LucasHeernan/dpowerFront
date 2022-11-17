@@ -93,7 +93,7 @@ import { shouldUseActivityState } from 'react-native-screens';
               
               ) : (
               
-              <Text key={'soyKey'} style={styles.else}>Comments not found</Text>)
+              <Text key={'soyKey'} style={styles.else}>Write the first comment!</Text>)
               }
               </View> 
               <View>

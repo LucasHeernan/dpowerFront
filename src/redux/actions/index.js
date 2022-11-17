@@ -80,7 +80,8 @@ export function createUser(info) {
                 name: info.name,
                 mail: info.email,
                 username: info.nickname,
-                avatar: info.picture
+                avatar: info.picture,
+                powers: 0
             }
             const data = await axios.post(`https://dpower-production.up.railway.app/users`, usuario)
             axios.post(`https://dpower-production.up.railway.app/users/email/${usuario.id}`)
