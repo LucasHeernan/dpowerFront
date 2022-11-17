@@ -45,7 +45,7 @@ export default function Cart() {
   }, [cart])
 
   useEffect(() => {
-    dispatch(getUserById(userById[0].data.id))
+    dispatch(getUserById(userById[0]?.data.id))
   }, [] )
 
   
@@ -66,12 +66,12 @@ export default function Cart() {
   // }
 
   const editpowers = async () => {
-    const newpowers = userById[0].data.powers + total
+    const newpowers = userById[0]?.data.powers + total
     try {
    await axios.put(
-    `https://dpower-production.up.railway.app/users/${userById[0].data.id}`,
+    `https://dpower-production.up.railway.app/users/${userById[0]?.data.id}`,
     {
-      ...userById[0].data,
+      ...userById[0]?.data,
       powers: newpowers
     }
   );
