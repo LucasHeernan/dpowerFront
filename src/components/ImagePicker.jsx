@@ -8,12 +8,13 @@ import { createIconSetFromFontello } from '@expo/vector-icons';
 import { Button } from 'react-native-paper';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { getUserById } from '../redux/actions';
 
 //  POST https://api.cloudinary.com/v1_1/dr6vvkghv/image/upload
 
 export default function PostImage() {
     const { user, userById } = useSelector(store => store)
-
+    const dispatch = useDispatch()
     const [image, setImage] = useState(null);
     const [img, setImg] = useState(null)
     const [descr, setDescr] = useState('')
@@ -46,6 +47,10 @@ export default function PostImage() {
             multimedia: e
         }))
     }
+
+    useEffect(() => {
+        dispatch(getUserById(user[0]?.data.id))
+      }, [] )
 
     let imagenurl = {}
 
