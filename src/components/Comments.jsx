@@ -10,12 +10,12 @@ import { shouldUseActivityState } from 'react-native-screens';
 
 
 
-let updateComments = true;
+// let updateComments = true;
 
     export default function CommentsPost({route, navigation}){
       const {id} = route.params;
       // console.log('soy id =>', id);
-      if (updateComments) getCommentsById()
+      // if (updateComments) getCommentsById()
 
       const [refreshing, setRefreshing] = useState(false);
 
@@ -26,12 +26,10 @@ let updateComments = true;
 
 
     useEffect(() => {
+      dispatch(removeState())
       dispatch(getCommentsById(id));
       dispatch(getpostById(id));
-      return () => {
-        dispatch(removeState())
-      }
-    }, [dispatch, id])
+    }, [])
 
    
 
@@ -55,6 +53,7 @@ let updateComments = true;
         console.log(crear);
         dispatch(postComments(crear));
         setText('');
+        dispatch(getCommentsById(id));
       }
 
       
@@ -62,16 +61,16 @@ let updateComments = true;
       const multimedia = postbyid.multimedia;
 
 
-      console.log(multimedia);
+ 
     // console.log('usuario =>', user[0].data.name)
       return (
         <ScrollView style={styles.todo}
-          refreshControl={
-            <RefreshControl
-            refreshing={refreshing}
-            onRefresh={getCommentsById}
-          />
-        }
+        //   refreshControl={
+        //     <RefreshControl
+        //     refreshing={refreshing}
+        //     onRefresh={getCommentsById}
+        //   />
+        // }
       >
           <View style={styles.container}>
           <View style={styles.imagen}>
