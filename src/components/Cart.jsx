@@ -7,20 +7,28 @@ import { useNavigation } from '@react-navigation/native';
 import CartItem from './CartItem';
 import { } from './CheckOutForm';
 import { CardField, useConfirmPayment, useStripe  } from "@stripe/stripe-react-native";
-
-
+import  axios  from 'axios';
+import { getUserById } from '../redux/actions';
 
 
 export default function Cart() {
 
-  const { user, userInfo } = useSelector(store => store)
+  const { user, userInfo, userById } = useSelector(store => store)
   const dispatch = useDispatch();
   const cart = useSelector(store => store.cart);
   const [total, setTotal] = useState(0)
+  const [pawers, setPawers] = useState(0)
   const navigation = useNavigation();
 
   const handleTotal = () => {
     setTotal(cart.filter(e => e.total).reduce((acc, curr) => {
+      acc += curr.price * curr.total;
+      return acc;
+    }, 0));
+  }
+
+  const handlepawers = () => {
+    setPawers(cart.filter(e => e.total).reduce((acc, curr) => {
       acc += curr.price * curr.total;
       return acc;
     }, 0));
@@ -35,7 +43,42 @@ export default function Cart() {
     handleClean();
     handleTotal();
   }, [cart])
+
+  useEffect(() => {
+    dispatch(getUserById(userById[0].data.id))
+  }, [] )
+
   
+  // const sumpowers = ()  => {
+  //   const pawers50 = cart.filter((e)=> e.name === '50 pawers to sponsor athletes')
+  //   const pawers100 = cart.filter((e)=> e.name === '100 pawers to sponsor athletes')
+
+  //   console.log('powers50', pawers50)
+  //   console.log('powers100', pawers100)
+
+  //   let count = 0
+  //   if (pawers50.length && pawers100.length) {
+  //   count = 150} else if (pawers50.length){
+  //   count = 50} else if (pawers100.length){
+  //     count = 100
+  //   }
+  //   editpowers(count)
+  // }
+
+  const editpowers = async () => {
+    const newpowers = userById[0].data.powers + total
+    try {
+   await axios.put(
+    `https://dpower-production.up.railway.app/users/${userById[0].data.id}`,
+    {
+      ...userById[0].data,
+      powers: newpowers
+    }
+  );
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   // ------ PAYMENT!!!! --------------
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
@@ -87,7 +130,7 @@ export default function Cart() {
         if (error) {
           alert(`Error code: ${error.code}`, error.message);
         } else {
-          alert('Success', 'Your order is confirmed!');
+          (alert('Success, Your order is confirmed!'), sumpowers());
         }
       };
       
@@ -308,7 +351,7 @@ export default function Cart() {
           variant="primary"
           disabled={!loading}
           title="Checkout"
-          onPress={openPaymentSheet}
+          onPress={editpowers}
           style={{
             width: '86%',
             height: '90%',
