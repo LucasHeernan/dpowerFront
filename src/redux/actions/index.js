@@ -20,9 +20,9 @@ import {
     LESS_TO_TOTAL,
     UPDATE_POST,
     GET_COMMENTS_BY_ID,
+    REMOVE_STATE,
     GET_POST_BY_ID,
     UPDATE_CART
-
 } from '../actionTypes';
 
 
@@ -80,7 +80,8 @@ export function createUser(info) {
                 name: info.name,
                 mail: info.email,
                 username: info.nickname,
-                avatar: info.picture
+                avatar: info.picture,
+                powers: 0
             }
             const data = await axios.post(`https://dpower-production.up.railway.app/users`, usuario)
             axios.post(`https://dpower-production.up.railway.app/users/email/${usuario.id}`)
@@ -236,6 +237,13 @@ const postComments = (payload) => {
     }
 }
 
+const removeState = (payload) => {
+    return {
+        type: REMOVE_STATE
+    }
+}
+
 export{
     postComments,
+    removeState,
 }

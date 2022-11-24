@@ -8,12 +8,13 @@ import { createIconSetFromFontello } from '@expo/vector-icons';
 import { Button } from 'react-native-paper';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import { getUserById } from '../redux/actions';
 
 //  POST https://api.cloudinary.com/v1_1/dr6vvkghv/image/upload
 
 export default function PostImage() {
-    const { user } = useSelector(store => store)
-
+    const { user, userById } = useSelector(store => store)
+    const dispatch = useDispatch()
     const [image, setImage] = useState(null);
     const [img, setImg] = useState(null)
     const [descr, setDescr] = useState('')
@@ -46,6 +47,10 @@ export default function PostImage() {
             multimedia: e
         }))
     }
+
+    useEffect(() => {
+        dispatch(getUserById(user[0]?.data.id))
+      }, [] )
 
     let imagenurl = {}
 
@@ -103,12 +108,12 @@ export default function PostImage() {
             .then(async (res) => {
                 let imagenurl = await res.json()
                 let publicacion = {}
-                if (user[0].data.validated === true) {
+                if (userById[0]?.data?.validated === true) {
                     publicacion = {
                         likes: 0,
                         powersGained: 0,
                         description: descr,
-                        UserInfoId: user[0].data.id,
+                        UserInfoId: userById[0]?.data?.id,
                         multimedia: imagenurl.secure_url
                     }
                 } else {
@@ -116,7 +121,7 @@ export default function PostImage() {
                         likes: 0,
                         powersGained: -1,
                         description: descr,
-                        UserInfoId: user[0].data.id,
+                        UserInfoId: userById[0]?.data?.id,
                         multimedia: imagenurl.secure_url
                     }
                 }

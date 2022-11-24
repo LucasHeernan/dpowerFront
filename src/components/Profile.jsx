@@ -30,7 +30,7 @@ function Profile(props) {
 
   const { user, userById } = useSelector(state => state)
   let userIdProfile = { userId: user[0].data.id }
-  let UserById = userById[0].data.id
+  let UserById = userById[0]?.data?.id
   const dispatch = useDispatch()
 
   const openMenu = () => setVisible(true);
@@ -38,7 +38,7 @@ function Profile(props) {
 
   let getFilteredPosts = async function() {
     let posts = await axios.get("https://dpower-production.up.railway.app/post").then(e => e.data)
-    let filteredPosts = posts.filter(e => e.UserInfoId === userById[0].data.id)
+    let filteredPosts = posts.filter(e => e.UserInfoId === userById[0]?.data?.id)
     let likes = filteredPosts.map(e => e.likes)
     let totalLikes = likes.reduce((accumulator, value) => {
       return accumulator + value;
@@ -115,8 +115,8 @@ function Profile(props) {
       console.error(err)
     }
   }
-  //!userById.length  ? user[0].data.name : userById[0].data.name
-  const avatar = !userById.length ? user[0].data.avatar : userById[0].data.avatar
+  //!userById.length  ? user[0].data.name : userById[0]?.data.name
+  const avatar = !userById.length ? user[0]?.data.avatar : userById[0]?.data.avatar
   return (
     <Provider>
 
@@ -126,7 +126,9 @@ function Profile(props) {
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
-            onRefresh={getImagenes}
+            onRefresh={(getImagenes,
+              getPosteos)
+            }
           />
         }
       >
@@ -134,7 +136,7 @@ function Profile(props) {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.titleBar}>
               <FontAwesome5 name="bolt" size={20} color="black">
-                <Text> {userById[0].data.powers}</Text>
+                <Text> {userById[0]?.data.powers}</Text>
               </FontAwesome5>
               <Menu
                 visible={visible}
@@ -159,19 +161,19 @@ function Profile(props) {
 
             <View style={styles.infoContainer}>
               <Text style={[styles.text, { fontWeight: "400", fontSize: 24 }]}>
-                {!userById.length ? user[0].data.name : userById[0].data.name}
+                {!userById.length ? user[0].data.name : userById[0]?.data.name}
               </Text>
               <Text style={[styles.text, { fontWeight: "400", fontSize: 18, fontWeight: '700', textDecorationLine: 'underline',  }]}>
                 {(userById.validated === true) ? 'Athlete' : null}
               </Text>
               <Text style={[styles.text, styles.subText]}>
-                {!userById.length ? user[0].data.age : userById[0].data.age}
+                {!userById.length ? user[0].data.age : userById[0]?.data.age}
               </Text>
               <Text style={[styles.text, styles.subText]}>
-                {!userById.length ? user[0].data.nationality : userById[0].data.nationality}
+                {!userById.length ? user[0].data.nationality : userById[0]?.data.nationality}
               </Text>
               <Text style={[styles.text, { color: "AEB5BC", fontSize: 14 }]}>
-                {!userById.length ? user[0].data.sport : userById[0].data.sport}
+                {!userById.length ? user[0].data.sport : userById[0]?.data.sport}
               </Text>
             </View>
 
@@ -184,7 +186,7 @@ function Profile(props) {
                 <Text style={[styles.text, { fontSize: 24 }]}>{likes}</Text>
                 <Text style={[styles.text, styles.subText]}>Likes</Text>
               </View>
-              {userById[0].data.validated ? <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1 }]}>
+              {userById[0]?.data.validated ? <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderRightWidth: 1 }]}>
                 <Text style={[styles.text, { fontSize: 24 }]}>{powers >= 0 ? powers : 0}</Text>
                 <Text style={[styles.text, styles.subText]}>Powers</Text>
               </View> : <Text></Text>}
@@ -223,7 +225,7 @@ function Profile(props) {
                 <View style={styles.descripcionIndicador}></View>
                 <View style={{ width: 250 }}>
                   <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
-                    {!userById.length ? 'Please fill in your description ...' : userById[0].data.description}
+                    {!userById.length ? 'Please fill in your description ...' : userById[0]?.data.description}
                   </Text>
                 </View>
               </View>
