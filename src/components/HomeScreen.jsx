@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, RefreshControl } from 'react-native';
 import { TextInput } from "react-native-paper";
 import Post from '../components/Post'
 import { getUserById } from "../redux/actions";
@@ -45,7 +45,20 @@ const dispatch = useDispatch();
 
   return (
     <View style={styles.bg1}>
-      <View style={styles.header}></View>
+      <View
+        style={{
+          width: '100%',
+          paddingBottom: 0,
+          paddingTop: 8,
+          alignItems: 'center',
+          backgroundColor: 'white'
+        }}
+      >
+        <View style={{ flexDirection: 'row' }} >
+          <Image source={require('../images/Dlogo.png')} style={{ width: 25, height: 25 }} />
+          <Text style={{color: '#C7D31E', fontSize: 25, fontWeight: 'bold', bottom: 5, letterSpacing: 1.5 }} >POWER</Text>
+        </View>
+      </View>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={

@@ -59,20 +59,26 @@ export default function Login() {
     <View style={{flex:1}} >
 
       <ImageBackground source={require('../images/fondo_login.jpg')}
-        style={{width:'100%', height: '100%', justifyContent: 'space-around'}}
+        style={{width:'100%', height: '100%', justifyContent: 'space-between'}}
       >
 
+        <View></View>
+
         <View style={{flexDirection:'column', alignItems:'center'}} >
-          <Text style={{color: '#FFF', fontSize:30, fontWeight: 'bold'}} >Welcome to Dpower</Text>
-          <Text style={{maxWidth:'50%', color:"#E6E6E6", fontSize:14, textAlign:'center', paddingTop:15}}>The application to support paralympic athletes</Text>
+          <View style={{flexDirection:'row'}} >
+            <Image source={require('../images/Dlogo.png')} style={{ width: 50, height: 50 }} />
+            <Text style={{color: '#FFF', fontSize:30, fontWeight: 'bold', bottom: -7}} >POWER APP</Text>
+          </View>
+          <Text style={{maxWidth:'50%', color:"#E6E6E6", fontSize:17, textAlign:'center', paddingTop:15, fontWeight:'500'}}>The application to support paralympic athletes</Text>
         </View>
 
         <View style={{flexDirection:'column', alignItems:'center'}} >
-          <TouchableOpacity style={{justifyContent:'center', width:'90%', backgroundColor: '#6E6E6E', height:50, borderRadius:13 }}
+          <TouchableOpacity style={{justifyContent:'center', width:'90%', backgroundColor: '#93b515', height:50, borderRadius: 10 }}
             onPress={() => { prueba() }}
             >
-            <Text style={{fontSize:18, letterSpacing:1.5, textAlign:'center', position:'relative', color: 'white'}} >Get Started</Text>
+            <Text style={{fontSize:18, letterSpacing:1.5, fontWeight: '500', textAlign:'center', position:'relative', color: 'white', textTransform: 'uppercase'}} >Get Started</Text>
           </TouchableOpacity>
+          <Text style={{ fontWeight:'500', marginVertical: 20, color: '#93b515', fontSize: 17}} >Log in to your account</Text>
         </View>
 
       </ImageBackground>

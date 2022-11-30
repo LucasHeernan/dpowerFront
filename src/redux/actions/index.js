@@ -144,7 +144,7 @@ export function updatePost(info) {
 export function updateCart(products) {
     return async (dispatch) => {
         try {
-            products.map( async (el) => {
+            products?.map( async (el) => {
                 await axios.put(`https://dpower-production.up.railway.app/products/${el.id}/${el.stock - el.total}`)
             })
             return dispatch({
